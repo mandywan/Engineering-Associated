@@ -4,11 +4,20 @@ namespace AeDirectory
 {
     public class Group
     {
-        public int group_id { get; set; }
-        public int office_id { get; set; }
-        public int comapny_id { get; set; }
-        public string label { get; set; }
-        public Employee manager { get; set; }
+        public int Group_id { get; set; }
+        public int Office_id { get; set; }
+        public int Comapny_id { get; set; }
+        public string Label { get; set; }
+        public Employee Manager { get; set; }
+
+        public Group(int group_id, int office_id, int comapny_id, string label, Employee manager)
+        {
+            Group_id = group_id;
+            Office_id = office_id;
+            Comapny_id = comapny_id;
+            Label = label;
+            Manager = manager;
+        }
 
     }
 }

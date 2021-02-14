@@ -5,11 +5,17 @@ namespace AeDirectory
     public class Company
     {
 
-        public int comapny_id { get; set; }
-        public string label { get; set; }
-        public Employee manager { get; set; }
-        public Office[] offices { get; set; }
+        public int Comapny_id { get; set; }
+        public string Label { get; set; }
+        public Employee Manager { get; set; }
+        public Office[] Offices { get; set; }
 
-
+        public Company(int comapny_id, string label, Employee manager, Office[] offices)
+        {
+            Comapny_id = comapny_id;
+            Label = label;
+            Manager = manager;
+            Offices = offices;
+        }
     }
 }

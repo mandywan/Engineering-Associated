@@ -5,9 +5,16 @@ namespace AeDirectory
     public class OrgChart
     {
 
-        public Employee supervisor { get; set; }
-        public Employee[] peers { get; set; }
-        public Employee[] subordinates { get; set; }
+        public Employee Supervisor { get; set; }
+        public Employee[] Peers { get; set; }
+        public Employee[] Subordinates { get; set; }
+
+        public OrgChart(Employee supervisor, Employee[] peers, Employee[] subordinates)
+        {
+            Supervisor = supervisor;
+            Peers = peers;
+            Subordinates = subordinates;
+        }
 
     }
 }
