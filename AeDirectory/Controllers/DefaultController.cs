@@ -15,13 +15,13 @@ namespace QuickStart.Controllers
 			_logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}
 
-		[Route("test1")]
+		[Route("")]
 		[HttpGet]
 		public object Get1()
 		{
 			var responseObject = new
 			{
-				Status = "Up 1"
+				Status = "Up"
 			};
 			_logger.LogInformation($"Status pinged: {responseObject.Status}");
 			return responseObject;
