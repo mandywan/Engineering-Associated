@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.808.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AeDirectory", "AeDirectory\AeDirectory.csproj", "{4060AE17-8081-4762-A4DE-51CDF8493058}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AeDirectory", "AeDirectory.csproj", "{4060AE17-8081-4762-A4DE-51CDF8493058}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
