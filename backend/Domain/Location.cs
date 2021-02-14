@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace AeDirectory
 {
@@ -8,9 +9,9 @@ namespace AeDirectory
         public int Location_id { get; set; }
         public string Label { get; set; }
         public string SortValue { get; set; }
-        public Employee[] Employees { get; set; }
+        public List<Employee> Employees { get; set; }
 
-        public Location(int location_id, string label, string sortValue, Employee[] employees)
+        public Location(int location_id, string label, string sortValue, List<Employee> employees)
         {
             Location_id = location_id;
             Label = label;

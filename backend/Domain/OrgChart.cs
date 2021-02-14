@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace AeDirectory
 {
@@ -6,10 +7,10 @@ namespace AeDirectory
     {
 
         public Employee Supervisor { get; set; }
-        public Employee[] Peers { get; set; }
-        public Employee[] Subordinates { get; set; }
+        public List<Employee> Peers { get; set; }
+        public List<Employee> Subordinates { get; set; }
 
-        public OrgChart(Employee supervisor, Employee[] peers, Employee[] subordinates)
+        public OrgChart(Employee supervisor, List<Employee> peers, List<Employee> subordinates)
         {
             Supervisor = supervisor;
             Peers = peers;

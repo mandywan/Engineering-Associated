@@ -1,15 +1,16 @@
 using System;
+using System.Collections.Generic;
 
 namespace AeDirectory
 {
     public class Filter
     {
 
-        public Company[] Companies { get; set; }
-        public Office[] Offices { get; set; }
-        public Group[] Groups { get; set; }
-        public Location[] Locations { get; set; }
-        public Skill[] Skills { get; set; }
+        public List<Company> Companies { get; set; }
+        public List<Office> Offices { get; set; }
+        public List<Group> Groups { get; set; }
+        public List<Location> Locations { get; set; }
+        public List<Skill> Skills { get; set; }
         public Category Category { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
@@ -22,11 +23,11 @@ namespace AeDirectory
         public string WorkCell { get; set; }
 
         public Filter(
-            Company[] companies,
-            Office[] offices,
-            Group[] groups,
-            Location[] locations,
-            Skill[] skills,
+            List<Company> companies,
+            List<Office> offices,
+            List<Group> groups,
+            List<Location> locations,
+            List<Skill> skills,
             Category category,
             string lastName,
             string firstName,

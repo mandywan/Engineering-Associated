@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text.Json;
+using AeDirectory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 
 namespace QuickStart.Controllers
 {
@@ -21,22 +25,58 @@ namespace QuickStart.Controllers
 		{
 			var responseObject = new
 			{
-				Status = "Up"
+				Status = "Up",
 			};
 			_logger.LogInformation($"Status pinged: {responseObject.Status}");
 			return responseObject;
 		}
 
-		[Route("test2")]
+
+		[Route("test1")] // GET api/test1
 		[HttpGet]
-		public object Get2()
+		public ActionResult<Object> TestGetWithNoInput()
 		{
-			var responseObject = new
+			Category testCategory = new Category(222, "label222", "sort222", new List<Skill>());
+
+			var response = new
 			{
-				Status = "Up22"
+				Status = "TestGetWithNoInput",
+				Data = testCategory,
+
 			};
-			_logger.LogInformation($"Status pinged: {responseObject.Status}");
-			return responseObject;
+			return response;
 		}
+
+		[Route("test2")] // GET api/test2
+		[HttpGet]
+		public ActionResult<Object> TestGetWithInput([FromBody] object value)
+		{
+			Category testCategory = new Category(222, "label222", "sort222", new List<Skill>());
+
+			var response = new
+			{
+				Status = "TestGetWithInput",
+				Data = testCategory,
+				Input = value,
+			};
+			return response;
+		}
+
+		[Route("test3")] // POST api/test3
+		[HttpPost]
+		public ActionResult<Object> TestPostWithInput([FromBody] object value)
+		{
+			Category testCategory = new Category(222, "label222", "sort222", new List<Skill>());
+
+			var response = new
+			{
+				Status = "TestPostWithInput",
+				Data = testCategory,
+				Input = value,
+			};
+			return response;
+		}
+
+
 	}
 }

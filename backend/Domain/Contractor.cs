@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace AeDirectory
 {
@@ -9,7 +10,7 @@ namespace AeDirectory
         public int Office_id { get; set; }
         public int Group_id { get; set; }
         public int Location_id { get; set; }
-        public Skill[] Skills { get; set; }
+        public List<Skill> Skills { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string Title { get; set; }
@@ -27,8 +28,8 @@ namespace AeDirectory
             int company_id, 
             int office_id, 
             int group_id, 
-            int location_id, 
-            Skill[] skills,
+            int location_id,
+            List<Skill> skills,
             string lastName, 
             string firstName,
             string title, 
