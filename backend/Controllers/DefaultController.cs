@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace QuickStart.Controllers
+namespace AeDirectory.Controllers
 {
 	[ApiController]
 	[Route("")]
