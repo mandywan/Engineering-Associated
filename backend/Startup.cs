@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using AeDirectory.Domain;
 using AeDirectory.DTO;
 using AeDirectory.Models;
 using AeDirectory.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -14,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AeDirectory
 {
@@ -35,6 +39,30 @@ namespace AeDirectory
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAutoMapper(typeof(EmployeeProfile));
             services.AddScoped<IEmployeeService, ImplEmployeeService>();
+            services.AddScoped<IAuthenticateService, TokenAuthenticationService>();
+            services.AddScoped<IUserService, UserService>();
+
+            services.Configure<TokenManagement>(Configuration.GetSection("tokenConfig"));
+            var token = Configuration.GetSection("tokenConfig").Get<TokenManagement>();
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                //Token Validation Parameters
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(token.Secret)),
+                    ValidIssuer = token.Issuer,
+                    ValidAudience = token.Audience,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,8 +75,11 @@ namespace AeDirectory
 
             app.UseHttpsRedirection();
 
-            app.UseRouting();
+            app.UseAuthentication();
 
+            app.UseRouting();
+            
+            // order matters here, should be added after Routing
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
