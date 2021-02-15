@@ -15,11 +15,11 @@ namespace AeDirectory.Controllers
     public class EmployeesController: ControllerBase
     {
         
-        private readonly ILogger<DefaultController> _logger;
+        private readonly ILogger<EmployeesController> _logger;
         private readonly IEmployeeService _employeeService;
 
         
-        public EmployeesController(ILogger<DefaultController> logger, IEmployeeService employeeService)
+        public EmployeesController(ILogger<EmployeesController> logger, IEmployeeService employeeService)
         {
             _employeeService = employeeService;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
