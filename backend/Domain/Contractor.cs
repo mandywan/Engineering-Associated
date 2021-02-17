@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace AeDirectory
+namespace AeDirectory.Domain
 {
     public class Contractor
     {
         public int Employee_id { get; set; }
-        public int Company_id { get; set; }
-        public int Office_id { get; set; }
-        public int Group_id { get; set; }
-        public int Location_id { get; set; }
+        public string Company_id { get; set; }
+        public string Office_id { get; set; }
+        public string Group_id { get; set; }
+        public string Location_id { get; set; }
         public List<Skill> Skills { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
@@ -17,7 +17,7 @@ namespace AeDirectory
         public DateTime HireDate { get; set; }
         public DateTime TerminationDate { get; set; }
         public int SupervisorEmployeeNo { get; set; }
-        public int YearsPriorExperience { get; set; }
+        public decimal YearsPriorExperience { get; set; }
         public string Email { get; set; }
         public string WorkPhone { get; set; }
         public string WorkCell { get; set; }
@@ -25,10 +25,10 @@ namespace AeDirectory
 
         public Contractor(
             int employee_id, 
-            int company_id, 
-            int office_id, 
-            int group_id, 
-            int location_id,
+            string company_id, 
+            string office_id, 
+            string group_id, 
+            string location_id,
             List<Skill> skills,
             string lastName, 
             string firstName,
@@ -36,7 +36,7 @@ namespace AeDirectory
             DateTime hireDate, 
             DateTime terminationDate,
             int supervisorEmployeeNo,
-            int yearsPriorExperience,
+            decimal yearsPriorExperience,
             string email,
             string workPhone,
             string workCell,

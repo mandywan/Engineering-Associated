@@ -1,43 +1,46 @@
 using System;
 using System.Collections.Generic;
 
-namespace AeDirectory
+#nullable enable
+
+namespace AeDirectory.Domain
 {
     public class Filter
     {
 
-        public List<Company> Companies { get; set; }
-        public List<Office> Offices { get; set; }
-        public List<Group> Groups { get; set; }
-        public List<Location> Locations { get; set; }
-        public List<Skill> Skills { get; set; }
-        public Category Category { get; set; }
-        public string LastName { get; set; }
-        public string FirstName { get; set; }
-        public string Title { get; set; }
-        public DateTime HireDate { get; set; }
-        public DateTime TerminationDate { get; set; }
-        public int YearsPriorExperience { get; set; }
-        public string Email { get; set; }
-        public string WorkPhone { get; set; }
-        public string WorkCell { get; set; }
+        public List<string>? Companies { get; set; }
+        public List<string>? Offices { get; set; }
+        public List<string>? Groups { get; set; }
+        public List<string>? Locations { get; set; }
+        public List<string>? Skills { get; set; }
+        public string? Category_id { get; set; }
+        public string? LastName { get; set; }
+        public string? FirstName { get; set; }
+        public string? Title { get; set; }
+        public DateTime? HireDate { get; set; }
+        public DateTime? TerminationDate { get; set; }
+        public decimal? YearsPriorExperience { get; set; }
+        public string? Email { get; set; }
+        public string? WorkPhone { get; set; }
+        public string? WorkCell { get; set; }
+        public Boolean UseAND { get; set; }
 
-        public Filter(
-            List<Company> companies,
-            List<Office> offices,
-            List<Group> groups,
-            List<Location> locations,
-            List<Skill> skills,
+/*        public Filter(
+            List<string> companies,
+            List<string> offices,
+            List<string> groups,
+            List<string> locations,
+            List<string> skills,
             Category category,
-            string lastName,
-            string firstName,
-            string title,
-            DateTime hireDate,
-            DateTime terminationDate,
-            int yearsPriorExperience,
-            string email,
-            string workPhone,
-            string workCell
+            string? lastName,
+            string? firstName,
+            string? title,
+            DateTime? hireDate,
+            DateTime? terminationDate,
+            decimal? yearsPriorExperience,
+            string? email,
+            string? workPhone,
+            string? workCell
         ) {
             Companies = companies;
             Offices = offices;
@@ -53,7 +56,7 @@ namespace AeDirectory
             Email = email;
             WorkPhone = workPhone;
             WorkCell = workCell;
-        }
+        }*/
 
     }
 }

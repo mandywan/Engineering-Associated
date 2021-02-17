@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AeDirectory
+namespace AeDirectory.Domain
 {
     public class OrgChart
     {

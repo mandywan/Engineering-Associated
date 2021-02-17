@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AeDirectory.DTO;
+using AeDirectory.Domain;
 using AeDirectory.Models;
 using AutoMapper;
 
@@ -33,6 +34,83 @@ namespace AeDirectory.Services
             EmployeeDTO employeeDTO = _mapper.Map<Models.Employee, EmployeeDTO>(employee);
             return employeeDTO;
         }
+
+        public List<EmployeeDTO> GetEmployeeByFilters(Filter filters)
+        {
+            //Filter filters = _mapper.Map<object, Filter>(filtersJSON); 
+
+            // skill filter prep
+            var employeeIdsFromSkills = (
+                from emp in _context.EmployeeSkills
+                where filters.Skills.Contains(emp.SkillId)
+                select emp.EmployeeNumber).ToList();
+
+            // category filter prep
+            var employeeIdsFromSkillCategory = new List<int>();
+            if (!(filters.Category_id == null))
+            {
+                var CategoryIdFromFilter = (
+                    from cat in _context.Categories
+                    where ((filters.Category_id == null) ? true : filters.Category_id == cat.SkillCategoryId)
+                    select cat.SkillCategoryId).ToList();
+                var skillIdsFromCategory = (
+                    from skill in _context.Skills
+                    where CategoryIdFromFilter.Contains(skill.SkillCategoryId)
+                    select skill.SkillId).ToList();
+                employeeIdsFromSkillCategory = (
+                    from emp in _context.EmployeeSkills
+                    where skillIdsFromCategory.Contains(emp.SkillId)
+                    select emp.EmployeeNumber).ToList();
+            }
+
+
+            // search employees
+            if (filters.UseAND) {
+                var employeeList = (
+                    from emp in _context.Employees
+                    where   ((filters.Companies.Count            == 0) ? true : filters.Companies.Contains(emp.CompanyCode)) &&
+                            ((filters.Offices.Count              == 0) ? true : filters.Offices.Contains(emp.OfficeCode)) && 
+                            ((filters.Groups.Count               == 0) ? true : filters.Groups.Contains(emp.GroupCode)) && 
+                            ((filters.Locations.Count            == 0) ? true : filters.Locations.Contains(emp.LocationId)) && 
+                            ((employeeIdsFromSkills.Count        == 0) ? true : employeeIdsFromSkills.Contains(emp.EmployeeNumber)) && 
+                            ((filters.Category_id           == null) ? true : employeeIdsFromSkillCategory.Contains(emp.EmployeeNumber)) &&
+                            ((filters.LastName              == null) ? true : filters.LastName == emp.LastName) &&
+                            ((filters.FirstName             == null) ? true : filters.FirstName == emp.FirstName) &&
+                            ((filters.Title                 == null) ? true : filters.Title == emp.Title) &&
+                            ((filters.HireDate              == null) ? true : filters.HireDate.Equals(emp.HireDate)) &&
+                            ((filters.TerminationDate       == null) ? true : filters.TerminationDate.Equals(emp.TerminationDate)) &&
+                            ((filters.YearsPriorExperience  == null) ? true : filters.YearsPriorExperience == emp.YearsPriorExperience) &&
+                            ((filters.Email                 == null) ? true : filters.Email == emp.Email) &&
+                            ((filters.WorkPhone             == null) ? true : filters.WorkPhone == emp.WorkPhone) &&
+                            ((filters.WorkCell              == null) ? true : filters.WorkCell == emp.WorkCell)
+                    select emp).ToList();
+                List<EmployeeDTO> employeeDTOList = _mapper.Map<List<Models.Employee>, List<EmployeeDTO>>(employeeList);
+                return employeeDTOList;
+            } else {
+                var employeeList = (
+                    from emp in _context.Employees
+                    where   filters.Companies.Contains(emp.CompanyCode) || 
+                            filters.Offices.Contains(emp.OfficeCode) || 
+                            filters.Groups.Contains(emp.GroupCode) || 
+                            filters.Locations.Contains(emp.LocationId) || 
+                            employeeIdsFromSkills.Contains(emp.EmployeeNumber) ||
+                            ((filters.Category_id           == null) ? false : employeeIdsFromSkillCategory.Contains(emp.EmployeeNumber)) ||
+                            ((filters.LastName              == null) ? false : filters.LastName == emp.LastName) ||
+                            ((filters.FirstName             == null) ? false : filters.FirstName == emp.FirstName) ||
+                            ((filters.Title                 == null) ? false : filters.Title == emp.Title) ||
+                            ((filters.HireDate              == null) ? false : filters.HireDate.Equals(emp.HireDate)) ||
+                            ((filters.TerminationDate       == null) ? false : filters.TerminationDate.Equals(emp.TerminationDate)) ||
+                            ((filters.YearsPriorExperience  == null) ? false : filters.YearsPriorExperience == emp.YearsPriorExperience) ||
+                            ((filters.Email                 == null) ? false : filters.Email == emp.Email) ||
+                            ((filters.WorkPhone             == null) ? false : filters.WorkPhone == emp.WorkPhone) ||
+                            ((filters.WorkCell              == null) ? false : filters.WorkCell == emp.WorkCell)
+                    select emp).ToList();
+                List<EmployeeDTO> employeeDTOList = _mapper.Map<List<Models.Employee>, List<EmployeeDTO>>(employeeList);
+                return employeeDTOList;
+            }
+
+        }
+
 
     }
 }

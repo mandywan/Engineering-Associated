@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json;
-using AeDirectory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
+
+using AeDirectory.Services;
+using AeDirectory.DTO;
+using AeDirectory.Domain;
+using System.Text.Json;
 
 namespace AeDirectory.Controllers
 {
@@ -12,10 +14,13 @@ namespace AeDirectory.Controllers
 	[Route("")]
 	public class DefaultController : ControllerBase
 	{
+		private readonly IEmployeeService _employeeService;
+
 		private readonly ILogger<DefaultController> _logger;
 
-		public DefaultController(ILogger<DefaultController> logger)
+		public DefaultController(ILogger<DefaultController> logger, IEmployeeService employeeService)
 		{
+			_employeeService = employeeService;
 			_logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}
 
@@ -32,49 +37,35 @@ namespace AeDirectory.Controllers
 		}
 
 
-		[Route("test1")] // GET api/test1
-		[HttpGet]
-		public ActionResult<Object> TestGetWithNoInput()
-		{
-			Category testCategory = new Category(222, "label222", "sort222", new List<Skill>());
-
-			var response = new
-			{
-				Status = "TestGetWithNoInput",
-				Data = testCategory,
-
-			};
-			return response;
-		}
-
-		[Route("test2")] // GET api/test2
-		[HttpGet]
-		public ActionResult<Object> TestGetWithInput([FromBody] object value)
-		{
-			Category testCategory = new Category(222, "label222", "sort222", new List<Skill>());
-
-			var response = new
-			{
-				Status = "TestGetWithInput",
-				Data = testCategory,
-				Input = value,
-			};
-			return response;
-		}
-
-		[Route("test3")] // POST api/test3
+		[Route("/search")]
 		[HttpPost]
-		public ActionResult<Object> TestPostWithInput([FromBody] object value)
+		// POST: /search
+		public List<EmployeeDTO> GetEmployeeByFilters([FromBody] object filterJSON)
 		{
-			Category testCategory = new Category(222, "label222", "sort222", new List<Skill>());
+			// example of JSON expected:
+/*			{
+				"Companies": [],
+				"Offices": [],
+				"Groups": [],
+				"Locations": [],
+				"Skills": [],
+				"Category_id": null,
+				"LastName": "Acme",
+				"FirstName": null,
+				"Title": null,
+				"HireDate": null,
+				"TerminationDate": null,
+				"YearsPriorExperience": null,
+				"Email": null,
+				"WorkPhone": null,
+				"WorkCell": null,
+				"UseAND": false
+			}*/
 
-			var response = new
-			{
-				Status = "TestPostWithInput",
-				Data = testCategory,
-				Input = value,
-			};
-			return response;
+			string jsonString = JsonSerializer.Serialize(filterJSON);
+			Filter filters = JsonSerializer.Deserialize<Filter>(jsonString);
+
+			return _employeeService.GetEmployeeByFilters(filters);
 		}
 
 
