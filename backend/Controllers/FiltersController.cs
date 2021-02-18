@@ -30,11 +30,11 @@ namespace AeDirectory.Controllers
 
         [HttpGet]
         // GET: /api/filters
+        [Produces("application/json")]
         public string GetFilters()
         {
             var options = new JsonSerializerOptions
             {
-                WriteIndented = true,
                 Converters = {new JsonStringEnumConverter()}
             };
 
