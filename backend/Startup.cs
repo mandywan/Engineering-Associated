@@ -41,6 +41,7 @@ namespace AeDirectory
             services.AddScoped<IEmployeeService, ImplEmployeeService>();
             services.AddScoped<IAuthenticateService, TokenAuthenticationService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IOrgChartService, OrgChartService>();
 
             services.Configure<TokenManagement>(Configuration.GetSection("tokenConfig"));
             var token = Configuration.GetSection("tokenConfig").Get<TokenManagement>();
