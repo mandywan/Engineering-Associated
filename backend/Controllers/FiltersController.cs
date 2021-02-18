@@ -30,24 +30,11 @@ namespace AeDirectory.Controllers
 
         [HttpGet]
         // GET: /api/filters
-        [Produces("application/json")]
-        public string GetFilters()
+        public object[] GetFilters()
         {
-            var options = new JsonSerializerOptions
-            {
-                Converters = {new JsonStringEnumConverter()}
-            };
 
-            // hack to serialize subclasses properly
-            string jsonResults = "[";
             var filters = _filtersService.GetFilters();
-            foreach (var f in filters)
-            {
-                jsonResults += JsonSerializer.Serialize(f, f.GetType(), options) + ",";
-            }
-            jsonResults = jsonResults.Trim(',');
-            jsonResults += "]";
-            return jsonResults;
+            return filters.Cast<object>().ToArray();
         }
 
     }
