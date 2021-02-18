@@ -1,13 +1,39 @@
 ﻿using System;
 using AutoMapper;
 using System.Collections.Generic;
+using System.Linq;
+using AeDirectory.Models;
 
 #nullable disable
 
 namespace AeDirectory.DTO
 {
+    public partial class EmployeeSkillDTO
+    {
+        public EmployeeSkillDTO(String skillCategoryId, String skillId)
+        {
+            this.SkillId = skillId;
+            this.SkillCategoryId = skillCategoryId;
+        }
+        public string SkillId { get; set; }
+        public string SkillCategoryId { get; set; }
+    }
+    
+    public partial class SupervisorDTO
+    {        
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
+        public string PhotoUrl { get; set; }
+
+    }
+    
     public partial class EmployeeDTO
     {
+        public EmployeeDTO()
+        {
+            this.Supervisor = new SupervisorDTO();
+            this.Skills = new List<EmployeeSkillDTO>();
+        }
         // PK
         public int EmployeeNumber { get; set; }
         
@@ -31,6 +57,9 @@ namespace AeDirectory.DTO
         public string WorkCell { get; set; }
         public string PhotoUrl { get; set; }
         public bool IsContractor { get; set; }
+        
+        public ICollection<EmployeeSkillDTO> Skills { get; set; }
+        public SupervisorDTO Supervisor { get; set; }
     }
     
     public class EmployeeProfile:Profile
