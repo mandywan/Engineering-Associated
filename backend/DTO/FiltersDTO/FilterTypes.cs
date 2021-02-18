@@ -4,6 +4,7 @@ namespace AeDirectory.DTO.FiltersDTO
     /**
      * Filter input types
      */
+    
     public enum FilterTypes
     {
         text_input,

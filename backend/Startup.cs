@@ -18,6 +18,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Text.Json.Serialization;
 
 namespace AeDirectory
 {
@@ -67,6 +68,8 @@ namespace AeDirectory
 
             //Filters
             services.AddScoped<IFiltersService, ImplFiltersService>();
+            services.AddControllers()
+                .AddJsonOptions(opts => opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
         }
 
