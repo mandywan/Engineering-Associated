@@ -4,6 +4,7 @@ using AeDirectory.DTO;
 using AeDirectory.Domain;
 using AeDirectory.Models;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace AeDirectory.Services
 {
@@ -28,10 +29,38 @@ namespace AeDirectory.Services
 
         public EmployeeDTO GetEmployeeByEmployeeNumber(int id)
         {
+            // fetch employee basic info
             var employee = (from emp in _context.Employees
+                    .Include("SupervisorEmployeeNumberNavigation")
+                    // .Include("CompanyCodeNavigation")
+                    // .Include("CompanyOfficeGroup")
+                    // .Include("Location")
+                    // .Include("Office")
+                    // many to many relationship, should join three tables together
+                    .Include(emp => emp.EmployeeSkills )
+                    .ThenInclude(empSkills => empSkills.Skill)
                 where emp.EmployeeNumber == id
                 select emp).FirstOrDefault();
+
+            // fetch skill_id and category_id
+            var skillList = (from c in _context.EmployeeSkills
+                where c.EmployeeNumber == id
+                join o in _context.Skills on c.SkillId equals o.SkillId 
+                select c).ToList();
+            
             EmployeeDTO employeeDTO = _mapper.Map<Models.Employee, EmployeeDTO>(employee);
+            
+            // set supervisor in DTO
+            employeeDTO.Supervisor.FirstName = employee.SupervisorEmployeeNumberNavigation.FirstName;
+            employeeDTO.Supervisor.LastName = employee.SupervisorEmployeeNumberNavigation.LastName;
+            employeeDTO.Supervisor.PhotoUrl = employee.SupervisorEmployeeNumberNavigation.PhotoUrl;
+
+            // set categories and skills in DTO
+            foreach (var ele in skillList)
+            {
+                employeeDTO.Skills.Add(new EmployeeSkillDTO(ele.Skill.SkillCategoryId, ele.Skill.SkillId));
+            }
+            
             return employeeDTO;
         }
 
