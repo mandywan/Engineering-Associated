@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using AeDirectory.DTO;
-using AeDirectory.Domain;
+using AeDirectory.Search;
 
 namespace AeDirectory.Services
 {

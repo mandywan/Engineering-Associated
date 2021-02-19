@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 using AeDirectory.Services;
 using AeDirectory.DTO;
-using AeDirectory.Domain;
+using AeDirectory.Search;
 using System.Text.Json;
 
 namespace AeDirectory.Controllers
@@ -42,29 +42,8 @@ namespace AeDirectory.Controllers
 		// POST: /search
 		public List<EmployeeDTO> GetEmployeeByFilters([FromBody] object filterJSON)
 		{
-			// example of JSON expected:
-/*			{
-				"Companies": [],
-				"Offices": [],
-				"Groups": [],
-				"Locations": [],
-				"Skills": [],
-				"Category_id": null,
-				"LastName": "Acme",
-				"FirstName": null,
-				"Title": null,
-				"HireDate": null,
-				"TerminationDate": null,
-				"YearsPriorExperience": null,
-				"Email": null,
-				"WorkPhone": null,
-				"WorkCell": null,
-				"UseAND": false
-			}*/
-
 			string jsonString = JsonSerializer.Serialize(filterJSON);
 			Filter filters = JsonSerializer.Deserialize<Filter>(jsonString);
-
 			return _employeeService.GetEmployeeByFilters(filters);
 		}
 
