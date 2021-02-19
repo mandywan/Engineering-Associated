@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AeDirectory.Models;
-using AeDirectory.Domain;
+using AeDirectory.Search;
 using AutoMapper;
 using System.Linq;
 using AeDirectory.DTO.FiltersDTO;
@@ -45,8 +45,8 @@ namespace AeDirectory.Services
                 inputs.Add(new FilterInputDTO(c.Label, new List<string>() { c.SkillCategoryId }));
             }
             return new HierarchyFilter(
-                GetMemberName((Filter f) => f.Category_id),
-                GetMemberName((Domain.Category c) => c.Category_id),
+                GetMemberName((Filter f) => f.Category),
+                GetMemberName((CompositeId c) => c.CategoryId),
                 "Skill Category",
                 null,
                 false,
@@ -63,10 +63,10 @@ namespace AeDirectory.Services
                 inputs.Add(new FilterInputDTO(s.Label, new List<string>() { s.SkillCategoryId, s.SkillId}));
             }
             return new HierarchyFilter(
-                GetMemberName((Filter f) => f.Skills),
-                GetMemberName((Domain.Skill c) => c.Skill_id),
+                GetMemberName((Filter f) => f.Skill),
+                GetMemberName((CompositeId c) => c.SkillId),
                 "Skill",
-                GetMemberName((Filter f) => f.Category_id),
+                GetMemberName((Filter f) => f.Category),
                 false,
                 true,
                 inputs);
@@ -81,8 +81,8 @@ namespace AeDirectory.Services
                 inputs.Add(new FilterInputDTO(v.Label, new List<string>() { v.CompanyCode }));
             }
             return new HierarchyFilter(
-                GetMemberName((Filter f) => f.Companies),
-                GetMemberName((Domain.Company c) => c.Comapny_id),
+                GetMemberName((Filter f) => f.Company),
+                GetMemberName((CompositeId c) => c.CompanyId),
                 "Company",
                 null,
                 false,
@@ -99,10 +99,10 @@ namespace AeDirectory.Services
                 inputs.Add(new FilterInputDTO(v.Label, new List<string>() { v.CompanyCode, v.OfficeCode }));
             }
             return new HierarchyFilter(
-                GetMemberName((Filter f) => f.Offices),
-                GetMemberName((Domain.Office c) => c.Office_id),
+                GetMemberName((Filter f) => f.Office),
+                GetMemberName((CompositeId c) => c.OfficeId),
                 "Office",
-                GetMemberName((Filter f) => f.Companies),
+                GetMemberName((Filter f) => f.Company),
                 true,
                 true,
                 inputs);
@@ -117,10 +117,10 @@ namespace AeDirectory.Services
                 inputs.Add(new FilterInputDTO(v.Label, new List<string>() { v.CompanyCode, v.OfficeCode, v.GroupCode }));
             }
             return new HierarchyFilter(
-                GetMemberName((Filter f) => f.Groups),
-                GetMemberName((Domain.Group c) => c.Group_id),
+                GetMemberName((Filter f) => f.Group),
+                GetMemberName((CompositeId c) => c.GroupId),
                 "Group",
-                GetMemberName((Filter f) => f.Offices),
+                GetMemberName((Filter f) => f.Office),
                 true,
                 true,
                 inputs);
@@ -135,8 +135,8 @@ namespace AeDirectory.Services
                 inputs.Add(new FilterInputDTO(v.Label, new List<string>() { v.LocationId}));
             }
             return new HierarchyFilter(
-                GetMemberName((Filter f) => f.Locations),
-                GetMemberName((Domain.Location c) => c.Location_id),
+                GetMemberName((Filter f) => f.Location),
+                GetMemberName((CompositeId c) => c.LocationId),
                 "Physical Location",
                 null,
                 false,
@@ -148,7 +148,6 @@ namespace AeDirectory.Services
         {
             List<FilterDTO> regularFilters = new List<FilterDTO>();
 
-            // TODO: should first & last names be together
             regularFilters.Add(buildRegularFilter(
                 GetMemberName((Filter f) => f.FirstName),
                 "First Name",
@@ -157,6 +156,11 @@ namespace AeDirectory.Services
             regularFilters.Add(buildRegularFilter(
                 GetMemberName((Filter f) => f.LastName),
                 "Last Name",
+                FilterTypes.text_input));
+
+            regularFilters.Add(buildRegularFilter(
+                GetMemberName((Filter f) => f.Name),
+                "Name",
                 FilterTypes.text_input));
 
             regularFilters.Add(buildRegularFilter(
