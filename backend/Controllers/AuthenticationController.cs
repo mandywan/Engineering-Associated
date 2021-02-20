@@ -1,12 +1,13 @@
 using AeDirectory.DTO;
 using AeDirectory.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AeDirectory.Controllers
 {
-    [Route("api/login")]
+    [Route("/login")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -18,6 +19,7 @@ namespace AeDirectory.Controllers
         }
 
         [AllowAnonymous]
+        [EnableCors("AllowAnyOrigin")]
         [HttpPost]
         public IActionResult RequestToken([FromBody] LoginRequestDTO request)
         {

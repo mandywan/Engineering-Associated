@@ -6,13 +6,14 @@ using AeDirectory.Models;
 using AeDirectory.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace AeDirectory.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class EmployeesController: ControllerBase
     {
         
@@ -25,25 +26,28 @@ namespace AeDirectory.Controllers
             _employeeService = employeeService;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-        
+
+        [EnableCors("AllowAnyOrigin")]
         [HttpGet]
-        // GET: /api/employees
+        // GET: /employees
         public List<EmployeeDTO> GetEmployees()
         {
             return _employeeService.GetEmployeeList();
         }
 
+        [EnableCors("AllowAnyOrigin")]
         [HttpGet("{id}")]
-        // GET: /api/employees/:id
+        // GET: /employees/:id
         public EmployeeDTO GetEmployee(int id)
         {
             return _employeeService.GetEmployeeByEmployeeNumber(id);
         }
-        
+
+        [EnableCors("AllowAnyOrigin")]
         [HttpPost]
         [Authorize]
         // Admin must login before posting this endpoint
-        // POST: /api/employees
+        // POST: /employees
         public IActionResult AddEmployee([FromBody] EmployeeDTO request)
         {
             // todo

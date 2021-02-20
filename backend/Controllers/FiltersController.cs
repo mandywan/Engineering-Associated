@@ -10,11 +10,12 @@ using Microsoft.Extensions.Logging;
 using AeDirectory.DTO.FiltersDTO;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using Microsoft.AspNetCore.Cors;
 
 namespace AeDirectory.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class FiltersController : ControllerBase
     {
 
@@ -28,8 +29,9 @@ namespace AeDirectory.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        [EnableCors("AllowAnyOrigin")]
         [HttpGet]
-        // GET: /api/filters
+        // GET: /filters
         public object[] GetFilters()
         {
 

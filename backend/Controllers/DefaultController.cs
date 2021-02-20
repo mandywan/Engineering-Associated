@@ -7,6 +7,7 @@ using AeDirectory.Services;
 using AeDirectory.DTO;
 using AeDirectory.Search;
 using System.Text.Json;
+using Microsoft.AspNetCore.Cors;
 
 namespace AeDirectory.Controllers
 {
@@ -25,6 +26,7 @@ namespace AeDirectory.Controllers
 		}
 
 		[Route("")]
+		[EnableCors("AllowAnyOrigin")]
 		[HttpGet]
 		public object Get1()
 		{
@@ -38,6 +40,7 @@ namespace AeDirectory.Controllers
 
 
 		[Route("/search")]
+		[EnableCors("AllowAnyOrigin")]
 		[HttpPost]
 		// POST: /search
 		public List<EmployeeDTO> GetEmployeeByFilters([FromBody] object filterJSON)
