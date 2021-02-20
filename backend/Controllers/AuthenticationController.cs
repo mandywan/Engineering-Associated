@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AeDirectory.Controllers
 {
-    [Route("/login")]
+    [Route("api/login")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {

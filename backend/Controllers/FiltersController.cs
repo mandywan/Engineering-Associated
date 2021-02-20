@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Cors;
 namespace AeDirectory.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class FiltersController : ControllerBase
     {
 
@@ -31,7 +31,7 @@ namespace AeDirectory.Controllers
 
         [EnableCors("AllowAnyOrigin")]
         [HttpGet]
-        // GET: /filters
+        // GET: api/filters
         public object[] GetFilters()
         {
 

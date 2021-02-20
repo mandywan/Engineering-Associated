@@ -39,10 +39,10 @@ namespace AeDirectory.Controllers
 		}
 
 
-		[Route("/search")]
+		[Route("api/search")]
 		[EnableCors("AllowAnyOrigin")]
 		[HttpPost]
-		// POST: /search
+		// POST: api/search
 		public List<EmployeeDTO> GetEmployeeByFilters([FromBody] object filterJSON)
 		{
 			string jsonString = JsonSerializer.Serialize(filterJSON);

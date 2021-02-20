@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 namespace AeDirectory.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class EmployeesController: ControllerBase
     {
         
@@ -29,7 +29,7 @@ namespace AeDirectory.Controllers
 
         [EnableCors("AllowAnyOrigin")]
         [HttpGet]
-        // GET: /employees
+        // GET: api/employees
         public List<EmployeeDTO> GetEmployees()
         {
             return _employeeService.GetEmployeeList();
@@ -37,7 +37,7 @@ namespace AeDirectory.Controllers
 
         [EnableCors("AllowAnyOrigin")]
         [HttpGet("{id}")]
-        // GET: /employees/:id
+        // GET: api/employees/:id
         public EmployeeDTO GetEmployee(int id)
         {
             return _employeeService.GetEmployeeByEmployeeNumber(id);
@@ -47,7 +47,7 @@ namespace AeDirectory.Controllers
         [HttpPost]
         [Authorize]
         // Admin must login before posting this endpoint
-        // POST: /employees
+        // POST: api/employees
         public IActionResult AddEmployee([FromBody] EmployeeDTO request)
         {
             // todo

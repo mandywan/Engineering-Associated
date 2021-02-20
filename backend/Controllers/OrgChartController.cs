@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Cors;
 namespace AeDirectory.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class OrgChartController: ControllerBase
     {
         
@@ -30,7 +30,7 @@ namespace AeDirectory.Controllers
 
         [EnableCors("AllowAnyOrigin")]
         [HttpGet("{id}")]
-        // GET: /orgchart/:id
+        // GET: api/orgchart/:id
         public List<Domain.OrgChartEmployee> GetOrgChart(int id)
         {
             List<Domain.OrgChartEmployee> OrgChartList = new List<Domain.OrgChartEmployee> (); 
