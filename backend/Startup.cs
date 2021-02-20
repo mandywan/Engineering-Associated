@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,6 +44,11 @@ namespace AeDirectory
             services.AddScoped<IAuthenticateService, TokenAuthenticationService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IOrgChartService, OrgChartService>();
+
+            services.AddCors(options => 
+            {
+                options.AddPolicy("AllowAnyOrigin", builder => builder.AllowAnyOrigin());
+            });
 
             services.Configure<TokenManagement>(Configuration.GetSection("tokenConfig"));
             var token = Configuration.GetSection("tokenConfig").Get<TokenManagement>();
@@ -86,7 +92,10 @@ namespace AeDirectory
             app.UseAuthentication();
 
             app.UseRouting();
-            
+
+            // injust CORS into container
+            app.UseCors(options => options.AllowAnyOrigin());
+
             // order matters here, should be added after Routing
             app.UseAuthorization();
 

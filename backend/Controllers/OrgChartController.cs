@@ -9,11 +9,12 @@ using AeDirectory.DTO;
 using AeDirectory.Domain;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Cors;
 
 namespace AeDirectory.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class OrgChartController: ControllerBase
     {
         
@@ -27,8 +28,9 @@ namespace AeDirectory.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        [EnableCors("AllowAnyOrigin")]
         [HttpGet("{id}")]
-        // GET: /orgchart/:id
+        // GET: api/orgchart/:id
         public List<Domain.OrgChartEmployee> GetOrgChart(int id)
         {
             List<Domain.OrgChartEmployee> OrgChartList = new List<Domain.OrgChartEmployee> (); 
