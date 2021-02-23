@@ -54,7 +54,10 @@ namespace AeDirectory.Services
             employeeDTO.Supervisor.FirstName = employee.SupervisorEmployeeNumberNavigation.FirstName;
             employeeDTO.Supervisor.LastName = employee.SupervisorEmployeeNumberNavigation.LastName;
             employeeDTO.Supervisor.PhotoUrl = employee.SupervisorEmployeeNumberNavigation.PhotoUrl;
-
+            employeeDTO.Supervisor.Title = employee.SupervisorEmployeeNumberNavigation.Title;
+            employeeDTO.Supervisor.Group_id = employee.SupervisorEmployeeNumberNavigation.GroupCode;
+            employeeDTO.Supervisor.Office_id = employee.SupervisorEmployeeNumberNavigation.OfficeCode;
+            
             // set categories and skills in DTO
             foreach (var ele in skillList)
             {

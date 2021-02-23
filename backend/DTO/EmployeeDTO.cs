@@ -24,7 +24,9 @@ namespace AeDirectory.DTO
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string PhotoUrl { get; set; }
-
+        public string Title { get; set; }
+        public string Group_id { get; set; }
+        public string Office_id { get; set; }
     }
     
     public partial class EmployeeDTO
