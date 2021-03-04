@@ -211,35 +211,63 @@ namespace AeDirectory.Services
                 }
             }
 
-            var employeeIdsFromLastName = new List<int>();
+            var employeeLastNamesFromFilters = new List<string>();
+            var employeeLastNames = new List<string>();
             if (filters.LastName != null) {
                 if ((filters.LastName.type == "OR") || (filters.LastName.values.Count == 1)) {
-                    employeeIdsFromLastName = (
+                    employeeLastNames = (
                         from employee in _context.Employees
-                        where filters.LastName.values.Contains(employee.LastName)
-                        select employee.EmployeeNumber).ToList();
+                        select employee.LastName).ToList();
                 } else if (filters.Location.type == "AND") {
                     // no such case can exist
                 }
+                foreach (string lastName in employeeLastNames) {
+                    foreach (string name in filters.LastName.values) {
+                        if (lastName.Contains(name)) {
+                            employeeLastNamesFromFilters.Add(lastName);
+                        }
+                    }
+                }
             }
-            var employeeIdsFromFirstName = new List<int>();
+            var employeeFirstNamesFromFilters = new List<string>();
+            var employeeFirstNames = new List<string>();
             if (filters.FirstName != null) {
                 if ((filters.FirstName.type == "OR") || (filters.FirstName.values.Count == 1)) {
-                    employeeIdsFromFirstName = (
+                    employeeFirstNames = (
                         from employee in _context.Employees
-                        where filters.FirstName.values.Contains(employee.FirstName)
-                        select employee.EmployeeNumber).ToList();
+                        select employee.FirstName).ToList();
                 } else if (filters.Location.type == "AND") {
                     // no such case can exist
                 }
+                foreach (string firstName in employeeFirstNames) {
+                    foreach (string name in filters.FirstName.values) {
+                        if (firstName.Contains(name)) {
+                            employeeFirstNamesFromFilters.Add(firstName);
+                        }
+                    }
+                }
             }
-            var employeeIdsFromName = new List<int>();
+            var employeeNamesFromFilters = new List<string>();
+            var employeeNames = new List<string>();
             if (filters.Name != null) {
-                employeeIdsFromName = (
+                employeeFirstNames = (
                     from employee in _context.Employees
-                    where filters.Name.values.Contains(employee.FirstName) || filters.Name.values.Contains(employee.LastName)
-                    select employee.EmployeeNumber).ToList();
+                    select employee.FirstName).ToList();
+                employeeLastNames = (
+                    from employee in _context.Employees
+                    select employee.LastName).ToList();
+                employeeNames = employeeFirstNames.Concat(employeeLastNames).ToList();
+                foreach (string firstOrLastName in employeeNames) {
+                    foreach (string name in filters.Name.values) {
+                        if (firstOrLastName.Contains(name)) {
+                            employeeNamesFromFilters.Add(firstOrLastName);
+                        }
+                    }
+                }
             }
+
+
+
             var employeeIdsFromTitle = new List<int>();
             if (filters.Title != null) {
                 if ((filters.Title.type == "OR") || (filters.Title.values.Count == 1)) {
@@ -328,9 +356,9 @@ namespace AeDirectory.Services
                         ((filters.Location              == null) ? true : employeeIdsFromLocation.Contains(employee.EmployeeNumber)) && 
                         ((filters.Skill                 == null) ? true : employeeIdsFromSkills.Contains(employee.EmployeeNumber)) && 
                         ((filters.Category              == null) ? true : employeeIdsFromSkillCategories.Contains(employee.EmployeeNumber)) &&
-                        ((filters.LastName              == null) ? true : employeeIdsFromLastName.Contains(employee.EmployeeNumber)) &&
-                        ((filters.FirstName             == null) ? true : employeeIdsFromFirstName.Contains(employee.EmployeeNumber)) &&
-                        ((filters.Name                  == null) ? true : employeeIdsFromName.Contains(employee.EmployeeNumber)) &&
+                        ((filters.LastName              == null) ? true : employeeLastNamesFromFilters.Contains(employee.LastName)) &&
+                        ((filters.FirstName             == null) ? true : employeeFirstNamesFromFilters.Contains(employee.FirstName)) &&
+                        ((filters.Name                  == null) ? true : (employeeNamesFromFilters.Contains(employee.FirstName) || (employeeNamesFromFilters.Contains(employee.LastName)))) &&
                         ((filters.Title                 == null) ? true : employeeIdsFromTitle.Contains(employee.EmployeeNumber)) &&
                         ((filters.HireDate              == null) ? true : employeeIdsFromHireDate.Contains(employee.EmployeeNumber)) &&
                         ((filters.TerminationDate       == null) ? true : employeeIdsFromTerminationDate.Contains(employee.EmployeeNumber)) &&
