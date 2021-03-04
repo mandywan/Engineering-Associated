@@ -40,7 +40,9 @@ namespace AeDirectory
             services.AddDbContext<AEV2Context>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAutoMapper(typeof(EmployeeProfile));
+            services.AddAutoMapper(typeof(ContractorProfile));
             services.AddScoped<IEmployeeService, ImplEmployeeService>();
+            services.AddScoped<IContractorService, ImplIContractorService>();
             services.AddScoped<IAuthenticateService, TokenAuthenticationService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IOrgChartService, OrgChartService>();

@@ -121,7 +121,7 @@ namespace AeDirectory.Models
 
                 entity.ToTable("Employee");
 
-                entity.Property(e => e.EmployeeNumber).ValueGeneratedNever();
+                entity.Property(e => e.EmployeeNumber).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.CompanyCode)
                     .IsRequired()
@@ -179,6 +179,14 @@ namespace AeDirectory.Models
 
                 entity.Property(e => e.WorkPhone)
                     .HasMaxLength(24)
+                    .IsUnicode(false);
+                
+                entity.Property(e => e.Bio)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+                
+                entity.Property(e => e.ExtraInfo)
+                    .HasMaxLength(255)
                     .IsUnicode(false);
 
                 entity.Property(e => e.YearsPriorExperience).HasColumnType("numeric(3, 1)");

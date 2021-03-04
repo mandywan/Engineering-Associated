@@ -35,6 +35,8 @@ namespace AeDirectory.Models
         public string WorkPhone { get; set; }
         public string WorkCell { get; set; }
         public string PhotoUrl { get; set; }
+        public string Bio { get; set; }
+        public string ExtraInfo { get; set; }
 
         public virtual Company CompanyCodeNavigation { get; set; }
         public virtual CompanyOfficeGroup CompanyOfficeGroup { get; set; }
