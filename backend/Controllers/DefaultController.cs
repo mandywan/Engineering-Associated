@@ -43,11 +43,32 @@ namespace AeDirectory.Controllers
 		[EnableCors("AllowAnyOrigin")]
 		[HttpPost]
 		// POST: api/search
-		public List<EmployeeDTO> GetEmployeeByFilters([FromBody] object filterJSON)
+		public SearchResult GetEmployeeByFilters([FromBody] object filterJSON)
 		{
 			string jsonString = JsonSerializer.Serialize(filterJSON);
 			Filter filters = JsonSerializer.Deserialize<Filter>(jsonString);
-			return _employeeService.GetEmployeeByFilters(filters);
+
+			List<EmployeeDTO> results = _employeeService.GetEmployeeByFilters(filters);
+			int total = results.Count;
+
+			SearchResult finalResult = new SearchResult();
+			finalResult.total = total;
+
+			if (filters.EntriesStart != null && filters.EntriesCount != null) {
+				if ( ((int)filters.EntriesStart + (int)filters.EntriesCount) <= total) {
+					finalResult.results = results.GetRange((int)filters.EntriesStart, (int)filters.EntriesCount);
+					return finalResult;
+				} else if (filters.EntriesStart < total)  {
+					finalResult.results = results.GetRange((int)filters.EntriesStart, total - (int)filters.EntriesStart);
+					return finalResult;
+				} else {
+					finalResult.results = new List<EmployeeDTO>();
+					return finalResult;
+				}
+			}
+
+			finalResult.results = results;
+			return finalResult;
 		}
 
 

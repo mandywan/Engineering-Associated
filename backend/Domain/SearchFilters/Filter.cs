@@ -25,8 +25,9 @@ namespace AeDirectory.Search
         public FilterByString? WorkPhone { get; set; }
         public FilterByString? WorkCell { get; set; }
 
-
-
+        public int? EntriesStart { get; set; }
+        public int? EntriesCount { get; set; }
+        public int? Total { get; set; }
     }
 }
 
