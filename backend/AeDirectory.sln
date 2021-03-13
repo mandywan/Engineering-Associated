@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.808.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AeDirectory", "AeDirectory.csproj", "{4060AE17-8081-4762-A4DE-51CDF8493058}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTest", "..\server_tests\IntegrationTest\IntegrationTest.csproj", "{BFB7732E-8982-45D6-969C-0C3657EAD589}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4060AE17-8081-4762-A4DE-51CDF8493058}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4060AE17-8081-4762-A4DE-51CDF8493058}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4060AE17-8081-4762-A4DE-51CDF8493058}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFB7732E-8982-45D6-969C-0C3657EAD589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFB7732E-8982-45D6-969C-0C3657EAD589}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFB7732E-8982-45D6-969C-0C3657EAD589}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFB7732E-8982-45D6-969C-0C3657EAD589}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
