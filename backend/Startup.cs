@@ -52,7 +52,7 @@ namespace AeDirectory
 
             services.AddCors(options => 
             {
-                options.AddPolicy("AllowAnyOrigin", builder => builder.AllowAnyOrigin());
+                options.AddPolicy("AllowAnyOrigin", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
 
             services.Configure<TokenManagement>(Configuration.GetSection("tokenConfig"));
@@ -99,7 +99,7 @@ namespace AeDirectory
             app.UseRouting();
 
             // injust CORS into container
-            app.UseCors(options => options.AllowAnyOrigin());
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             // order matters here, should be added after Routing
             app.UseAuthorization();
