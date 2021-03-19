@@ -20,6 +20,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.Json.Serialization;
+using Amazon.S3;
 
 namespace AeDirectory
 {
@@ -46,6 +47,8 @@ namespace AeDirectory
             services.AddScoped<IAuthenticateService, TokenAuthenticationService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IOrgChartService, OrgChartService>();
+            // AWS S3
+            services.AddScoped<IStorageService, S3StorageService>();
 
             services.AddCors(options => 
             {
