@@ -1,0 +1,3 @@
+put controllers in Controllers folder
+put business logic related code in Domain folder
+put code for interacting with db in Database folder
