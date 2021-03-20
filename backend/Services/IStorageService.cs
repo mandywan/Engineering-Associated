@@ -24,12 +24,33 @@ namespace AeDirectory.Services
         private const string FOLDER_NAME = "images";
         private readonly IContractorService _contractorService;
         private readonly IEmployeeService _employeeService;
-        // private static string accessKey = "YOUR_ACCESS_KEY_ID";
-        // private static string accessSecret = "YOUR_SECRET_ACCESS_KEY";
+
+        private static string accessKey;
+        private static string accessSecret;
+
+        public S3StorageService()
+        {
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                // accessKey and accessSecret pre-saved in Windows server's environmental variables
+                accessKey = Environment.GetEnvironmentVariable("accessKey", EnvironmentVariableTarget.Machine);
+                accessSecret = Environment.GetEnvironmentVariable("accessSecret", EnvironmentVariableTarget.Machine);
+            }
+        }
 
         public S3StorageService(IContractorService contractorService, IEmployeeService employeeService)
         {
-            s3Client = new AmazonS3Client(RegionEndpoint.USEast1);
+            if (accessKey != null && accessSecret != null)
+            {
+                s3Client = new AmazonS3Client(accessKey, accessSecret, RegionEndpoint.USEast1);
+            }
+            else
+            {
+                // accessKey and accessSecret saved in aws configure
+                s3Client = new AmazonS3Client(RegionEndpoint.USEast1);
+            }
+
+            
             _contractorService = contractorService;
             _employeeService = employeeService;
         }
