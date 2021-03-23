@@ -13,7 +13,8 @@ namespace AeDirectory.Services
 {
     public interface IStorageService
     {
-        Task<bool> AddItem(IFormFile file, string employeeID, int id);
+        Task<bool> AddItemWithID(IFormFile file, string employeeID, int id);
+        Task<string> AddItemWithoutID(IFormFile file, string employeeID);
         Task<Stream> GetItem(int id);
     }
 
@@ -25,19 +26,9 @@ namespace AeDirectory.Services
         private readonly IContractorService _contractorService;
         private readonly IEmployeeService _employeeService;
 
-        private static string accessKey;
-        private static string accessSecret;
-
-        public S3StorageService()
-        {
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-            {
-                // accessKey and accessSecret pre-saved in Windows server's environmental variables
-                accessKey = Environment.GetEnvironmentVariable("accessKey", EnvironmentVariableTarget.Machine);
-                accessSecret = Environment.GetEnvironmentVariable("accessSecret", EnvironmentVariableTarget.Machine);
-            }
-        }
-
+        private static string accessKey = Environment.GetEnvironmentVariable("accessKey", EnvironmentVariableTarget.Machine);
+        private static string accessSecret = Environment.GetEnvironmentVariable("accessSecret", EnvironmentVariableTarget.Machine);
+        
         public S3StorageService(IContractorService contractorService, IEmployeeService employeeService)
         {
             if (accessKey != null && accessSecret != null)
@@ -56,7 +47,7 @@ namespace AeDirectory.Services
         }
 
         //https://docs.aws.amazon.com/zh_cn/AmazonS3/latest/dev-retired/HLuploadFileDotNet.html
-        public async Task<bool> AddItem(IFormFile file, string fileName, int id)
+        public async Task<bool> AddItemWithID(IFormFile file, string fileName, int id)
         {
             // string fileName = file.FileName;
             // string objectKey = $"{FOLDER_NAME}/{readerName}/{fileName}";
@@ -83,6 +74,31 @@ namespace AeDirectory.Services
                     return true;
                 else
                     return false;
+            }
+        }
+        
+        public async Task<string> AddItemWithoutID(IFormFile file, string fileName)
+        {
+            // string fileName = file.FileName;
+            // string objectKey = $"{FOLDER_NAME}/{readerName}/{fileName}";
+
+            string objectKey = $"{FOLDER_NAME}/{fileName}";
+
+            using (Stream fileToUpload = file.OpenReadStream())
+            {
+                var putObjectRequest = new PutObjectRequest();
+                putObjectRequest.BucketName = BUCKET_NAME;
+                putObjectRequest.Key = objectKey;
+                putObjectRequest.InputStream = fileToUpload;
+                putObjectRequest.ContentType = file.ContentType;
+
+                // save the photo to S3 bucket
+                var response = await s3Client.PutObjectAsync(putObjectRequest);
+                
+                if (response.HttpStatusCode == System.Net.HttpStatusCode.OK)
+                    return objectKey;
+                else
+                    return null;
             }
         }
 

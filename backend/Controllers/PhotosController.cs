@@ -23,12 +23,23 @@ namespace AeDirectory.Controllers
         
 
         [EnableCors("AllowAnyOrigin")]
-        [HttpPost]
+        [HttpPut]
         // todo
         // [Authorize]
         public async Task<bool> AddPhoto([FromForm] PhotoModel photoFile)
         {
-            return await _S3StorageService.AddItem(photoFile.FormFile, photoFile.FileName, photoFile.Id);
+            // id is mandatory
+            if (photoFile.Id != null)
+            {
+                return await _S3StorageService.AddItemWithID(photoFile.FormFile, photoFile.FileName, (int)photoFile.Id);
+            }
+            else
+            {
+                // id is not corrected passed in
+                return false;
+            }
+
+            
         }
         
         [EnableCors("AllowAnyOrigin")]
@@ -45,6 +56,17 @@ namespace AeDirectory.Controllers
                 return Ok(id);
             }
         }
+        
+        [EnableCors("AllowAnyOrigin")]
+        [HttpPost]
+        // todo
+        // [Authorize]
+        public async Task<string> AddPhotoWithoutID([FromForm] PhotoModelWithoutId photoFile)
+        {
+            return await _S3StorageService.AddItemWithoutID(photoFile.FormFile, photoFile.FileName);
+        }
+        
+        
 
 
     }
