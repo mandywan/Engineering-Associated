@@ -61,9 +61,9 @@ namespace AeDirectory.Controllers
         [HttpPost]
         // todo
         // [Authorize]
-        public async Task<string> AddPhotoWithoutID([FromForm] PhotoModelWithoutId photoFile)
+        public async Task<string> AddPhotoWithoutID([FromForm]IFormFile photoFile)
         {
-            return await _S3StorageService.AddItemWithoutID(photoFile.FormFile, photoFile.FileName);
+            return await _S3StorageService.AddItemWithoutID(photoFile, photoFile.FileName);
         }
         
         
