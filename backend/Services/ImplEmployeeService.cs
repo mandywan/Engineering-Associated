@@ -5,6 +5,7 @@ using AeDirectory.Search;
 using AeDirectory.Models;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace AeDirectory.Services
 {
@@ -223,7 +224,7 @@ namespace AeDirectory.Services
                 }
                 foreach (string lastName in employeeLastNames) {
                     foreach (string name in filters.LastName.values) {
-                        if (lastName.Contains(name)) {
+                        if (lastName.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0) {
                             employeeLastNamesFromFilters.Add(lastName);
                         }
                     }
@@ -241,7 +242,7 @@ namespace AeDirectory.Services
                 }
                 foreach (string firstName in employeeFirstNames) {
                     foreach (string name in filters.FirstName.values) {
-                        if (firstName.Contains(name)) {
+                        if (firstName.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0) {
                             employeeFirstNamesFromFilters.Add(firstName);
                         }
                     }
@@ -259,7 +260,7 @@ namespace AeDirectory.Services
                 employeeNames = employeeFirstNames.Concat(employeeLastNames).ToList();
                 foreach (string firstOrLastName in employeeNames) {
                     foreach (string name in filters.Name.values) {
-                        if (firstOrLastName.Contains(name)) {
+                        if (firstOrLastName.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0) {
                             employeeNamesFromFilters.Add(firstOrLastName);
                         }
                     }
