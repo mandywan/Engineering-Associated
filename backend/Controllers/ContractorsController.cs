@@ -24,6 +24,7 @@ namespace AeDirectory.Controllers
         
         [EnableCors("AllowAnyOrigin")]
         [HttpGet]
+        [Authorize]
         // GET: api/contractors
         public List<ContractorDTO> GetContractors()
         {
@@ -41,7 +42,7 @@ namespace AeDirectory.Controllers
         [EnableCors("AllowAnyOrigin")]
         [HttpPost]
         // todo uncomment this when this feature is done
-        // [Authorize]
+        [Authorize]
         // Admin must login before posting this endpoint
         
         // POST: api/contractors
@@ -59,7 +60,7 @@ namespace AeDirectory.Controllers
         [EnableCors("AllowAnyOrigin")]
         [HttpPut("{id}")]
         // todo uncomment this when this feature is done
-        // [Authorize]
+        [Authorize]
         // Admin must login before posting this endpoint
         
         // PUT /api/Contractors/{id}
@@ -77,7 +78,7 @@ namespace AeDirectory.Controllers
         [EnableCors("AllowAnyOrigin")]
         [HttpDelete("{id}")]
         // todo uncomment this when this feature is done
-        // [Authorize]
+        [Authorize]
         // Admin must login before posting this endpoint
         
         // Delete /api/Contractors/{id}
