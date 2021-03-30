@@ -106,6 +106,8 @@ namespace AeDirectory.Services
                 existingEmp.PhotoUrl = request.PhotoUrl ?? existingEmp.PhotoUrl;
                 existingEmp.HireDate = request.HireDate ?? existingEmp.HireDate;
                 existingEmp.TerminationDate = request.TerminationDate ?? existingEmp.TerminationDate;
+                existingEmp.Bio = request.Bio ?? existingEmp.Bio;
+                existingEmp.ExtraInfo = request.ExtraInfo ?? existingEmp.ExtraInfo;
                 _context.SaveChanges();
                 return 1;
             }
