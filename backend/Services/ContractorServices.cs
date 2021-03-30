@@ -103,6 +103,7 @@ namespace AeDirectory.Services
                 existingEmp.EmploymentType = request.EmploymentType ?? existingEmp.EmploymentType;
                 existingEmp.Title = request.Title ?? existingEmp.Title;
                 existingEmp.WorkPhone = request.WorkPhone ?? existingEmp.WorkPhone;
+                existingEmp.WorkCell = request.WorkCell ?? existingEmp.WorkCell;
                 existingEmp.PhotoUrl = request.PhotoUrl ?? existingEmp.PhotoUrl;
                 existingEmp.HireDate = request.HireDate ?? existingEmp.HireDate;
                 existingEmp.TerminationDate = request.TerminationDate ?? existingEmp.TerminationDate;
