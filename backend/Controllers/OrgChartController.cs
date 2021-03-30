@@ -45,6 +45,7 @@ namespace AeDirectory.Controllers
             OrgChartSuper.CompanyCode = supervisor.CompanyCode;
             OrgChartSuper.OfficeCode = supervisor.OfficeCode;
             OrgChartSuper.GroupCode = supervisor.GroupCode;
+            OrgChartSuper.Email = supervisor.Email;
             OrgChartSuper.IsContractor = supervisor.IsContractor;
             OrgChartSuper.Level = 0;
 
@@ -61,6 +62,7 @@ namespace AeDirectory.Controllers
                 OrgChartPeer.CompanyCode = p.CompanyCode;
                 OrgChartPeer.OfficeCode = p.OfficeCode;
                 OrgChartPeer.GroupCode = p.GroupCode;
+                OrgChartPeer.Email = p.Email;
                 OrgChartPeer.IsContractor = p.IsContractor;
                 OrgChartPeer.Level = 1;
 
@@ -78,6 +80,7 @@ namespace AeDirectory.Controllers
                 OrgChartSubor.CompanyCode = s.CompanyCode;
                 OrgChartSubor.OfficeCode = s.OfficeCode;
                 OrgChartSubor.GroupCode = s.GroupCode;
+                OrgChartSubor.Email = s.Email;
                 OrgChartSubor.IsContractor = s.IsContractor;
                 OrgChartSubor.Level = 2;
 
