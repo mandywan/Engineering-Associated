@@ -103,9 +103,12 @@ namespace AeDirectory.Services
                 existingEmp.EmploymentType = request.EmploymentType ?? existingEmp.EmploymentType;
                 existingEmp.Title = request.Title ?? existingEmp.Title;
                 existingEmp.WorkPhone = request.WorkPhone ?? existingEmp.WorkPhone;
+                existingEmp.WorkCell = request.WorkCell ?? existingEmp.WorkCell;
                 existingEmp.PhotoUrl = request.PhotoUrl ?? existingEmp.PhotoUrl;
                 existingEmp.HireDate = request.HireDate ?? existingEmp.HireDate;
                 existingEmp.TerminationDate = request.TerminationDate ?? existingEmp.TerminationDate;
+                existingEmp.Bio = request.Bio ?? existingEmp.Bio;
+                existingEmp.ExtraInfo = request.ExtraInfo ?? existingEmp.ExtraInfo;
                 _context.SaveChanges();
                 return 1;
             }
