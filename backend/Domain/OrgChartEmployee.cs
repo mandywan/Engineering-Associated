@@ -13,6 +13,7 @@ namespace AeDirectory.Domain
         public string CompanyCode { get; set; }
          public string OfficeCode { get; set; }
         public string GroupCode { get; set; }
+        public string Email { get; set; }
         public bool IsContractor { get; set; }        
         public int Level { get; set; }
 
