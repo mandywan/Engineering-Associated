@@ -351,6 +351,8 @@ namespace AeDirectory.Services
 
             var employeeList = (
                 from employee in _context.Employees
+                .Include(employee => employee.EmployeeSkills)
+                .ThenInclude(empSkills => empSkills.Skill)
                 where   ((filters.Company               == null) ? true : employeeIdsFromCompany.Contains(employee.EmployeeNumber)) &&
                         ((filters.Office                == null) ? true : employeeIdsFromOffice.Contains(employee.EmployeeNumber)) && 
                         ((filters.Group                 == null) ? true : employeeIdsFromGroup.Contains(employee.EmployeeNumber)) && 
@@ -369,7 +371,24 @@ namespace AeDirectory.Services
                         ((filters.WorkCell              == null) ? true : employeeIdsFromWorkCell.Contains(employee.EmployeeNumber))
                 select employee).ToList();
         
-            List<EmployeeDTO> employeeDTOList = _mapper.Map<List<Models.Employee>, List<EmployeeDTO>>(employeeList);
+            //List<EmployeeDTO> employeeDTOList = _mapper.Map<List<Models.Employee>, List<EmployeeDTO>>(employeeList);
+            List<EmployeeDTO> employeeDTOList = new List<EmployeeDTO>();
+
+            foreach (Models.Employee employee in employeeList) {
+                var skillList = (from c in _context.EmployeeSkills
+                                 where c.EmployeeNumber == employee.EmployeeNumber
+                                 join o in _context.Skills on c.SkillId equals o.SkillId
+                                 select c).ToList();
+
+                EmployeeDTO employeeDTO = _mapper.Map<Models.Employee, EmployeeDTO>(employee);
+
+                foreach (var ele in skillList) {
+                    employeeDTO.Skills.Add(new EmployeeSkillDTO(ele.Skill.SkillCategoryId, ele.Skill.SkillId));
+                }
+
+                employeeDTOList.Add(employeeDTO);
+            }
+
             return employeeDTOList;          
         }
 
