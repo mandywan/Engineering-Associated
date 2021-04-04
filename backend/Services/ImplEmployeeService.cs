@@ -307,7 +307,7 @@ namespace AeDirectory.Services
                 if ((filters.YearsPriorExperience.type == "OR") || (filters.YearsPriorExperience.values.Count == 1)) {
                     employeeIdsFromYearsPriorExperience = (
                         from employee in _context.Employees
-                        where filters.YearsPriorExperience.values.Contains(employee.YearsPriorExperience)
+                        where filters.YearsPriorExperience.values.Contains(employee.YearsPriorExperience.ToString())
                         select employee.EmployeeNumber).ToList();
                 } else if (filters.Location.type == "AND") {
                     // no such case can exist
