@@ -219,7 +219,7 @@ namespace AeDirectory.Services
                     employeeLastNames = (
                         from employee in _context.Employees
                         select employee.LastName).ToList();
-                } else if (filters.Location.type == "AND") {
+                } else if (filters.LastName.type == "AND") {
                     // no such case can exist
                 }
                 foreach (string lastName in employeeLastNames) {
@@ -237,7 +237,7 @@ namespace AeDirectory.Services
                     employeeFirstNames = (
                         from employee in _context.Employees
                         select employee.FirstName).ToList();
-                } else if (filters.Location.type == "AND") {
+                } else if (filters.FirstName.type == "AND") {
                     // no such case can exist
                 }
                 foreach (string firstName in employeeFirstNames) {
@@ -251,23 +251,47 @@ namespace AeDirectory.Services
             var employeeNamesFromFilters = new List<string>();
             var employeeNames = new List<string>();
             if (filters.Name != null) {
-                employeeFirstNames = (
+                if ((filters.Name.type == "OR") || (filters.Name.values.Count == 1)) {
+                    employeeFirstNames = (
                     from employee in _context.Employees
                     select employee.FirstName).ToList();
-                employeeLastNames = (
-                    from employee in _context.Employees
-                    select employee.LastName).ToList();
-                employeeNames = employeeFirstNames.Concat(employeeLastNames).ToList();
-                foreach (string firstOrLastName in employeeNames) {
-                    foreach (string name in filters.Name.values) {
-                        if (firstOrLastName.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0) {
-                            employeeNamesFromFilters.Add(firstOrLastName);
+                    employeeLastNames = (
+                        from employee in _context.Employees
+                        select employee.LastName).ToList();
+                    employeeNames = employeeFirstNames.Concat(employeeLastNames).ToList();
+                    foreach (string firstOrLastName in employeeNames) {
+                        foreach (string name in filters.Name.values) {
+                            if (firstOrLastName.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0) {
+                                employeeNamesFromFilters.Add(firstOrLastName);
+                            }
                         }
                     }
+                } else if (filters.Name.type == "AND" && (filters.Name.values.Count == 2)) {
+                    employeeLastNames = (
+                        from employee in _context.Employees
+                        select employee.LastName).ToList();
+                    foreach (string lastName in employeeLastNames) {
+                        foreach (string name in filters.Name.values) {
+                            if (lastName.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0) {
+                                employeeLastNamesFromFilters.Add(lastName);
+                            }
+                        }
+                    }
+                    employeeFirstNames = (
+                        from employee in _context.Employees
+                        select employee.FirstName).ToList();
+                    foreach (string firstName in employeeFirstNames) {
+                        foreach (string name in filters.Name.values) {
+                            if (firstName.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0) {
+                                employeeFirstNamesFromFilters.Add(firstName);
+                            }
+                        }
+                    }
+                    filters.LastName = filters.Name;
+                    filters.FirstName = filters.Name;
+                    filters.Name = null;
                 }
             }
-
-
 
             var employeeIdsFromTitle = new List<int>();
             if (filters.Title != null) {
@@ -276,7 +300,7 @@ namespace AeDirectory.Services
                         from employee in _context.Employees
                         where filters.Title.values.Contains(employee.Title)
                         select employee.EmployeeNumber).ToList();
-                } else if (filters.Location.type == "AND") {
+                } else if (filters.Title.type == "AND") {
                     // no such case can exist
                 }
             }
@@ -287,7 +311,7 @@ namespace AeDirectory.Services
                         from employee in _context.Employees
                         where filters.HireDate.values.Contains(employee.HireDate)
                         select employee.EmployeeNumber).ToList();
-                } else if (filters.Location.type == "AND") {
+                } else if (filters.HireDate.type == "AND") {
                     // no such case can exist
                 }
             }
@@ -298,7 +322,7 @@ namespace AeDirectory.Services
                         from employee in _context.Employees
                         where filters.TerminationDate.values.Contains(employee.TerminationDate)
                         select employee.EmployeeNumber).ToList();
-                } else if (filters.Location.type == "AND") {
+                } else if (filters.TerminationDate.type == "AND") {
                     // no such case can exist
                 }
             }
@@ -309,7 +333,7 @@ namespace AeDirectory.Services
                         from employee in _context.Employees
                         where filters.YearsPriorExperience.values.Contains(employee.YearsPriorExperience.ToString())
                         select employee.EmployeeNumber).ToList();
-                } else if (filters.Location.type == "AND") {
+                } else if (filters.YearsPriorExperience.type == "AND") {
                     // no such case can exist
                 }
             }
@@ -320,7 +344,7 @@ namespace AeDirectory.Services
                         from employee in _context.Employees
                         where filters.Email.values.Contains(employee.Email)
                         select employee.EmployeeNumber).ToList();
-                } else if (filters.Location.type == "AND") {
+                } else if (filters.Email.type == "AND") {
                     // no such case can exist
                 }
             }
@@ -331,7 +355,7 @@ namespace AeDirectory.Services
                         from employee in _context.Employees
                         where filters.WorkPhone.values.Contains(employee.WorkPhone)
                         select employee.EmployeeNumber).ToList();
-                } else if (filters.Location.type == "AND") {
+                } else if (filters.WorkPhone.type == "AND") {
                     // no such case can exist
                 }
             }
@@ -342,7 +366,7 @@ namespace AeDirectory.Services
                         from employee in _context.Employees
                         where filters.WorkCell.values.Contains(employee.WorkCell)
                         select employee.EmployeeNumber).ToList();
-                } else if (filters.Location.type == "AND") {
+                } else if (filters.WorkCell.type == "AND") {
                     // no such case can exist
                 }
             }
