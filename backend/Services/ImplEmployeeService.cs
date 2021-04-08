@@ -82,26 +82,40 @@ namespace AeDirectory.Services
                 }
             }
             var employeeIdsFromOffice = new List<int>();
+            var employeesFromOffice = new List<Employee>();
             if (filters.Office != null) {
                 if ((filters.Office.type == "OR") || (filters.Office.values.Count == 1)) {
-                    employeeIdsFromOffice = (
+                    employeesFromOffice = (
                         from employee in _context.Employees
-                        where   //filters.Office.officeIds().Contains(employee.OfficeCode) && 
-                                filters.Office.companyIds().Contains(employee.CompanyCode)
-                        select employee.EmployeeNumber).ToList();
+                        select employee).ToList();
+                    foreach (Employee employee in employeesFromOffice) {
+                        foreach (CompositeId compositeId in filters.Office.values) {
+                            if (employee.OfficeCode == compositeId.OfficeId &&
+                                employee.CompanyCode == compositeId.CompanyId) {
+                                employeeIdsFromOffice.Add(employee.EmployeeNumber);
+                            }
+                        }
+                    }
                 } else if (filters.Office.type == "AND") {
                     // no such case can exist
                 }
             }
             var employeeIdsFromGroup = new List<int>();
+            var employeesFromGroup = new List<Employee>();
             if (filters.Group != null) {
                 if ((filters.Group.type == "OR") || (filters.Group.values.Count == 1)) {
-                    employeeIdsFromGroup = (
+                    employeesFromGroup = (
                         from employee in _context.Employees
-                        where   filters.Group.groupIds().Contains(employee.GroupCode) && 
-                                filters.Group.officeIds().Contains(employee.OfficeCode) && 
-                                filters.Group.companyIds().Contains(employee.CompanyCode)
-                        select employee.EmployeeNumber).ToList();
+                        select employee).ToList();
+                    foreach (Employee employee in employeesFromGroup) {
+                        foreach(CompositeId compositeId in filters.Group.values) {
+                            if (employee.GroupCode == compositeId.GroupId &&
+                                employee.OfficeCode == compositeId.OfficeId &&
+                                employee.CompanyCode == compositeId.CompanyId) {
+                                employeeIdsFromGroup.Add(employee.EmployeeNumber);
+                            }
+                        }
+                    }
                 } else if (filters.Group.type == "AND") {
                     // no such case can exist
                 }
