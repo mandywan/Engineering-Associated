@@ -37,19 +37,21 @@ namespace AeDirectory.Controllers
 
             var OrgChartSuper = new OrgChartEmployee();
             var supervisor = _orgChartService.GetSupervisorByEmployeeNumber(id);
-            OrgChartSuper.EmployeeNumber = supervisor.EmployeeNumber;
-            OrgChartSuper.FirstName = supervisor.FirstName;
-            OrgChartSuper.LastName = supervisor.LastName;
-            OrgChartSuper.Title = supervisor.Title;
-            OrgChartSuper.PhotoUrl = supervisor.PhotoUrl;
-            OrgChartSuper.CompanyCode = supervisor.CompanyCode;
-            OrgChartSuper.OfficeCode = supervisor.OfficeCode;
-            OrgChartSuper.GroupCode = supervisor.GroupCode;
-            OrgChartSuper.Email = supervisor.Email;
-            OrgChartSuper.IsContractor = supervisor.IsContractor;
-            OrgChartSuper.Level = 0;
+            if (supervisor != null) {
+                OrgChartSuper.EmployeeNumber = supervisor.EmployeeNumber;
+                OrgChartSuper.FirstName = supervisor.FirstName;
+                OrgChartSuper.LastName = supervisor.LastName;
+                OrgChartSuper.Title = supervisor.Title;
+                OrgChartSuper.PhotoUrl = supervisor.PhotoUrl;
+                OrgChartSuper.CompanyCode = supervisor.CompanyCode;
+                OrgChartSuper.OfficeCode = supervisor.OfficeCode;
+                OrgChartSuper.GroupCode = supervisor.GroupCode;
+                OrgChartSuper.Email = supervisor.Email;
+                OrgChartSuper.IsContractor = supervisor.IsContractor;
+                OrgChartSuper.Level = 0;
 
-            OrgChartList.Add(OrgChartSuper);
+                OrgChartList.Add(OrgChartSuper);
+            }
 
             var peers = _orgChartService.GetPeersByEmployeeNumber(id);
             foreach (var p in peers) {
@@ -71,6 +73,9 @@ namespace AeDirectory.Controllers
 
             var subords = _orgChartService.GetSubordinatesByEmployeeNumber(id);
             foreach (var s in subords) {
+                if (s.EmployeeNumber == id) {
+                    continue;
+                }
                 var OrgChartSubor = new OrgChartEmployee();
                 OrgChartSubor.EmployeeNumber = s.EmployeeNumber;
                 OrgChartSubor.FirstName = s.FirstName;

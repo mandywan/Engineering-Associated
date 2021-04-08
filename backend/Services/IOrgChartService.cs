@@ -33,16 +33,29 @@ namespace AeDirectory.Services
         }
 
         public EmployeeDTO GetSupervisorByEmployeeNumber(int id) {
+            var supervisorEmployeeID = getSupervisorID(id);
+            if (supervisorEmployeeID == id) {
+                return null;
+            }
             var supervisor = (from emp in _context.Employees
-                where emp.EmployeeNumber == getSupervisorID(id)
+                where emp.EmployeeNumber == supervisorEmployeeID
                 select emp).FirstOrDefault();
             EmployeeDTO supervisorDTO = _mapper.Map<Models.Employee, EmployeeDTO>(supervisor);
             return supervisorDTO;
         }
         public List<EmployeeDTO> GetPeersByEmployeeNumber(int id) {
+            var supervisorEmployeeID = getSupervisorID(id);
+            if (supervisorEmployeeID == id) {
+                var selfEmployee = (
+                from emp in _context.Employees
+                where emp.EmployeeNumber == id
+                select emp).ToList();
+                List<EmployeeDTO> selfEmployeeDTO = _mapper.Map<List<Models.Employee>, List<EmployeeDTO>>(selfEmployee);
+                return selfEmployeeDTO;
+            }
             var peersEmployeeList = (
                 from emp in _context.Employees
-                where emp.SupervisorEmployeeNumber == getSupervisorID(id)
+                where emp.SupervisorEmployeeNumber == supervisorEmployeeID
                 select emp).ToList();
             List<EmployeeDTO> employeeDTOList = _mapper.Map<List<Models.Employee>, List<EmployeeDTO>>(peersEmployeeList);
             return employeeDTOList;
