@@ -134,19 +134,25 @@ namespace AeDirectory.Services
 
             // skill filter prep
             var employeeIdsFromSkills = new List<int>();
-            if (filters.Skill != null) {
-                if (filters.Skill.type == "OR") {
+            var employeeSkillsFromSkills = new List<EmployeeSkill>();
+
+            if (filters.Skill != null)
+            {
+                if (filters.Skill.type == "OR")
+                {
                     employeeIdsFromSkills = (
                         from employee in _context.EmployeeSkills
                         where filters.Skill.skillIds().Contains(employee.SkillId)
                         select employee.EmployeeNumber).ToList();
-                } else if (filters.Skill.type == "AND") {
+                }
+                else if (filters.Skill.type == "AND")
+                {
                     var employeeSkills = (
                         from employeeSkill in _context.EmployeeSkills
                         where filters.Skill.skillIds().Contains(employeeSkill.SkillId)
                         select employeeSkill).ToList();
 
-                    Dictionary<int, HashSet<string>> employeeSkillDictionary = new Dictionary<int, HashSet<string>>();
+                    Dictionary<int, HashSet<string>> employeeSkillDictionary = new Dictionary<int, HashSet<string>>(); // employees with list of skills each
                     foreach (EmployeeSkill employeeSkill in employeeSkills) {
                         if (!employeeSkillDictionary.ContainsKey(employeeSkill.EmployeeNumber)) {
                             employeeSkillDictionary.Add(employeeSkill.EmployeeNumber, new HashSet<string>() { employeeSkill.SkillId });
@@ -154,13 +160,16 @@ namespace AeDirectory.Services
                             employeeSkillDictionary[employeeSkill.EmployeeNumber].Add(employeeSkill.SkillId);
                         }
                     }
-                    HashSet<string> skillIdsHashSet = filters.Skill.skillIdsHashSet();
-                    foreach (int employeeNumber in employeeSkillDictionary.Keys) {
-                        HashSet<string> skillIdsHashSetCopy = skillIdsHashSet;
-                        int originalCount = skillIdsHashSet.Count();
-                        skillIdsHashSetCopy.IntersectWith(employeeSkillDictionary[employeeNumber]);
-                        if (skillIdsHashSetCopy.Count() == originalCount) {
-                            employeeIdsFromSkills.Add(employeeNumber);
+                    foreach (int employee in employeeSkillDictionary.Keys) {
+                        bool contains = true;
+                        foreach (string skill in filters.Skill.skillIds()) {
+                            if (!employeeSkillDictionary[employee].Contains(skill)) {
+                                //employeeSkillDictionary.Remove(employee);
+                                contains = false;
+                            }
+                        }
+                        if (contains) {
+                            employeeIdsFromSkills.Add(employee);
                         }
                     }
                 }
