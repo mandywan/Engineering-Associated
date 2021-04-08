@@ -33,10 +33,11 @@ namespace IntegrationTest
             response.EnsureSuccessStatusCode(); // Status Code 200-299
 
             var stringResponse = await response.Content.ReadAsStringAsync();
-
+            // Console.WriteLine(stringResponse);
             var orgchart = JsonConvert.DeserializeObject<ICollection<OrgChartEmployee>>(stringResponse);
 
-            Assert.Equal(5, orgchart.Count);
+            Assert.Equal(6, orgchart.Count);
+            Assert.Contains(orgchart, o => o.EmployeeNumber == 1 && o.Level == 0);
             Assert.Contains(orgchart, o => o.EmployeeNumber == 1 && o.Level == 1);
             Assert.Contains(orgchart, o => o.EmployeeNumber == 2 && o.Level == 2);
             Assert.Contains(orgchart, o => o.EmployeeNumber == 3 && o.Level == 2);
@@ -145,7 +146,7 @@ namespace IntegrationTest
         }
         
         [Fact]
-        public async Task GetOrgChartNoSuprNoSubord_ShouldReturnCorrectData()
+        public async Task GetOrgChartSelfSuprNoSubord_ShouldReturnCorrectData()
         {
             // Arrange
             var client = _factory.CreateClient();
@@ -160,7 +161,8 @@ namespace IntegrationTest
             // Console.WriteLine(stringResponse);
             var orgchart = JsonConvert.DeserializeObject<ICollection<OrgChartEmployee>>(stringResponse);
 
-            Assert.Equal(1, orgchart.Count);
+            Assert.Equal(2, orgchart.Count);
+            Assert.Contains(orgchart, o => o.EmployeeNumber == 48 && o.Level == 0);
             Assert.Contains(orgchart, o => o.EmployeeNumber == 48 && o.Level == 1);
         }
     }
