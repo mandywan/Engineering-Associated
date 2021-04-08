@@ -144,5 +144,24 @@ namespace IntegrationTest
             Assert.Contains(orgchart, o => o.EmployeeNumber == 20 && o.Level == 2);
         }
         
+        [Fact]
+        public async Task GetOrgChartNoSuprNoSubord_ShouldReturnCorrectData()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+
+            // Act
+            var response = await client.GetAsync("/api/orgchart/48");
+
+            // Assert
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            // Console.WriteLine(stringResponse);
+            var orgchart = JsonConvert.DeserializeObject<ICollection<OrgChartEmployee>>(stringResponse);
+
+            Assert.Equal(1, orgchart.Count);
+            Assert.Contains(orgchart, o => o.EmployeeNumber == 48 && o.Level == 1);
+        }
     }
 }
