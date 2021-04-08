@@ -398,6 +398,51 @@ namespace AeDirectory.Services
             //List<EmployeeDTO> employeeDTOList = _mapper.Map<List<Models.Employee>, List<EmployeeDTO>>(employeeList);
             List<EmployeeDTO> employeeDTOList = new List<EmployeeDTO>();
 
+            List<Employee> tempEmployeeList = new List<Employee>();
+            if (filters.Name != null) {
+                foreach (String name in filters.Name.values) {
+                    foreach (Employee employee in employeeList.ToList()) {
+                        if (!employee.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase) &&
+                            !employee.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase)) {
+                            tempEmployeeList.Add(employee);
+                            employeeList.Remove(employee);
+                        }
+                    }
+                }
+                foreach (Employee employee in tempEmployeeList) {
+                    employeeList.Add(employee);
+                }
+                tempEmployeeList.Clear();
+            }
+            if (filters.FirstName != null) {
+                foreach (String name in filters.FirstName.values) {
+                    foreach (Employee employee in employeeList.ToList()) {
+                        if (!employee.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase)) {
+                            tempEmployeeList.Add(employee);
+                            employeeList.Remove(employee);
+                        }
+                    }
+                }
+                foreach (Employee employee in tempEmployeeList) {
+                    employeeList.Add(employee);
+                }
+                tempEmployeeList.Clear();
+            }
+            if (filters.LastName != null) {
+                foreach (String name in filters.LastName.values) {
+                    foreach (Employee employee in employeeList.ToList()) {
+                        if (!employee.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase)) {
+                            tempEmployeeList.Add(employee);
+                            employeeList.Remove(employee);
+                        }
+                    }
+                }
+                foreach (Employee employee in tempEmployeeList) {
+                    employeeList.Add(employee);
+                }
+                tempEmployeeList.Clear();
+            }
+
             foreach (Models.Employee employee in employeeList) {
                 var skillList = (from c in _context.EmployeeSkills
                                  where c.EmployeeNumber == employee.EmployeeNumber
