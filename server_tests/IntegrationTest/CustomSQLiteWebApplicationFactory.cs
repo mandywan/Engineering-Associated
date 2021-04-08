@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using AeDirectory.Models;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Data.Sqlite;
 
 namespace IntegrationTest
 {
@@ -13,11 +15,23 @@ namespace IntegrationTest
      * This class sets up the custom web host factory to be used in tests
      * Resource: https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-3.1#test-app-organization
      */
-    public class CustomWebApplicationFactory<TStartup>
+    public class CustomSQLiteWebApplicationFactory<TStartup>
         : WebApplicationFactory<TStartup> where TStartup: class
     {
+        private SqliteConnection Connection;
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
+            Connection = new SqliteConnection("DataSource=:memory:");
+            Connection.Open();
+            // Read data into the database
+            SqliteCommand command = Connection.CreateCommand();
+            Console.WriteLine(Directory.GetCurrentDirectory());
+            //string dumpFile = Path.Combine("path", "/create_sqlite_testdb.sql");
+            // current directory is /server_tests/IntegrationTest/bin/Debug/netcoreapp3.1
+            string importedSql = File.ReadAllText("../../../create_sqlite_testdb.sql");
+            command.CommandText = importedSql;
+            command.ExecuteNonQuery();
+            
             builder.ConfigureServices(services =>
             {
                 // remove application database context
@@ -27,10 +41,10 @@ namespace IntegrationTest
 
                 services.Remove(descriptor);
 
-                // set up inMemoryDatabase
+                // set up 
                 services.AddDbContext<AEV2Context>(options =>
                 {
-                    options.UseInMemoryDatabase("InMemoryDbForTesting");
+                    options.UseSqlite(Connection);
                 });
 
                 var sp = services.BuildServiceProvider();
@@ -40,21 +54,17 @@ namespace IntegrationTest
                     var scopedServices = scope.ServiceProvider;
                     var db = scopedServices.GetRequiredService<AEV2Context>();
                     var logger = scopedServices
-                        .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
+                        .GetRequiredService<ILogger<CustomSQLiteWebApplicationFactory<TStartup>>>();
 
                     db.Database.EnsureCreated();
-
-                    try
-                    {
-                        Utilities.InitializeDbForTests(db);
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.LogError(ex, "An error occurred seeding the " +
-                                            "database with test messages. Error: {Message}", ex.Message);
-                    }
                 }
             });
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            Connection.Close();
         }
     }
 }
