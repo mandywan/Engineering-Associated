@@ -10,6 +10,6 @@ namespace AeDirectory.Search
     {
         public int? total { get; set; }
         public List<EmployeeDTO>? results { get; set; }
-
+        public string? msg { get; set; }
     }
 }
