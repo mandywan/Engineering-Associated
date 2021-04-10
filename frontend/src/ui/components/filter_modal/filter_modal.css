@@ -1,0 +1,84 @@
+#filter_modal .modal_body{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    background: white;
+    padding: 25px;
+    padding-top: 15px;
+    width: 600px;
+    height: 360px;
+    border: none !important;
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.25);
+    border-radius: 5px;
+    outline: none;
+}
+
+#filter_modal .tabpanel_wrapper {
+    height: 300px;
+    display: flex;
+    flex-grow: 1;
+}
+
+#filter_modal .vertical-tabpanel {
+
+    overflow-y: scroll;
+    width: 425px;
+    padding-top: 0 !important;
+    padding-bottom: 0;
+}
+
+#filter_modal .vertical-tabpanel div{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+#filter_modal .MuiTabs-indicator {
+    background-color: rgb(38, 65, 92) !important;
+}
+
+
+#filter_modal .tabpanel_padding {
+    padding: 24px;
+    padding-top: 0px;
+}
+
+#filter_modal #submit_filters {
+    float: right;
+    border-radius: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    position: absolute;
+    right: 50%;
+    left: 50%;
+    bottom: -45px;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.25);
+
+}
+
+#filter_modal h3 {
+    padding: 0px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+#filter_modal .vertical-tabpanel .filter-model-selbox {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    background-color: #fffdd0;
+    border-radius: 7px;
+    font-family: Poppins;
+    font-size: 10pt;
+    font-weight: 450;
+}
+
+#filter_modal .vertical-tabpanel .filter-model-selbox select{
+    padding: 2px !important;
+    border-radius: 5px;
+    font-family: Poppins;
+    font-size: 10pt;
+    margin-left: 1.5px;
+}

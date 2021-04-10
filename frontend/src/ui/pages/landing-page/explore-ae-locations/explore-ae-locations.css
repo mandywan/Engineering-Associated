@@ -1,0 +1,28 @@
+.explore {
+  height: 400;
+  /* background-color: #F2F2F2; */
+  padding-left: 80px;
+  padding-right: 80px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.explore-title {
+  color: #26415C;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.explore-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.explore-container {
+  margin-top: 15px;
+  margin-left: -1%;
+  width: 100%;
+  min-width: 800px;
+}

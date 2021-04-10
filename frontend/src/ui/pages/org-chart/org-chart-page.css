@@ -1,0 +1,259 @@
+img.avatar {
+    border-radius: 50%;
+}
+
+p.employeeName {
+    color: #26415C;
+    font-size: 18px;
+    font-family: Poppins, serif;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+p.employeeTitle {
+    color: #868D98;
+    font-size: 14px;
+    font-family: Poppins, -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.material-icons {
+    font-size: 35px !important;
+    color: #26415C;
+}
+
+div.selectedEmployeeContainer {
+    width: 98.2%;
+    background-color: #E5E4E2;
+    padding: 2px;
+    border-radius: 5px;
+    flex-flow: column;
+    align-items: center;
+    display: flex;
+}
+
+p.selectedEmployeeTitle {
+    color: #26415C;
+    font-size: 14px;
+    font-family: Poppins, -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+div.node-container {
+    width: 97%;
+    padding: 2px;
+    border-radius: 5px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+a.link-wrapper {
+    font-size: 12px;
+    font-family: Poppins,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-weight: 400;
+    line-height: 1.43;
+    text-decoration: none;
+    display: inline;
+}
+
+a.link-wrapper:hover {
+    opacity: .5;
+}
+
+div.loader {
+    height: 1000px;
+}
+
+td.google-visualization-orgchart-node.google-visualization-orgchart-node-small {
+    border: 1px solid #26415C;
+    padding: 0;
+    min-width: 130px;
+}
+
+div.orgchart-wrapper:active{
+    cursor: grabbing;
+}
+
+td.google-visualization-orgchart-linebottom {
+    border-bottom: 2px solid #26415C;
+    display: table-cell;
+}
+
+td.google-visualization-orgchart-lineleft {
+    border-left: 2px solid #26415C;
+    display: table-cell;
+}
+
+td.google-visualization-orgchart-lineright {
+    border-right: 2px solid #26415C;
+    display: table-cell;
+}
+
+td.google-visualization-orgchart-linetop {
+    border-top: 2px solid #26415C;
+    display: table-cell;
+}
+
+.page-title-wrapper {
+    background-color: #26415C;
+    height: 142px;
+    margin-top: -100px;
+    position: relative;
+    z-index: 0;
+    width: 100%;
+}
+
+div.zoom-icons {
+    margin-left: auto;
+}
+
+button.icon-button {
+    color: #F2F2F2;
+}
+
+.page-title-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-title {
+    display: flex;
+    padding-left: 20px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #ffffff;
+    padding-bottom: 16px;
+    position: absolute;
+    bottom: 0;
+}
+
+div.title {
+
+}
+
+div.page {
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+/*--------------------------------------------------------------------------------------------------------------*/
+
+
+div.page-wrapper {
+
+}
+
+div.orgchart-wrapper {
+    background-color: #F2F2F2;
+    width: 7000px;
+    height: 1700px;
+    display: flex;
+    align-items: center;
+}
+
+div.container {
+    width: 100%;
+    text-align: center;
+    height: 800px;
+}
+
+div.react-transform-component {
+    background-color: #F2F2F2;
+    padding: 30px;
+    cursor: grab;
+}
+
+
+/*--------------------------------------------------------------------------------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+div.contractor-badge {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #005CAB;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: -10%;
+    bottom: 14%;
+}
+
+span.contractor-badge-span {
+    right: 14%;
+    bottom: 14%;
+    transform: scale(1) translate(50%, 50%);
+    transform-origin: 100% 100%;
+}
+
+span.avatar-image-wrapper {
+    position: relative;
+    margin: 0;
+}
+
+.employee-text {
+    color: #868D98;
+    font-size: 14px;
+    font-family: Poppins, Poppins, 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    text-overflow: ellipsis;
+}
+
+.email-text {
+    color: #868D98;
+    font-size: 14px;
+    font-family: Poppins, Poppins, 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    text-decoration: none;
+}
+
+.email-text:hover {
+    text-decoration: underline;
+}
+
+.backup-image {
+    color: #fafafa;
+    background-color: #bdbdbd;
+    border-radius: 50%;
+    height: 54px;
+    width: 54px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-shrink: 0;
+    font-family: Poppins,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    line-height: 1;
+    position: relative;
+    font-size: 1.25rem;
+    margin: 0;
+}
+
