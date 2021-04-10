@@ -168,6 +168,12 @@ function TabPanel(props) {
         let skillType = await storage.ss.getPair('skillType');
         let qstr = await filters.getQS(selection, attach, selectionRaw, skillType);
         await storage.ss.setPair('currentURI', null);
+        let basis = await storage.ss.getPair('basisName');
+        if (basis == "(Blank Search)" && (selection.length > 0)) {
+          let name = await storage.db.searchDocument('metadata', {meta_id: selection[0]});
+          await storage.ss.setPair('basisName', name[0].value_name);
+          //return;
+        }
         setOpen(false);
         history.push(`/search?q=${qstr}`);
     }
