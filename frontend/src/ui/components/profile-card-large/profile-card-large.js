@@ -237,11 +237,11 @@ const ProfileCardLarge = (props) => {
                             <div className="profile-outerBox">
                                 <div className="profile-content">
                                     <SmartphoneIcon className="icon" align={"left"}/>
-                                    <IconTypography align={"left"}> {props.data.workCell} (mobile) </IconTypography> <br/>
+                                    <IconTypography align={"left"}> {props.data.workCell} (work cell) </IconTypography> <br/>
                                 </div>
                                 <div className="profile-content">
                                     <PhoneIcon className="icon" align={"left"}/>
-                                    <IconTypography align={"left"}> {props.data.workPhone} (work)  </IconTypography> <br/>
+                                    <IconTypography align={"left"}> {props.data.workPhone} (work phone)  </IconTypography> <br/>
                                 </div>
                                 <div className="profile-content">
                                     <EmailIcon className="icon" align={"left"}/>
