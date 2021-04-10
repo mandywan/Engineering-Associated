@@ -1,0 +1,20 @@
+.search-results-wrapper {
+  width: 100%;
+  justify-content: center;
+  /* align-items: center; */
+  background-color: #F2F2F2;
+  min-height: 60vh;
+}
+
+.search-results-container {
+  width: 80%;
+  max-width: 1400px;
+  min-width: 800px;
+}
+
+.search-results-expand-more {
+  background-color: #F2F2F2;
+  padding-bottom: 40px;
+  display: flex !important;
+}
+

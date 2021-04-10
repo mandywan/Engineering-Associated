@@ -1,0 +1,21 @@
+.page-contents-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  background-color: #ffffff;
+}
+
+.page-contents-container {
+  width: 80%;
+  max-width: 1400px;
+  min-width: 900px;
+}
+
+.generic-msg {
+  font-family: Poppins;
+  font-weight: 500;
+}
+.msg-white {
+  color: white;
+}
