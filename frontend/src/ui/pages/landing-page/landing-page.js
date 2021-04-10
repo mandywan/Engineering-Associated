@@ -13,6 +13,7 @@ import EventEmitter from '../../hooks/event-manager';
 
 const LandingPage = () => {
   let history = useHistory();
+  let location = useLocation();
   const [pinnedProfiles, setPinnedProfiles] = useState([]);
   const [collegues, setCollegues] = useState([]);
   const [city, setCity] = useState('Vancouver');
@@ -33,6 +34,13 @@ const LandingPage = () => {
     });
   
   }, [] );
+  useEffect(async() => {
+    try {
+      setPinnedProfiles(await storage.db.searchDocument("pinnedProfiles", {status: "pinned"}));
+    } catch (error) {
+      //Do Nothing
+    }
+  }, [location]);
 
   let count = 0;
 
