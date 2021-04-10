@@ -73,7 +73,7 @@ const SearchBar = (props) => {
   const getPlaceholder = () => {
     let choices = [
       "try searching for 'Susan'...",
-      "try searching for 'acmes@acme.ca'...",
+      "try searching for 'pam@amc.com'...",
       "try searching for 'Victor'...",
       "Search here...",
       "try searching for 'Victoria'...",
