@@ -117,12 +117,7 @@ const IconTypography = withStyles({
 const ProfileCardLarge = (props) => {
     const classes = useStyles();
     let history = useHistory();
-    let email = props.data.email ? props.data.email : 'n/a';
-    let workCell = props.data.workCell ? props.data.workCell : 'n/a';
-    let workPhone = props.data.workPhone ? props.data.workPhone : 'n/a';
-    let hiredOn = props.data.hiredOn ? props.data.hiredOn : 'n/a';
-    let employmentType = props.data.employmentType ? props.data.employmentType : 'n/a';
-    
+    let email = props.data.email;
     let emailLink= "mailto:" + email;
 
     useEffect(async() => {
@@ -242,34 +237,23 @@ const ProfileCardLarge = (props) => {
                             <div className="profile-outerBox">
                                 <div className="profile-content">
                                     <SmartphoneIcon className="icon" align={"left"}/>
-                                    <IconTypography align={"left"}> (work cell) {workCell} </IconTypography> <br/>
+                                    <IconTypography align={"left"}> {props.data.workCell} (work cell) </IconTypography> <br/>
                                 </div>
                                 <div className="profile-content">
                                     <PhoneIcon className="icon" align={"left"}/>
-                                    <IconTypography align={"left"}> (work phone) {workPhone} </IconTypography> <br/>
+                                    <IconTypography align={"left"}> {props.data.workPhone} (work phone)  </IconTypography> <br/>
                                 </div>
                                 <div className="profile-content">
                                     <EmailIcon className="icon" align={"left"}/>
-                                    {
-                                        email === 'n/a' ? (
-                                            <>
-                                                <IconTypography align={"left"}> {email} </IconTypography><br/>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <IconTypography align={"left"}> <a class="link" href={emailLink}> {email} </a> </IconTypography><br/>
-                                            </>
-                                        )
-                                    }
-                                    
+                                    <IconTypography align={"left"}> <a class="link" href={emailLink}> {email} </a> </IconTypography><br/>
                                 </div>
                                 <div className="profile-content">
                                     <TodayIcon className="icon" align={"left"}/>
-                                    <IconTypography align={"left"}> {hiredOn} </IconTypography><br/>
+                                    <IconTypography align={"left"}> {props.data.hiredOn} </IconTypography><br/>
                                 </div>
                                 <div className="profile-content">
                                     <WorkIcon className="icon" align={"left"}/>
-                                    <IconTypography align={"left"}> {employmentType} </IconTypography><br/>
+                                    <IconTypography align={"left"}> {props.data.employmentType} </IconTypography><br/>
                                 </div>
                                 <div className="profile-content">
                                     <RoomIcon className="icon" align={"left"}/>
