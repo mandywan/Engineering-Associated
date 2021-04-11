@@ -46,9 +46,11 @@ search.postSearchResults = async(queries, uri = null) => {
     let basisKeyName = await storage.ss.getPair('basisKeyName');
     if (basisName == '') basisName = "(Blank Search)";
     if ((basis === current) && (basis) && (current)) {
-      let data = await storage.db.toArray('searchResults');
+      let data = await util.searchOnline(uri);
       res.results = data;
       res.total = data.length;
+      res.msg = data.msg;
+      //alert('hi');
 
     } else if (evaluation) {
       let hist = await storage.db.toArray('searchHistory');
@@ -110,7 +112,7 @@ util.searchOnline = (body, value = {}) => {
         let results = response.data.results;
         let total = response.data.total;
         let msg = response.data.msg;
-        await util.saveResult(results);
+        //await util.saveResult(results);
         if (Object.keys(value).length !== 0) {
           searchItem = {
             keyword: value,
