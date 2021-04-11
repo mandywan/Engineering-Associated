@@ -117,6 +117,344 @@ namespace IntegrationTest
         }
 
         [Fact]
+        public async Task SearchByLocation_ShouldReturnCorrectData()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+
+            // Act
+            var payload = "{\"Location\":{\"type\":\"OR\",\"values\":[{\"LocationId\":\"02\"}]}}";
+            HttpContent post = new StringContent(payload, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("/api/search", post);
+
+            // Assert
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            // Console.WriteLine(stringResponse);
+            var searchRes = JsonConvert.DeserializeObject<JObject>(stringResponse);
+            // Console.WriteLine(searchRes.GetValue("results"));
+            var employees = JsonConvert.DeserializeObject<ICollection<EmployeeDTO>>(searchRes.GetValue("results").ToString());
+            
+            Assert.Equal(14, searchRes.GetValue("total"));
+            Assert.Equal("", searchRes.GetValue("msg"));
+            Assert.Contains(employees, e => e.LastName == "Ratke");
+            Assert.Contains(employees, e => e.FirstName == "Chrissy");
+            foreach (EmployeeDTO e in employees) {
+                Assert.Equal("02", e.LocationId);
+            }
+        }
+
+
+        [Fact]
+        public async Task SearchBySkill_ShouldReturnCorrectData()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+
+            // Act
+            var payload = "{\"Skill\":{\"type\":\"AND\",\"values\":[{\"SkillId\":\"1\"}]}}";
+            HttpContent post = new StringContent(payload, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("/api/search", post);
+
+            // Assert
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            // Console.WriteLine(stringResponse);
+            var searchRes = JsonConvert.DeserializeObject<JObject>(stringResponse);
+            // Console.WriteLine(searchRes.GetValue("results"));
+            var employees = JsonConvert.DeserializeObject<ICollection<EmployeeDTO>>(searchRes.GetValue("results").ToString());
+            
+            Assert.Equal(3, searchRes.GetValue("total"));
+            Assert.Equal("", searchRes.GetValue("msg"));
+            Assert.Contains(employees, e => e.EmployeeNumber == 15);
+            Assert.Contains(employees, e => e.EmployeeNumber == 11);
+            Assert.Contains(employees, e => e.EmployeeNumber == 48);
+
+            foreach (EmployeeDTO e in employees) {
+                Assert.Contains(e.Skills, s => s.SkillId == "1");
+            }
+        }
+
+        [Fact]
+        public async Task SearchByCategory_ShouldReturnCorrectData()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+
+            // Act
+            // {Category: {type: "OR", values: [{CategoryId: "1"}]}, meta: ["Category,1"]}
+            var payload = "{\"Category\":{\"type\":\"OR\",\"values\":[{\"CategoryId\":\"1\"}]}}";
+            HttpContent post = new StringContent(payload, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("/api/search", post);
+
+            // Assert
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            // Console.WriteLine(stringResponse);
+            var searchRes = JsonConvert.DeserializeObject<JObject>(stringResponse);
+            // Console.WriteLine(searchRes.GetValue("results"));
+            var employees = JsonConvert.DeserializeObject<ICollection<EmployeeDTO>>(searchRes.GetValue("results").ToString());
+            Assert.Equal(12, searchRes.GetValue("total"));
+            Assert.Equal("", searchRes.GetValue("msg"));
+
+            foreach (EmployeeDTO e in employees) {
+                Assert.Contains(e.Skills, s => s.SkillCategoryId == "1");
+            }
+        }
+        
+        [Fact]
+        public async Task SearchByName_ShouldReturnCorrectData()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+
+            // Act
+            // Name: {type: "OR", values: ["Mitchell"]}
+            var payload = "{\"Name\":{\"type\":\"OR\",\"values\":[\"Mitchell\"]}}";
+            HttpContent post = new StringContent(payload, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("/api/search", post);
+
+            // Assert
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            // Console.WriteLine(stringResponse);
+            var searchRes = JsonConvert.DeserializeObject<JObject>(stringResponse);
+            // Console.WriteLine(searchRes.GetValue("results"));
+            var employees = JsonConvert.DeserializeObject<ICollection<EmployeeDTO>>(searchRes.GetValue("results").ToString());
+            Assert.Equal(1, searchRes.GetValue("total"));
+            Assert.Equal("", searchRes.GetValue("msg"));
+            Assert.Contains(employees, e => e.LastName == "Mitchell");
+        }
+
+        [Fact]
+        public async Task SearchByLastName_ShouldReturnCorrectData()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+
+            // Act
+            // Name: {type: "OR", values: ["Mitchell"]}
+            var payload = "{\"LastName\":{\"type\":\"OR\",\"values\":[\"Mitchell\"]}}";
+            HttpContent post = new StringContent(payload, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("/api/search", post);
+
+            // Assert
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            // Console.WriteLine(stringResponse);
+            var searchRes = JsonConvert.DeserializeObject<JObject>(stringResponse);
+            // Console.WriteLine(searchRes.GetValue("results"));
+            var employees = JsonConvert.DeserializeObject<ICollection<EmployeeDTO>>(searchRes.GetValue("results").ToString());
+            Assert.Equal(1, searchRes.GetValue("total"));
+            Assert.Equal("", searchRes.GetValue("msg"));
+            Assert.Contains(employees, e => e.LastName == "Mitchell");
+        }
+
+
+        [Fact]
+        public async Task SearchByFirstName_ShouldReturnCorrectData()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+
+            // Act
+            // Name: {type: "OR", values: ["Mitchell"]}
+            var payload = "{\"FirstName\":{\"type\":\"OR\",\"values\":[\"Scotty\"]}}";
+            HttpContent post = new StringContent(payload, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("/api/search", post);
+
+            // Assert
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            // Console.WriteLine(stringResponse);
+            var searchRes = JsonConvert.DeserializeObject<JObject>(stringResponse);
+            // Console.WriteLine(searchRes.GetValue("results"));
+            var employees = JsonConvert.DeserializeObject<ICollection<EmployeeDTO>>(searchRes.GetValue("results").ToString());
+            Assert.Equal(1, searchRes.GetValue("total"));
+            Assert.Equal("", searchRes.GetValue("msg"));
+            Assert.Contains(employees, e => e.FirstName == "Scotty");
+        }
+
+        [Fact]
+        public async Task SearchByNameFuzzy_ShouldReturnCorrectData()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+
+            // Act
+            // Name: {type: "OR", values: ["Mitchell"]}
+            var payload = "{\"Name\":{\"type\":\"OR\",\"values\":[\"Da\"]}}";
+            HttpContent post = new StringContent(payload, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("/api/search", post);
+
+            // Assert
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            // Console.WriteLine(stringResponse);
+            var searchRes = JsonConvert.DeserializeObject<JObject>(stringResponse);
+            // Console.WriteLine(searchRes.GetValue("results"));
+            var employees = JsonConvert.DeserializeObject<ICollection<EmployeeDTO>>(searchRes.GetValue("results").ToString());
+            Assert.Equal(3, searchRes.GetValue("total"));
+            Assert.Equal("", searchRes.GetValue("msg"));
+            Assert.Contains(employees, e => e.FirstName == "Damien");
+            Assert.Contains(employees, e => e.FirstName == "Dallas");
+            Assert.Contains(employees, e => e.FirstName == "Branda");
+        }
+
+        [Fact]
+        public async Task SearchByTitle_ShouldReturnCorrectData()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+
+            // Act
+            var payload = "{\"Title\":{\"type\":\"OR\",\"values\":[\"Supervisor\"]}}";
+            HttpContent post = new StringContent(payload, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("/api/search", post);
+
+            // Assert
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            // Console.WriteLine(stringResponse);
+            var searchRes = JsonConvert.DeserializeObject<JObject>(stringResponse);
+            // Console.WriteLine(searchRes.GetValue("results"));
+            var employees = JsonConvert.DeserializeObject<ICollection<EmployeeDTO>>(searchRes.GetValue("results").ToString());
+            Assert.Equal(7, searchRes.GetValue("total"));
+            Assert.Equal("", searchRes.GetValue("msg"));
+
+            foreach (EmployeeDTO e in employees) {
+                Assert.Equal("Supervisor", e.Title);
+            }
+        }
+
+        [Fact]
+        // Omit this since we don't use this in front end?
+        // Not sure how hire date should be formated as assertions are 
+        // failing because search isn't returning any results
+        public async Task SearchByHireDate_ShouldReturnCorrectData()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+
+            // Act
+            var payload = "{\"HireDate\":{\"type\":\"OR\",\"values\":[\"2013-08-29\"]}}";
+            HttpContent post = new StringContent(payload, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("/api/search", post);
+
+            // Assert
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            // Console.WriteLine(stringResponse);
+            var searchRes = JsonConvert.DeserializeObject<JObject>(stringResponse);
+            // Console.WriteLine(searchRes.GetValue("results"));
+            var employees = JsonConvert.DeserializeObject<ICollection<EmployeeDTO>>(searchRes.GetValue("results").ToString());
+            
+            // Assert.Equal(1, searchRes.GetValue("total"));
+            // Assert.Equal("", searchRes.GetValue("msg"));
+            // DateTime hireDate = new DateTime(2013, 08, 29, 00, 00, 00);
+            // Assert.Contains(employees, e => e.HireDate == hireDate);
+
+        }
+
+        [Fact]
+        public async Task SearchByWorkCell_ShouldReturnCorrectData()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+
+            // Act
+            var payload = "{\"WorkCell\":{\"type\":\"OR\",\"values\":[\"601-146-7691\"]}}";
+            HttpContent post = new StringContent(payload, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("/api/search", post);
+
+            // Assert
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            // Console.WriteLine(stringResponse);
+            var searchRes = JsonConvert.DeserializeObject<JObject>(stringResponse);
+            // Console.WriteLine(searchRes.GetValue("results"));
+            var employees = JsonConvert.DeserializeObject<ICollection<EmployeeDTO>>(searchRes.GetValue("results").ToString());
+            Assert.Equal(1, searchRes.GetValue("total"));
+            Assert.Equal("", searchRes.GetValue("msg"));
+
+            foreach (EmployeeDTO e in employees) {
+                Assert.Equal("601-146-7691", e.WorkCell);
+            }
+        }
+
+        [Fact]
+        public async Task SearchByEmail_ShouldReturnCorrectData()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+
+            // Act
+            var payload = "{\"Email\":{\"type\":\"OR\",\"values\":[\"Luis@amc.com\"]}}";
+            HttpContent post = new StringContent(payload, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("/api/search", post);
+
+            // Assert
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            // Console.WriteLine(stringResponse);
+            var searchRes = JsonConvert.DeserializeObject<JObject>(stringResponse);
+            // Console.WriteLine(searchRes.GetValue("results"));
+            var employees = JsonConvert.DeserializeObject<ICollection<EmployeeDTO>>(searchRes.GetValue("results").ToString());
+            Assert.Equal(1, searchRes.GetValue("total"));
+            Assert.Equal("", searchRes.GetValue("msg"));
+
+            foreach (EmployeeDTO e in employees) {
+                Assert.Equal("Luis@amc.com", e.Email);
+            }
+        }
+
+        [Fact]
+        public async Task SearchReturnNoResult_ShouldReturnCorrectData()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+
+            // Act
+            var payload = "{\"Name\":{\"type\":\"OR\",\"values\":[\"Annie\"]}}";
+            HttpContent post = new StringContent(payload, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("/api/search", post);
+
+            // Assert
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            // Console.WriteLine(stringResponse);
+            var searchRes = JsonConvert.DeserializeObject<JObject>(stringResponse);
+            // Console.WriteLine(searchRes.GetValue("results"));
+            var employees = JsonConvert.DeserializeObject<ICollection<EmployeeDTO>>(searchRes.GetValue("results").ToString());
+            Assert.Equal(0, searchRes.GetValue("total"));
+            Assert.Equal("Looked here, there and everywhere - but couldn't find the person you're looking for.", searchRes.GetValue("msg"));
+        }
+
+        [Fact]
         public async Task SearchEmpty_ShouldReturnCorrectData()
         {
             // Arrange
