@@ -1,9 +1,4 @@
 import React, {useEffect, useRef, useState} from "react";
-import PageHeader from "../../components/header";
-import ProfileCardLarge from "../../components/profile-card-large";
-import ProfileAccordion from "../../components/profile-accordion";
-import Footer from "../../components/footer/footer";
-import {getProfileResults} from "../../../services/profile";
 import {useParams} from "react-router-dom";
 import OrgChart from "../../components/org-chart";
 import {getOrgChartResults} from "../../../services/org-chart";
@@ -11,31 +6,26 @@ import './org-chart-page.css';
 import ScrollContainer from 'react-indiana-drag-scroll'
 import ZoomInIcon from "@material-ui/icons/ZoomIn";
 import ZoomOutIcon from "@material-ui/icons/ZoomOut";
-import ZoomOutMapIcon from "@material-ui/icons/ZoomOutMap";
-import ClearIcon from "@material-ui/icons/Clear";
 import {Button} from "@material-ui/core";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import ReactDOM from "react-dom";
-import storage from "../../../services/storage";
 
 const OrgChartPage = () => {
     const heading_text = "Organizational Chart";
     const [orgChartResults, setOrgChartResults] = useState([]);
     let { id } = useParams();
-    useEffect(async () => {
-        getOrgChartResults(id).then(res => {
-            console.log(res);
-
-            setOrgChartResults(res)
-        })
-
-    }, [])
+    useEffect(() => {
+        async function getOrgData() {
+            getOrgChartResults(id).then(res => {
+                setOrgChartResults(res)
+            })
+        }
+        getOrgData();
+    }, [id]);
 
     const container = useRef(null);
 
     useEffect(() => {
         let pageWidth = document.getElementById('titleWrapper').offsetWidth
-        console.log(pageWidth)
         container.current.getElement().scrollTo(2830-pageWidth/2, 400);
     }, []);
 

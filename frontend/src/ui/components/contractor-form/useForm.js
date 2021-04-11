@@ -14,10 +14,8 @@ import {useState} from "react";
  */
 export const useForm = (initialFValues, validateOnChange = false, validate) => {
 
-    console.log(initialFValues);
     const [values, setValues] = useState(initialFValues);
     const [errors, setErrors] = useState({});
-    console.log(values);
 
     const handleInputChange = e => {
         const {name, value} = e.target

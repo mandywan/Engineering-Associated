@@ -169,8 +169,6 @@ const SearchBar = (props) => {
 
     // TODO: not accurate. needs to set the value filter, not the whole array
     setSelectedFilters([{inputValue: element.value.trim(), filter_name: detectedFilter, queryId: detectedFilter.toLowerCase()}]);
-
-    // console.log("handleOnChange newValue", newValue);
   };
 
   const handleInitiateSearch = async(e, metadata = null, attach = null) => {
@@ -184,10 +182,8 @@ const SearchBar = (props) => {
       try {
         if (queries[Object.keys(queries)[0]].values[0] != "") {
           if (queries[Object.keys(queries)[0]].values.length > 1) {
-            // console.log('> 1', queries[Object.keys(queries)[0]].values.toString().replace(',', ' '));
             await storage.ss.setPair('basisName', queries[Object.keys(queries)[0]].values.toString().replace(',', ' '));
           } else {
-            // console.log('== 1', queries[Object.keys(queries)[0]].values[0]);
             await storage.ss.setPair('basisName', queries[Object.keys(queries)[0]].values[0]);
           }
   
@@ -213,14 +209,12 @@ const SearchBar = (props) => {
       document.querySelector('#searchInput').value = '';
       await storage.ss.setPair('search_key', null);
       await storage.ss.setPair('basisName', attach);
-      // await storage.ss.setPair('basisKeyName', JSON.stringify({ key: Object.keys(queries)[0], name: queries[Object.keys(queries)[0]].values[0]}));
 
       queries = null;
     }
     let qstr = await filters.getQS(metadata, queries, raw);
     await storage.ss.setPair('basisURI', qstr);
     await storage.ss.setPair('currentURI', null);
-    // console.table(qstr);
     history.push(`/search?q=${qstr}`);
   };
 
@@ -283,7 +277,6 @@ const SearchBar = (props) => {
         queries = JSON.parse(resp);
       }
     }
-    // console.log(selectedFilters.length);
     return queries;
   }
 

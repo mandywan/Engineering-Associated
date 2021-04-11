@@ -13,8 +13,6 @@ const ProfileSkill = (props) => {
     let searchLink = linkBase + "/search/"
 
     const handleSkillOnClick = async (e, meta_id) => {
-        //todo: search by skill when the skill is clicked
-        console.log(props.data);
         let data = await storage.db.searchDocument('metadata', {meta_id: `${meta_id}`});
         let all = await storage.db.searchDocument('metadata', {call_name: `Skill`});
         let raw = "";

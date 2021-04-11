@@ -20,7 +20,6 @@ const ExpandButton = withStyles((theme) => ({
 let listed = 0;
 let toShow = [];
 const SearchResults = (props) => {
-  // console.log(props.data.results);
   const [isLoading, setIsLoading] = useState(true);
   const [offset, setOffset] = useState(0);
   const [perPage, setPerPage] = useState(12);

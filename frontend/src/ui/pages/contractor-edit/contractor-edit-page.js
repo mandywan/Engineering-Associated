@@ -13,7 +13,6 @@ const ContractorEditPage = () => {
     const location = useLocation();
     let { id } = useParams();
     // access the contractor data through location.state
-    // console.log(id, location.state);
 
     return (
         <div>

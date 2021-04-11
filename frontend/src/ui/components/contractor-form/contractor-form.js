@@ -55,7 +55,6 @@ const ContractorForm = (props) => {
     const [defaultGroup, setDefaultGroup] = useState("")
 
     // initial form values
-    console.log(props.data);
     let initialFValues = {
         lastName: props.data.lastName || '',
         firstName: props.data.firstName || '',
@@ -78,7 +77,6 @@ const ContractorForm = (props) => {
 
     // set the initial companies and locations selections
     useEffect(async() => {
-        console.log(await storage.db.searchDocument('metadata', {meta_id: 'Office,01,02'}));
         setCompanies(await storage.db.searchDocument('metadata', {call_name: 'Company'}));
         setLocations(await storage.db.searchDocument('metadata', {call_name: 'Location'}));
 
@@ -172,7 +170,6 @@ const ContractorForm = (props) => {
         if (validate()) {
             const requestBody = formatContractor(values, imageName);
             const editRequestBody = formatEditContractor(values, imageName);
-            console.log(requestBody);
             // case add - no initial data
             if (!isEdit) {
                 addContractor(requestBody).then(res => {

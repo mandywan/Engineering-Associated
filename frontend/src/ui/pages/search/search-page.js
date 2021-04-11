@@ -93,23 +93,7 @@ const SearchPage = () => {
     }
   } 
 
-  // useEffect(async () => {
-  //   let query = qs.parse(location.search);
-    
-  //   if (query.q) {
-  //     setSearchResults([]);
-  //     let data = JSON.parse(decodeURIComponent(query.q));
-  //     search.postSearchResults(null, data)
-  //     .then(async(res) => {
-  //       //console.log(res);
-  //       setSearchResults(res);
-  //       await storage.ss.setPair('currentURI', encodeURIComponent(JSON.stringify(data)));
-  //     });
-  //   }
-  // }, [history.location.key]);
-
   EventEmitter.addListener('deleteChip', (data) => {
-    // console.log('deleteChip', data);
     setSelectionsRaw(data.selectionsRaw);
   })
 

@@ -18,14 +18,12 @@ const OrgChart = (props) => {
     let selectedEmployeeCount;
     useEffect(async () => {
         storage.db.searchDocument('metadata', {call_name: "Group"}).then((res) => {
-            console.log(res)
             setGroups(res)
         })
     }, [])
 
     useEffect(async () => {
         storage.db.searchDocument('metadata', {call_name: "Office"}).then((res) => {
-            console.log(res)
             setOffices(res)
         })
     }, [])

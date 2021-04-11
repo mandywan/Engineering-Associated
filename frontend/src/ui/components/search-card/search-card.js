@@ -281,8 +281,6 @@ const HasFilterCardNoBasisKeyNameDiv = (props) => {
 
     const open = Boolean(anchorEl);
 
-    // console.log('HasFilterCardNoBasisKeyNameDiv', props);
-
     return (
         <div className="profile-details">
             <CardContent padding={0}>

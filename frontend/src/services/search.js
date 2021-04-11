@@ -8,8 +8,6 @@ const search = {};
 const util = {};
 
 search.postSearchResults = async(queries, uri = null) => {
-  // console.log("search service queries? ", queries);
-  // console.log('uri', uri);
   if (uri == null) {
     const value = queries;
     const filterName = Object.keys(value)[0];
@@ -26,9 +24,7 @@ search.postSearchResults = async(queries, uri = null) => {
           ? util.createBodyForNameSearch(inputValue)
           : util.createBodyNameForNumberOrEmail(filterName, inputValue);
 
-      // Decide Here
-      console.log('reached original search');
-      
+      // Decide Here      
 
       let res = await util.searchOnline(body, value);
     }
@@ -92,7 +88,6 @@ util.removeDuplicateSearchHistory = (historyObj, history) => {
 
   history.push(historyObj);
 
-  // console.log('history obj uri ', JSON.parse(decodeURIComponent(historyObj.uri) ));
   let unique_arr = history.filter((v,i,a) =>
     a.findIndex(t =>
       (JSON.stringify(JSON.parse(decodeURIComponent(t.uri))) === JSON.stringify(JSON.parse(decodeURIComponent(v.uri)))))
@@ -108,11 +103,9 @@ util.searchOnline = (body, value = {}) => {
   return new Promise(async(resolve) => {
     return axios.post("/api/search", body).then(
       async(response) => {
-        // console.table(body);
         let results = response.data.results;
         let total = response.data.total;
         let msg = response.data.msg;
-        //await util.saveResult(results);
         if (Object.keys(value).length !== 0) {
           searchItem = {
             keyword: value,
@@ -123,7 +116,6 @@ util.searchOnline = (body, value = {}) => {
             filterObject: body,
           }
         }
-        // storage.ss.setPair('current_search', JSON.stringify(searchItem));
         resolve({results: results, total: total, msg: msg});
       },
       (error) => {

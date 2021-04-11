@@ -28,7 +28,6 @@ const ProfilePage = (props) => {
     const heading_text = "Employee Profile";
     const location = useLocation();
     let { id } = useParams(); // dynamic part of url, in this case, employeeNumber
-    console.log(id);
 
     const [profileResults, setProfileResults] = useState({
         extraInfo: "...",
@@ -102,7 +101,6 @@ const ProfilePage = (props) => {
             }]);
         });
     }, []);
-    console.log(profileResults)
     // Control loading indicator
     // Based on availability of first name, could be buggy
     useEffect(() => {

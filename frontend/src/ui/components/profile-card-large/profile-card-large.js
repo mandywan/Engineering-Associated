@@ -125,7 +125,6 @@ const ProfileCardLarge = (props) => {
             let allPins = await storage.db.toArray('pinnedProfiles');
 
             let res = await allPins.filter((item) => {
-                console.log(`${item.employeeNumber} == ${props.data.employeeNumber}`)
                 if (item.employeeNumber == props.data.employeeNumber) {
                     return true;
                 } else {

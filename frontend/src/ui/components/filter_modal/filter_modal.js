@@ -61,7 +61,6 @@ function TabPanel(props) {
         document.getElementById("filter_open_button").onclick = async() => {
             setOpen(true);
             let query = qs.parse(location.search);
-            // console.log(query);
             if (query.q) {
               let data = JSON.parse(decodeURIComponent(query.q));
               if (data.Skill) {
@@ -77,7 +76,6 @@ function TabPanel(props) {
               } else {
                 await storage.ss.setPair('skillType', 'AND');
               }
-              console.warn(data);
               if(data.meta) {
                 selectionRaw = data.meta;
                 setSelectionData(selectionRaw);
@@ -127,7 +125,6 @@ function TabPanel(props) {
               
             }
 
-            console.table(filterManifest);
             setFilterDocs(filterManifest);
         }
 
@@ -178,19 +175,6 @@ function TabPanel(props) {
         history.push(`/search?q=${qstr}`);
     }
 
-    const handleFormReset = async() => {
-      /*for (let meta_id of selection) {
-        console.log(meta_id.replaceAll(',','_'));
-        try {
-          let element = document.querySelector(`#${meta_id.replaceAll(',','_')}`);
-          element.checked = true;
-          console.log(element);
-        } catch (e) {
-          continue;
-        }
-      }*/
-    }
-
     const getCheckboxState = (meta_id) => {
       if (selection.includes(meta_id)) {
         return true;
@@ -202,41 +186,6 @@ function TabPanel(props) {
     const handleChangeTabs = (event, newValue) => {
       setTabValue(newValue);
     };
-
-    // EventEmitter.addListener('deleteChip', async (data) => {
-    //   console.log('clicked delete chip', data);
-
-    //   selectionRaw = data;
-    //     let tempSelectionRaw = data;
-    //     for (let x of tempSelectionRaw) {
-    //       let item = x.split("__");
-    //       selection = selection.concat(item);
-    //     }
-
-    //     if (tempSelectionRaw.length == 0) {
-    //       selection = [];
-    //     }
-  
-    //     selection = [...new Set(selection)];
-    //     selectionRaw = [...new Set(selectionRaw)];
-    //     setSelectionData(selectionRaw);
-
-    //     console.log('after delete selection raw', selectionRaw);
-    //     console.log('after delete selection', selection);
-
-    // });
-
-    // useEffect(() => {
-    //   async function updateSelections() {
-    //     console.log('selectionRaw', selectionRaw);
-    //     let attach = storage.ss.getPair('search_key');
-    //     attach = JSON.parse(attach);
-    //     let qstr = await filters.getQS(selection, attach, selectionRaw);
-    //     await storage.ss.setPair('currentURI', null);
-    //     history.push(`/search?q=${qstr}`);
-    //   }
-    //   updateSelections();
-    // }, [selectionRaw]);
      
     return (
         <div>

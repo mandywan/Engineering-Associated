@@ -35,7 +35,6 @@ storage.db.searchDocument = async(table, doc) => {
 }
 
 storage.db.updateDocuments = async(table, docs) => {
-    // console.table(docs);
     return new Promise (async(resolve) => {
         await idb[table].bulkPut(docs);
         resolve();

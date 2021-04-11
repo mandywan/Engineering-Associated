@@ -2,7 +2,6 @@ import axios from 'axios';
 import jwtManager from "./jwt-manager"
 
 const contractor = {};
-const util = {};
 
 // formats the contractor object for http request
 export const formatContractor = (contractor, imageFileName) => {
@@ -38,7 +37,6 @@ export const addContractor = (contractor) => {
     return axios.post('/api/contractors', contractor, config)
         .then((response) => {
                 // return response.data;
-                console.log(response);
                 return response;
             },
             (error) => {
@@ -83,7 +81,6 @@ export const editContractor = async(id, contractor) => {
     return axios.put('/api/contractors/' + id, contractor, config)
         .then((response) => {
                 // return response.data;
-                console.log(response);
                 return response;
             },
             (error) => {
@@ -94,7 +91,6 @@ export const editContractor = async(id, contractor) => {
 };
 
 contractor.getAllContractors = async () => {
-    let item = {};
     let config = {
         headers: {
             'Authorization': 'Bearer ' + jwtManager.getToken()
@@ -104,7 +100,6 @@ contractor.getAllContractors = async () => {
         return axios.get("/api/contractors", config).then(
             async (response) => {
                 let results = response.data;
-                //console.log(response.data)
                 resolve(results);
             },
             (error) => {

@@ -12,8 +12,6 @@ const ContractorProfileCard = (props) => {
   let isContractor = props.data.isContractor;
   let clickButton = false;
 
-  //console.log(props.data);
-
   const handleCardOnClick = async () => {
     if (!clickButton) {
       history.push(`/profile/${props.data.employeeNumber}`);

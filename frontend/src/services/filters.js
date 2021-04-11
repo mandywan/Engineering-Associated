@@ -51,9 +51,7 @@ filters.getQS = (selection, attach = null, raw = [], skillType = 'AND') => {
         for (const e of selection) {
             let data = e.split(",");
             let filterName = data[0];
-            console.log(filterName);
             let dbResult = await storage.db.searchDocument('filters', {call_name: filterName});
-            console.log(dbResult);
             let filterMetadata = dbResult[0];
     
             if (!(filterName in localQuueryObj)) {
@@ -107,7 +105,6 @@ filters.getFilterList = async(filterType = "Keyword") => {
 }
 
 filters.set = async(selection) => {
-    console.log('filters.js selection', selection);
     return new Promise(async(resolve) => {
 
         for (const e of selection) {
