@@ -117,28 +117,39 @@ const IconTypography = withStyles({
 const ProfileCardLarge = (props) => {
     const classes = useStyles();
     let history = useHistory();
-    let email = props.data.email;
+    let email = props.data.email ? props.data.email : 'n/a';
+    let workCell = props.data.workCell ? props.data.workCell : 'n/a';
+    let workPhone = props.data.workPhone ? props.data.workPhone : 'n/a';
+    let hiredOn = props.data.hiredOn ? props.data.hiredOn : 'n/a';
+    let employmentType = props.data.employmentType ? props.data.employmentType : 'n/a';
+    
     let emailLink= "mailto:" + email;
 
-    useEffect(async() => {
-        if(true) {
-            let allPins = await storage.db.toArray('pinnedProfiles');
+    useEffect(() => {
 
-            let res = await allPins.filter((item) => {
-                if (item.employeeNumber == props.data.employeeNumber) {
-                    return true;
+        async function setPins() {
+            if(true) {
+                let allPins = await storage.db.toArray('pinnedProfiles');
+    
+                let res = await allPins.filter((item) => {
+                    console.log(`${item.employeeNumber} == ${props.data.employeeNumber}`)
+                    if (item.employeeNumber == props.data.employeeNumber) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+                if (res.length == 0) {
+                    document.querySelector("#profile-addpin").style.display = 'block';
+                    document.querySelector("#profile-removepin").style.display = 'none';
                 } else {
-                    return false;
+                    document.querySelector("#profile-removepin").style.display = 'block';
+                    document.querySelector("#profile-addpin").style.display = 'none';
                 }
-            });
-            if (res.length == 0) {
-                document.querySelector("#profile-addpin").style.display = 'block';
-                document.querySelector("#profile-removepin").style.display = 'none';
-            } else {
-                document.querySelector("#profile-removepin").style.display = 'block';
-                document.querySelector("#profile-addpin").style.display = 'none';
             }
         }
+        setPins();
+        
     }, [props.data]);
 
     const addPin = async() => {
@@ -236,23 +247,34 @@ const ProfileCardLarge = (props) => {
                             <div className="profile-outerBox">
                                 <div className="profile-content">
                                     <SmartphoneIcon className="icon" align={"left"}/>
-                                    <IconTypography align={"left"}> {props.data.workCell} (work cell) </IconTypography> <br/>
+                                    <IconTypography align={"left"}> (work cell) {workCell} </IconTypography> <br/>
                                 </div>
                                 <div className="profile-content">
                                     <PhoneIcon className="icon" align={"left"}/>
-                                    <IconTypography align={"left"}> {props.data.workPhone} (work phone)  </IconTypography> <br/>
+                                    <IconTypography align={"left"}> (work phone) {workPhone} </IconTypography> <br/>
                                 </div>
                                 <div className="profile-content">
                                     <EmailIcon className="icon" align={"left"}/>
-                                    <IconTypography align={"left"}> <a class="link" href={emailLink}> {email} </a> </IconTypography><br/>
+                                    {
+                                        email === 'n/a' ? (
+                                            <>
+                                                <IconTypography align={"left"}> {email} </IconTypography><br/>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <IconTypography align={"left"}> <a class="link" href={emailLink}> {email} </a> </IconTypography><br/>
+                                            </>
+                                        )
+                                    }
+                                    
                                 </div>
                                 <div className="profile-content">
                                     <TodayIcon className="icon" align={"left"}/>
-                                    <IconTypography align={"left"}> {props.data.hiredOn} </IconTypography><br/>
+                                    <IconTypography align={"left"}> {hiredOn} </IconTypography><br/>
                                 </div>
                                 <div className="profile-content">
                                     <WorkIcon className="icon" align={"left"}/>
-                                    <IconTypography align={"left"}> {props.data.employmentType} </IconTypography><br/>
+                                    <IconTypography align={"left"}> {employmentType} </IconTypography><br/>
                                 </div>
                                 <div className="profile-content">
                                     <RoomIcon className="icon" align={"left"}/>
