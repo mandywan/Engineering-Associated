@@ -106,6 +106,7 @@ util.searchOnline = (body, value = {}) => {
         let results = response.data.results;
         let total = response.data.total;
         let msg = response.data.msg;
+        await util.saveResult(results);
         if (Object.keys(value).length !== 0) {
           searchItem = {
             keyword: value,
@@ -148,14 +149,14 @@ search.detectType = (input) => {
 
 util.saveResult = async(results) => {
   return new Promise(async(resolve) => {
-    await storage.db.clearTable('searchResults');
+    //await storage.db.clearTable('searchResults');
     if (results) {
       try {
         for (let result of results) {
           let group = await storage.db.searchDocument('metadata', {meta_id: `Group,${result.companyCode},${result.officeCode},${result.groupCode}`});
           result.groupName = group[0].value_name;
           result.skills = result.skills.toString();
-          await storage.db.addDocument('searchResults', result);
+          //await storage.db.addDocument('searchResults', result);
         }
       } catch(e) {
         let rFlag = null;
@@ -169,7 +170,6 @@ util.saveResult = async(results) => {
         }, 2000);
       }
     }
-
     resolve(results);
   })
 }
