@@ -1,0 +1,39 @@
+div.page-contents-wrapper {
+    background: #F8F9FA;
+    min-height: 60vh;
+}
+
+div.reporting-manager-box {
+
+}
+
+header {
+    color: #26415C;
+    font-weight: 600;
+    font-size: 30px;
+    font-family: 'Poppins', Poppins, 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    flex-direction: row;
+}
+
+title {
+    padding: 16px;
+}
+
+div.content {
+    display: flex;
+}
+
+.italic-text {
+    font-style: italic;
+    color: #868D98;
+    font-size: 18px;
+    font-family: Poppins;
+    font-weight: 200;
+    margin: 0;
+}
+
+.no-skills-container {
+    text-align: center;
+    margin: 0;
+    width: 100%;
+}
