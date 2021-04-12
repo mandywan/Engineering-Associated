@@ -121,6 +121,16 @@ namespace IntegrationTest
                                                 && c.Bio == "added bio"
                                                 && c.EmployeeNumber == 51
                                                 && c.SupervisorEmployeeNumber == 10);
+                                                
+            var deleteResponse = await client.DeleteAsync("/api/contractors/51");
+            putThenGetResponse.EnsureSuccessStatusCode();
+
+            var deleteThenGetResponse = await client.GetAsync("/api/contractors");
+            deleteThenGetResponse.EnsureSuccessStatusCode();
+            var deleteThenGetRes = await deleteThenGetResponse.Content.ReadAsStringAsync();
+            var deleteContractors = JsonConvert.DeserializeObject<ICollection<EmployeeDTO>>(deleteThenGetRes);
+            
+            Assert.Equal(0, deleteContractors.Count);
 
         }
 
