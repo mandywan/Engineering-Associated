@@ -344,37 +344,6 @@ namespace IntegrationTest
         }
 
         [Fact]
-        // Omit this since we don't use this in front end?
-        // Not sure how hire date should be formated as assertions are 
-        // failing because search isn't returning any results
-        public async Task SearchByHireDate_ShouldReturnCorrectData()
-        {
-            // Arrange
-            var client = _factory.CreateClient();
-
-            // Act
-            var payload = "{\"HireDate\":{\"type\":\"OR\",\"values\":[\"2013-08-29\"]}}";
-            HttpContent post = new StringContent(payload, Encoding.UTF8, "application/json");
-
-            var response = await client.PostAsync("/api/search", post);
-
-            // Assert
-            response.EnsureSuccessStatusCode(); // Status Code 200-299
-
-            var stringResponse = await response.Content.ReadAsStringAsync();
-            // Console.WriteLine(stringResponse);
-            var searchRes = JsonConvert.DeserializeObject<JObject>(stringResponse);
-            // Console.WriteLine(searchRes.GetValue("results"));
-            var employees = JsonConvert.DeserializeObject<ICollection<EmployeeDTO>>(searchRes.GetValue("results").ToString());
-            
-            // Assert.Equal(1, searchRes.GetValue("total"));
-            // Assert.Equal("", searchRes.GetValue("msg"));
-            // DateTime hireDate = new DateTime(2013, 08, 29, 00, 00, 00);
-            // Assert.Contains(employees, e => e.HireDate == hireDate);
-
-        }
-
-        [Fact]
         public async Task SearchByWorkCell_ShouldReturnCorrectData()
         {
             // Arrange

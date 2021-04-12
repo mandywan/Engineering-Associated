@@ -327,28 +327,6 @@ namespace AeDirectory.Services
                     // no such case can exist
                 }
             }
-            var employeeIdsFromHireDate = new List<int>();
-            if (filters.HireDate != null) {
-                if ((filters.HireDate.type == "OR") || (filters.HireDate.values.Count == 1)) {
-                    employeeIdsFromHireDate = (
-                        from employee in _context.Employees
-                        where filters.HireDate.values.Contains(employee.HireDate)
-                        select employee.EmployeeNumber).ToList();
-                } else if (filters.HireDate.type == "AND") {
-                    // no such case can exist
-                }
-            }
-            var employeeIdsFromTerminationDate = new List<int>();
-            if (filters.TerminationDate != null) {
-                if ((filters.TerminationDate.type == "OR") || (filters.TerminationDate.values.Count == 1)) {
-                    employeeIdsFromTerminationDate = (
-                        from employee in _context.Employees
-                        where filters.TerminationDate.values.Contains(employee.TerminationDate)
-                        select employee.EmployeeNumber).ToList();
-                } else if (filters.TerminationDate.type == "AND") {
-                    // no such case can exist
-                }
-            }
             var employeeIdsFromYearsPriorExperience = new List<int>();
             if (filters.YearsPriorExperience != null) {
                 if ((filters.YearsPriorExperience.type == "OR") || (filters.YearsPriorExperience.values.Count == 1)) {
@@ -410,8 +388,6 @@ namespace AeDirectory.Services
                         ((filters.FirstName             == null) ? true : employeeFirstNamesFromFilters.Contains(employee.FirstName)) &&
                         ((filters.Name                  == null) ? true : (employeeNamesFromFilters.Contains(employee.FirstName) || (employeeNamesFromFilters.Contains(employee.LastName)))) &&
                         ((filters.Title                 == null) ? true : employeeIdsFromTitle.Contains(employee.EmployeeNumber)) &&
-                        ((filters.HireDate              == null) ? true : employeeIdsFromHireDate.Contains(employee.EmployeeNumber)) &&
-                        ((filters.TerminationDate       == null) ? true : employeeIdsFromTerminationDate.Contains(employee.EmployeeNumber)) &&
                         ((filters.YearsPriorExperience  == null) ? true : employeeIdsFromYearsPriorExperience.Contains(employee.EmployeeNumber)) &&
                         ((filters.Email                 == null) ? true : employeeIdsFromEmail.Contains(employee.EmployeeNumber)) &&
                         ((filters.WorkPhone             == null) ? true : employeeIdsFromWorkPhone.Contains(employee.EmployeeNumber)) &&
