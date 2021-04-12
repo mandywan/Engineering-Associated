@@ -673,18 +673,16 @@
       "targets": [],
       "value": "Gayle MacGyver"
     }, {
-      "id": "66ebf1c6-ff8e-4744-b840-12ab3551b1e2",
+      "id": "f9bd2f51-e71c-413e-8887-b5b022bd53c9",
       "comment": "",
-      "command": "verifyText",
-      "target": "css=.MuiPaper-root:nth-child(1) .MuiTypography-root",
-      "targets": [],
-      "value": "Someone with the Name \"Gayle\""
-    }, {
-      "id": "54bffadf-6595-4fa0-a321-b212086109d4",
-      "comment": "",
-      "command": "verify",
-      "target": "css=.MuiButtonBase-root > .profile-details > .MuiCardContent-root",
-      "targets": [],
+      "command": "verifyElementPresent",
+      "target": "xpath=//p[contains(.,'Someone with the Name \"Gayle\"')]",
+      "targets": [
+        ["css=.MuiPaper-root:nth-child(3) .MuiTypography-root", "css:finder"],
+        ["xpath=//div[@id='root']/div/div[3]/div[2]/div[2]/div[3]/button/div/div/p", "xpath:idRelative"],
+        ["xpath=//div[3]/button/div/div/p", "xpath:position"],
+        ["xpath=//p[contains(.,'Someone with the Name \"Gayle\"')]", "xpath:innerText"]
+      ],
       "value": ""
     }]
   }, {
@@ -817,19 +815,29 @@
     }, {
       "id": "7f1ea5a5-9495-410c-9d84-0493176ebdff",
       "comment": "",
-      "command": "verifyText",
-      "target": "css=.MuiPaper-root:nth-child(1) b:nth-child(2)",
-      "targets": [],
+      "command": "verifyElementPresent",
+      "target": "xpath=//b[contains(.,'\"Laverne\"')]",
+      "targets": [
+        ["css=.MuiPaper-root:nth-child(1) b:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='root']/div/div[3]/div[2]/div[2]/div/button/div/div/p/b[2]", "xpath:idRelative"],
+        ["xpath=//b[2]", "xpath:position"],
+        ["xpath=//b[contains(.,'\"Laverne\"')]", "xpath:innerText"]
+      ],
       "value": "\"Laverne\""
     }, {
       "id": "0c0baf85-fe4a-413e-a144-01b12a3f0358",
       "comment": "",
-      "command": "verifyText",
-      "target": "css=.MuiTypography-subtitle2",
-      "targets": [],
+      "command": "verifyElementPresent",
+      "target": "css=.MuiTypography-subtitle2:nth-child(2)",
+      "targets": [
+        ["css=.MuiTypography-subtitle2:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='root']/div/div[3]/div[2]/div[2]/div/button/div/div/h6", "xpath:idRelative"],
+        ["xpath=//h6", "xpath:position"],
+        ["xpath=//h6[contains(.,'with the filter: Company - Acme Harvesting Ltd.')]", "xpath:innerText"]
+      ],
       "value": "with the filter: Company - Acme Harvesting Ltd."
     }, {
-      "id": "b4955a29-d882-4a4e-aaed-0e09f84ee500",
+      "id": "90d0613c-bbff-41b1-a5b9-cdd652e1bcb7",
       "comment": "",
       "command": "click",
       "target": "css=.MuiPaper-root:nth-child(1) > .MuiCardActions-root path",
@@ -1015,7 +1023,7 @@
       "id": "f59c4cec-9238-4b87-987c-86504ead3041",
       "comment": "",
       "command": "click",
-      "target": "css=.google-visualization-orgchart-nodesel .link-wrapper:nth-child(2) > .material-icons",
+      "target": "xpath=//div[@id='reactgooglegraph-1']/table/tbody/tr[2]/td[2]/div/div/a[2]/span",
       "targets": [
         ["css=.google-visualization-orgchart-nodesel .link-wrapper:nth-child(2) > .material-icons", "css:finder"],
         ["xpath=//div[@id='reactgooglegraph-1']/table/tbody/tr[2]/td[2]/div/div/a[2]/span", "xpath:idRelative"],
@@ -1027,7 +1035,7 @@
       "id": "dae1d30a-a839-466c-be03-e9c17838b14b",
       "comment": "",
       "command": "click",
-      "target": "css=.google-visualization-orgchart-nodesel .link-wrapper:nth-child(2) > .material-icons",
+      "target": "xpath=//div[@id='reactgooglegraph-1']/table/tbody/tr[2]/td[2]/div/div/a[2]/span",
       "targets": [
         ["css=.google-visualization-orgchart-nodesel .link-wrapper:nth-child(2) > .material-icons", "css:finder"],
         ["xpath=//div[@id='reactgooglegraph-1']/table/tbody/tr[2]/td[2]/div/div/a[2]/span", "xpath:idRelative"],
@@ -1035,529 +1043,6 @@
         ["xpath=//span[contains(.,'account_tree')]", "xpath:innerText"]
       ],
       "value": ""
-    }]
-  }, {
-    "id": "72a9c882-b382-45fe-89a0-8bb5e773f41f",
-    "name": "filterApplyOneFromEachCategory",
-    "commands": [{
-      "id": "975907da-2e0f-442e-8feb-7df5269f24f4",
-      "comment": "",
-      "command": "open",
-      "target": "http://localhost:3000/",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "f12739d9-3a5c-4fd3-9a24-28242b09eaa5",
-      "comment": "",
-      "command": "mouseOver",
-      "target": "css=#search_button_target .MuiSvgIcon-root",
-      "targets": [
-        ["css=#search_button_target .MuiSvgIcon-root", "css:finder"]
-      ],
-      "value": ""
-    }, {
-      "id": "be7aaea7-df23-4a1e-bad3-956a5ed148e4",
-      "comment": "",
-      "command": "click",
-      "target": "css=#search_button_target .MuiSvgIcon-root",
-      "targets": [
-        ["css=#search_button_target .MuiSvgIcon-root", "css:finder"]
-      ],
-      "value": ""
-    }, {
-      "id": "00cf5b26-3f12-428d-82f3-8b2b758fb1fa",
-      "comment": "",
-      "command": "click",
-      "target": "css=.makeStyles-buttonText-4",
-      "targets": [
-        ["css=.makeStyles-buttonText-4", "css:finder"],
-        ["xpath=//button[@id='filter_open_button']/span/p", "xpath:idRelative"],
-        ["xpath=//span/p", "xpath:position"],
-        ["xpath=//p[contains(.,'Filter')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "e8bb111c-39d2-42d6-beb2-38dc8a795263",
-      "comment": "",
-      "command": "click",
-      "target": "id=vertical-tab-1841",
-      "targets": [
-        ["id=vertical-tab-1841", "id"],
-        ["css=#vertical-tab-1841", "css:finder"],
-        ["xpath=//button[@id='vertical-tab-1841']", "xpath:attributes"],
-        ["xpath=//div[@id='filter_modal']/section/div/div/div[2]/div/button", "xpath:idRelative"],
-        ["xpath=//section/div/div/div[2]/div/button", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "b9ce04cb-b0d3-4899-9477-d4f263afd21d",
-      "comment": "",
-      "command": "click",
-      "target": "name=filter_checkbox",
-      "targets": [
-        ["name=filter_checkbox", "name"],
-        ["css=.MuiFormGroup-root:nth-child(1) .PrivateSwitchBase-input-13", "css:finder"],
-        ["xpath=//input[@name='filter_checkbox']", "xpath:attributes"],
-        ["xpath=//div[@id='vertical-tabpanel-0']/section/div/label/span/span/input", "xpath:idRelative"],
-        ["xpath=//span/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "78b8c472-5a98-41fd-b2f7-9349cfea2598",
-      "comment": "",
-      "command": "click",
-      "target": "id=vertical-tab-1842",
-      "targets": [
-        ["id=vertical-tab-1842", "id"],
-        ["css=#vertical-tab-1842", "css:finder"],
-        ["xpath=//button[@id='vertical-tab-1842']", "xpath:attributes"],
-        ["xpath=//div[@id='filter_modal']/section/div/div/div[2]/div/button[2]", "xpath:idRelative"],
-        ["xpath=//div[2]/div/button[2]", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "3711d25b-bfec-442f-814d-406fcad3c38d",
-      "comment": "",
-      "command": "click",
-      "target": "name=filter_checkbox",
-      "targets": [
-        ["name=filter_checkbox", "name"],
-        ["css=.MuiFormGroup-root:nth-child(1) .PrivateSwitchBase-input-13", "css:finder"],
-        ["xpath=//input[@name='filter_checkbox']", "xpath:attributes"],
-        ["xpath=//div[@id='vertical-tabpanel-1']/section/div/label/span/span/input", "xpath:idRelative"],
-        ["xpath=//span/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "6a6d0bf4-3fd4-4463-b354-dd261849aa1b",
-      "comment": "",
-      "command": "click",
-      "target": "id=vertical-tab-1843",
-      "targets": [
-        ["id=vertical-tab-1843", "id"],
-        ["css=#vertical-tab-1843", "css:finder"],
-        ["xpath=//button[@id='vertical-tab-1843']", "xpath:attributes"],
-        ["xpath=//div[@id='filter_modal']/section/div/div/div[2]/div/button[3]", "xpath:idRelative"],
-        ["xpath=//button[3]", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "8e715221-1752-49df-825b-6ecb1427ad88",
-      "comment": "",
-      "command": "click",
-      "target": "name=filter_checkbox",
-      "targets": [
-        ["name=filter_checkbox", "name"],
-        ["css=.MuiFormGroup-root:nth-child(1) .PrivateSwitchBase-input-13", "css:finder"],
-        ["xpath=//input[@name='filter_checkbox']", "xpath:attributes"],
-        ["xpath=//div[@id='vertical-tabpanel-2']/section/div/label/span/span/input", "xpath:idRelative"],
-        ["xpath=//span/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "6bc012b9-484b-451d-8141-7d2d6025b320",
-      "comment": "",
-      "command": "click",
-      "target": "id=vertical-tab-1844",
-      "targets": [
-        ["id=vertical-tab-1844", "id"],
-        ["css=#vertical-tab-1844", "css:finder"],
-        ["xpath=//button[@id='vertical-tab-1844']", "xpath:attributes"],
-        ["xpath=//div[@id='filter_modal']/section/div/div/div[2]/div/button[4]", "xpath:idRelative"],
-        ["xpath=//button[4]", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "e9b5cc87-b073-49c0-9b61-934d719a96b3",
-      "comment": "",
-      "command": "click",
-      "target": "name=filter_checkbox",
-      "targets": [
-        ["name=filter_checkbox", "name"],
-        ["css=.MuiFormGroup-root:nth-child(1) .PrivateSwitchBase-input-13", "css:finder"],
-        ["xpath=//input[@name='filter_checkbox']", "xpath:attributes"],
-        ["xpath=//div[@id='vertical-tabpanel-3']/section/div/label/span/span/input", "xpath:idRelative"],
-        ["xpath=//span/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "a7492e10-8410-4771-89e6-257e8894c3b7",
-      "comment": "",
-      "command": "click",
-      "target": "id=vertical-tab-1845",
-      "targets": [
-        ["id=vertical-tab-1845", "id"],
-        ["css=#vertical-tab-1845", "css:finder"],
-        ["xpath=//button[@id='vertical-tab-1845']", "xpath:attributes"],
-        ["xpath=//div[@id='filter_modal']/section/div/div/div[2]/div/button[5]", "xpath:idRelative"],
-        ["xpath=//button[5]", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "64e4f356-c30f-433f-a94a-16cb14cb3765",
-      "comment": "",
-      "command": "click",
-      "target": "name=filter_checkbox",
-      "targets": [
-        ["name=filter_checkbox", "name"],
-        ["css=.MuiFormGroup-root:nth-child(1) .PrivateSwitchBase-input-13", "css:finder"],
-        ["xpath=//input[@name='filter_checkbox']", "xpath:attributes"],
-        ["xpath=//div[@id='vertical-tabpanel-4']/section/div/label/span/span/input", "xpath:idRelative"],
-        ["xpath=//span/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "f11f9abb-a2ce-4473-86dc-4071178ecadd",
-      "comment": "",
-      "command": "click",
-      "target": "id=vertical-tab-1846",
-      "targets": [
-        ["id=vertical-tab-1846", "id"],
-        ["css=#vertical-tab-1846", "css:finder"],
-        ["xpath=//button[@id='vertical-tab-1846']", "xpath:attributes"],
-        ["xpath=//div[@id='filter_modal']/section/div/div/div[2]/div/button[6]", "xpath:idRelative"],
-        ["xpath=//button[6]", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "39f82b01-0cd0-46a0-8b4c-c7ed5df50534",
-      "comment": "",
-      "command": "click",
-      "target": "name=filter_checkbox",
-      "targets": [
-        ["name=filter_checkbox", "name"],
-        ["css=.MuiFormGroup-root:nth-child(2) .PrivateSwitchBase-input-13", "css:finder"],
-        ["xpath=//input[@name='filter_checkbox']", "xpath:attributes"],
-        ["xpath=//div[@id='vertical-tabpanel-5']/section/div[2]/label/span/span/input", "xpath:idRelative"],
-        ["xpath=//span/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "90f1fba6-783c-425b-ac8a-12f826e52479",
-      "comment": "",
-      "command": "click",
-      "target": "css=#submit_filters > .MuiButton-label",
-      "targets": [
-        ["css=#submit_filters > .MuiButton-label", "css:finder"],
-        ["xpath=//button[@id='submit_filters']/span", "xpath:idRelative"],
-        ["xpath=//div[2]/section/button/span", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "f7c89671-4c09-4771-80ee-b5119e147ffd",
-      "comment": "",
-      "command": "verifyElementPresent",
-      "target": "css=.MuiChip-root:nth-child(1) > .MuiChip-label",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "ac4ed33e-55e9-47a6-ace8-62749177d777",
-      "comment": "",
-      "command": "verifyElementPresent",
-      "target": "css=.MuiChip-root:nth-child(2) > .MuiChip-label",
-      "targets": [
-        ["css=.MuiChip-root:nth-child(2) > .MuiChip-label", "css:finder"],
-        ["xpath=//div[@id='root']/div/div[3]/section/div/div/div/div/div/div[2]/span", "xpath:idRelative"],
-        ["xpath=//div[2]/span", "xpath:position"],
-        ["xpath=//span[contains(.,'Office - Corporate')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "e221a14c-27d0-434d-85dc-127ff9730e3e",
-      "comment": "",
-      "command": "verifyElementPresent",
-      "target": "css=.MuiChip-root:nth-child(3) > .MuiChip-label",
-      "targets": [
-        ["css=.MuiChip-root:nth-child(3) > .MuiChip-label", "css:finder"],
-        ["xpath=//div[@id='root']/div/div[3]/section/div/div/div/div/div/div[3]/span", "xpath:idRelative"],
-        ["xpath=//div[3]/span", "xpath:position"],
-        ["xpath=//span[contains(.,'Group - Accounting')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "8f4d9967-66aa-44a2-86c2-2e95a4762110",
-      "comment": "",
-      "command": "verifyElementPresent",
-      "target": "css=.MuiChip-root:nth-child(4) > .MuiChip-label",
-      "targets": [
-        ["css=.MuiChip-root:nth-child(4) > .MuiChip-label", "css:finder"],
-        ["xpath=//div[@id='root']/div/div[3]/section/div/div/div/div/div/div[4]/span", "xpath:idRelative"],
-        ["xpath=//div[4]/span", "xpath:position"],
-        ["xpath=//span[contains(.,'Physical Location - Burnaby')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "c31063e3-91c2-4ca0-85a3-44d6f1e95c42",
-      "comment": "",
-      "command": "verifyElementPresent",
-      "target": "css=.MuiChip-root:nth-child(5) > .MuiChip-label",
-      "targets": [
-        ["css=.MuiChip-root:nth-child(5) > .MuiChip-label", "css:finder"],
-        ["xpath=//div[@id='root']/div/div[3]/section/div/div/div/div/div/div[5]/span", "xpath:idRelative"],
-        ["xpath=//div[5]/span", "xpath:position"],
-        ["xpath=//span[contains(.,'Skill Category - Accounting')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "3e9936db-354f-4035-a64d-a10cf94047f0",
-      "comment": "",
-      "command": "verifyElementPresent",
-      "target": "css=.MuiChip-root:nth-child(6) > .MuiChip-label",
-      "targets": [
-        ["css=.MuiChip-root:nth-child(6) > .MuiChip-label", "css:finder"],
-        ["xpath=//div[@id='root']/div/div[3]/section/div/div/div/div/div/div[6]/span", "xpath:idRelative"],
-        ["xpath=//div[6]/span", "xpath:position"],
-        ["xpath=//span[contains(.,'Skill - Conflict Resolution')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }]
-  }, {
-    "id": "c5752757-199a-4f98-a9c8-fb536345c2d4",
-    "name": "filterSkillAny",
-    "commands": [{
-      "id": "9757e28d-4a72-4d3e-a738-f7e71293efe5",
-      "comment": "",
-      "command": "open",
-      "target": "http://localhost:3000/",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "1775720f-bc5b-4db6-bcb5-c1eb4e8dac3e",
-      "comment": "",
-      "command": "click",
-      "target": "id=search_button_target",
-      "targets": [
-        ["id=search_button_target", "id"],
-        ["css=#search_button_target", "css:finder"],
-        ["xpath=//button[@id='search_button_target']", "xpath:attributes"],
-        ["xpath=//section[@id='searchBox']/button", "xpath:idRelative"],
-        ["xpath=//section/button", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "715f60e2-f348-48a4-932e-4a880b924e36",
-      "comment": "",
-      "command": "click",
-      "target": "css=.makeStyles-buttonText-4",
-      "targets": [
-        ["css=.makeStyles-buttonText-4", "css:finder"],
-        ["xpath=//button[@id='filter_open_button']/span/p", "xpath:idRelative"],
-        ["xpath=//span/p", "xpath:position"],
-        ["xpath=//p[contains(.,'Filter')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "a2148501-e059-4158-b724-438c9a6c473b",
-      "comment": "",
-      "command": "click",
-      "target": "xpath=//button[6]/span",
-      "targets": [
-        ["css=#vertical-tab-1830 > .MuiTab-wrapper", "css:finder"],
-        ["xpath=//button[@id='vertical-tab-1830']/span", "xpath:idRelative"],
-        ["xpath=//button[6]/span", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "104c1114-80a0-4f42-859b-1f9db33b5f23",
-      "comment": "",
-      "command": "select",
-      "target": "id=skillType",
-      "targets": [],
-      "value": "label=Any of these"
-    }, {
-      "id": "9930de5f-2aeb-4f41-aef6-c116f1323abe",
-      "comment": "",
-      "command": "click",
-      "target": "css=.MuiFormGroup-root:nth-child(2) .MuiTypography-root",
-      "targets": [
-        ["css=.MuiFormGroup-root:nth-child(2) .MuiTypography-root", "css:finder"],
-        ["xpath=//div[@id='vertical-tabpanel-5']/section/div[2]/label/span[2]", "xpath:idRelative"],
-        ["xpath=//label/span[2]", "xpath:position"],
-        ["xpath=//span[contains(.,'Conflict Resolution')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "abab3795-e541-403a-85bd-a28902628ae2",
-      "comment": "",
-      "command": "click",
-      "target": "css=.MuiFormGroup-root:nth-child(3) .MuiTypography-root",
-      "targets": [
-        ["css=.MuiFormGroup-root:nth-child(3) .MuiTypography-root", "css:finder"],
-        ["xpath=//div[@id='vertical-tabpanel-5']/section/div[3]/label/span[2]", "xpath:idRelative"],
-        ["xpath=//div[3]/label/span[2]", "xpath:position"],
-        ["xpath=//span[contains(.,'Customer Service')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "bc1c5c11-e508-45c4-b76f-17126fa6fe79",
-      "comment": "",
-      "command": "click",
-      "target": "css=.MuiFormGroup-root:nth-child(4) .MuiTypography-root",
-      "targets": [
-        ["css=.MuiFormGroup-root:nth-child(4) .MuiTypography-root", "css:finder"],
-        ["xpath=//div[@id='vertical-tabpanel-5']/section/div[4]/label/span[2]", "xpath:idRelative"],
-        ["xpath=//div[4]/label/span[2]", "xpath:position"],
-        ["xpath=//span[contains(.,'Fertilizing')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "102dc5ed-8782-4107-99f1-3549bb362982",
-      "comment": "",
-      "command": "click",
-      "target": "css=#submit_filters > .MuiButton-label",
-      "targets": [
-        ["css=#submit_filters > .MuiButton-label", "css:finder"],
-        ["xpath=//button[@id='submit_filters']/span", "xpath:idRelative"],
-        ["xpath=//div[2]/section/button/span", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "6f7c5c8b-208a-4a15-8f3b-7bc2c826e276",
-      "comment": "",
-      "command": "verifyText",
-      "target": "css=.MuiChip-root:nth-child(1) > .MuiChip-label",
-      "targets": [],
-      "value": "Skill - Conflict Resolution"
-    }, {
-      "id": "7b18ed2c-1639-46c3-8494-3921bc83818f",
-      "comment": "",
-      "command": "verifyText",
-      "target": "css=.MuiChip-root:nth-child(2) > .MuiChip-label",
-      "targets": [],
-      "value": "Skill - Customer Service"
-    }, {
-      "id": "21ad0a74-775f-4f41-9eff-35adcb0c08af",
-      "comment": "",
-      "command": "verifyText",
-      "target": "css=.MuiChip-root:nth-child(3) > .MuiChip-label",
-      "targets": [],
-      "value": "Skill - Fertilizing"
-    }]
-  }, {
-    "id": "e484db84-2d64-4340-8512-fb69682cbfe7",
-    "name": "filterSkillAll",
-    "commands": [{
-      "id": "f53fb4e2-87ed-48a6-94c7-420f039e7c8b",
-      "comment": "",
-      "command": "open",
-      "target": "http://localhost:3000/",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "55fc1341-35ee-418a-b287-c0901e2b5883",
-      "comment": "",
-      "command": "mouseOver",
-      "target": "css=#search_button_target path",
-      "targets": [
-        ["css=#search_button_target path", "css:finder"]
-      ],
-      "value": ""
-    }, {
-      "id": "748a9d9a-39cb-4762-8016-9588ed72c797",
-      "comment": "",
-      "command": "click",
-      "target": "css=#search_button_target path",
-      "targets": [
-        ["css=#search_button_target path", "css:finder"]
-      ],
-      "value": ""
-    }, {
-      "id": "ec55b505-9154-4ccd-b033-cc07192f5811",
-      "comment": "",
-      "command": "mouseOut",
-      "target": "css=#search_button_target path",
-      "targets": [
-        ["css=#search_button_target path", "css:finder"]
-      ],
-      "value": ""
-    }, {
-      "id": "435458c4-b49e-4f4f-81be-327c7b11145d",
-      "comment": "",
-      "command": "click",
-      "target": "css=.makeStyles-buttonText-4",
-      "targets": [
-        ["css=.makeStyles-buttonText-4", "css:finder"],
-        ["xpath=//button[@id='filter_open_button']/span/p", "xpath:idRelative"],
-        ["xpath=//span/p", "xpath:position"],
-        ["xpath=//p[contains(.,'Filter')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "1df1796e-ad52-4724-9010-805fd8426eb9",
-      "comment": "",
-      "command": "click",
-      "target": "id=vertical-tab-1846",
-      "targets": [
-        ["id=vertical-tab-1846", "id"],
-        ["css=#vertical-tab-1846", "css:finder"],
-        ["xpath=//button[@id='vertical-tab-1846']", "xpath:attributes"],
-        ["xpath=//div[@id='filter_modal']/section/div/div/div[2]/div/button[6]", "xpath:idRelative"],
-        ["xpath=//button[6]", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "e7f40ad9-9d02-4c28-b55f-4244a8acd817",
-      "comment": "",
-      "command": "click",
-      "target": "id=skillType",
-      "targets": [
-        ["id=skillType", "id"],
-        ["name=skillType", "name"],
-        ["css=#skillType", "css:finder"],
-        ["xpath=//select[@id='skillType']", "xpath:attributes"],
-        ["xpath=//div[@id='vertical-tabpanel-5']/section/div/center/select", "xpath:idRelative"],
-        ["xpath=//select", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "8f03f7ea-d08b-401e-bef8-6645855d0380",
-      "comment": "",
-      "command": "click",
-      "target": "css=.MuiFormGroup-root:nth-child(2) .MuiTypography-root",
-      "targets": [
-        ["css=.MuiFormGroup-root:nth-child(2) .MuiTypography-root", "css:finder"],
-        ["xpath=//div[@id='vertical-tabpanel-5']/section/div[2]/label/span[2]", "xpath:idRelative"],
-        ["xpath=//label/span[2]", "xpath:position"],
-        ["xpath=//span[contains(.,'Conflict Resolution')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "27923115-d234-449d-a715-ad33cbdd1c27",
-      "comment": "",
-      "command": "click",
-      "target": "css=.MuiFormGroup-root:nth-child(5) .MuiTypography-root",
-      "targets": [
-        ["css=.MuiFormGroup-root:nth-child(5) .MuiTypography-root", "css:finder"],
-        ["xpath=//div[@id='vertical-tabpanel-5']/section/div[5]/label/span[2]", "xpath:idRelative"],
-        ["xpath=//div[5]/label/span[2]", "xpath:position"],
-        ["xpath=//span[contains(.,'Financial Statements')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "b5db98db-8756-4903-a46d-954e198b8010",
-      "comment": "",
-      "command": "click",
-      "target": "css=#submit_filters > .MuiButton-label",
-      "targets": [
-        ["css=#submit_filters > .MuiButton-label", "css:finder"],
-        ["xpath=//button[@id='submit_filters']/span", "xpath:idRelative"],
-        ["xpath=//div[2]/section/button/span", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "333f6212-4a21-49cf-801e-0c257b96413b",
-      "comment": "",
-      "command": "verifyText",
-      "target": "css=.MuiChip-root:nth-child(1) > .MuiChip-label",
-      "targets": [],
-      "value": "Skill - Conflict Resolution"
-    }, {
-      "id": "4f40e9e5-74f6-487a-935d-fe8bfce3978d",
-      "comment": "",
-      "command": "verifyText",
-      "target": "css=.MuiChip-root:nth-child(2) > .MuiChip-label",
-      "targets": [],
-      "value": "Skill - Financial Statements"
     }]
   }, {
     "id": "689243bc-48c0-4a04-a5cd-bb122c025bb2",
@@ -2496,7 +1981,7 @@
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": ["72a9c882-b382-45fe-89a0-8bb5e773f41f", "e484db84-2d64-4340-8512-fb69682cbfe7", "c5752757-199a-4f98-a9c8-fb536345c2d4"]
+    "tests": []
   }, {
     "id": "cb60578f-a47d-4059-befd-9879cad382a6",
     "name": "D10. Pin Profiles",
