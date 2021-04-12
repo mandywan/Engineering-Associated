@@ -43,7 +43,7 @@ const ContractorProfileCard = (props) => {
               overlap="circle"
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
               badgeContent={isContractor ? 
-                (<div className='contractor-badge'>
+                (<div className='contractor-contractor-badge'>
                   C
                 </div>) : null}
             >
