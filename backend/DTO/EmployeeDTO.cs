@@ -25,8 +25,8 @@ namespace AeDirectory.DTO
         public string FirstName { get; set; }
         public string PhotoUrl { get; set; }
         public string Title { get; set; }
-        public string Group_id { get; set; }
-        public string Office_id { get; set; }
+        public string GroupCode { get; set; }
+        public string OfficeCode { get; set; }
     }
     
     public partial class EmployeeDTO
@@ -59,7 +59,9 @@ namespace AeDirectory.DTO
         public string WorkCell { get; set; }
         public string PhotoUrl { get; set; }
         public bool IsContractor { get; set; }
-        
+        public string Bio { get; set; }
+        public string ExtraInfo { get; set; }
+
         public ICollection<EmployeeSkillDTO> Skills { get; set; }
         public SupervisorDTO Supervisor { get; set; }
     }
@@ -69,7 +71,7 @@ namespace AeDirectory.DTO
         public EmployeeProfile()
         {
             CreateMap<Models.Employee, EmployeeDTO>();
-            // CreateMap<EmployeeDTO, Models.Employee>();
+            CreateMap<ContractorAddDTO, Models.Employee>();
         }
     }
 

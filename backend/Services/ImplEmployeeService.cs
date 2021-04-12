@@ -5,6 +5,7 @@ using AeDirectory.Search;
 using AeDirectory.Models;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace AeDirectory.Services
 {
@@ -55,8 +56,8 @@ namespace AeDirectory.Services
             employeeDTO.Supervisor.LastName = employee.SupervisorEmployeeNumberNavigation.LastName;
             employeeDTO.Supervisor.PhotoUrl = employee.SupervisorEmployeeNumberNavigation.PhotoUrl;
             employeeDTO.Supervisor.Title = employee.SupervisorEmployeeNumberNavigation.Title;
-            employeeDTO.Supervisor.Group_id = employee.SupervisorEmployeeNumberNavigation.GroupCode;
-            employeeDTO.Supervisor.Office_id = employee.SupervisorEmployeeNumberNavigation.OfficeCode;
+            employeeDTO.Supervisor.GroupCode = employee.SupervisorEmployeeNumberNavigation.GroupCode;
+            employeeDTO.Supervisor.OfficeCode = employee.SupervisorEmployeeNumberNavigation.OfficeCode;
             
             // set categories and skills in DTO
             foreach (var ele in skillList)
@@ -81,26 +82,40 @@ namespace AeDirectory.Services
                 }
             }
             var employeeIdsFromOffice = new List<int>();
+            var employeesFromOffice = new List<Employee>();
             if (filters.Office != null) {
                 if ((filters.Office.type == "OR") || (filters.Office.values.Count == 1)) {
-                    employeeIdsFromOffice = (
+                    employeesFromOffice = (
                         from employee in _context.Employees
-                        where   //filters.Office.officeIds().Contains(employee.OfficeCode) && 
-                                filters.Office.companyIds().Contains(employee.CompanyCode)
-                        select employee.EmployeeNumber).ToList();
+                        select employee).ToList();
+                    foreach (Employee employee in employeesFromOffice) {
+                        foreach (CompositeId compositeId in filters.Office.values) {
+                            if (employee.OfficeCode == compositeId.OfficeId &&
+                                employee.CompanyCode == compositeId.CompanyId) {
+                                employeeIdsFromOffice.Add(employee.EmployeeNumber);
+                            }
+                        }
+                    }
                 } else if (filters.Office.type == "AND") {
                     // no such case can exist
                 }
             }
             var employeeIdsFromGroup = new List<int>();
+            var employeesFromGroup = new List<Employee>();
             if (filters.Group != null) {
                 if ((filters.Group.type == "OR") || (filters.Group.values.Count == 1)) {
-                    employeeIdsFromGroup = (
+                    employeesFromGroup = (
                         from employee in _context.Employees
-                        where   filters.Group.groupIds().Contains(employee.GroupCode) && 
-                                filters.Group.officeIds().Contains(employee.OfficeCode) && 
-                                filters.Group.companyIds().Contains(employee.CompanyCode)
-                        select employee.EmployeeNumber).ToList();
+                        select employee).ToList();
+                    foreach (Employee employee in employeesFromGroup) {
+                        foreach(CompositeId compositeId in filters.Group.values) {
+                            if (employee.GroupCode == compositeId.GroupId &&
+                                employee.OfficeCode == compositeId.OfficeId &&
+                                employee.CompanyCode == compositeId.CompanyId) {
+                                employeeIdsFromGroup.Add(employee.EmployeeNumber);
+                            }
+                        }
+                    }
                 } else if (filters.Group.type == "AND") {
                     // no such case can exist
                 }
@@ -119,19 +134,25 @@ namespace AeDirectory.Services
 
             // skill filter prep
             var employeeIdsFromSkills = new List<int>();
-            if (filters.Skill != null) {
-                if (filters.Skill.type == "OR") {
+            var employeeSkillsFromSkills = new List<EmployeeSkill>();
+
+            if (filters.Skill != null)
+            {
+                if (filters.Skill.type == "OR")
+                {
                     employeeIdsFromSkills = (
                         from employee in _context.EmployeeSkills
                         where filters.Skill.skillIds().Contains(employee.SkillId)
                         select employee.EmployeeNumber).ToList();
-                } else if (filters.Skill.type == "AND") {
+                }
+                else if (filters.Skill.type == "AND")
+                {
                     var employeeSkills = (
                         from employeeSkill in _context.EmployeeSkills
                         where filters.Skill.skillIds().Contains(employeeSkill.SkillId)
                         select employeeSkill).ToList();
 
-                    Dictionary<int, HashSet<string>> employeeSkillDictionary = new Dictionary<int, HashSet<string>>();
+                    Dictionary<int, HashSet<string>> employeeSkillDictionary = new Dictionary<int, HashSet<string>>(); // employees with list of skills each
                     foreach (EmployeeSkill employeeSkill in employeeSkills) {
                         if (!employeeSkillDictionary.ContainsKey(employeeSkill.EmployeeNumber)) {
                             employeeSkillDictionary.Add(employeeSkill.EmployeeNumber, new HashSet<string>() { employeeSkill.SkillId });
@@ -139,13 +160,16 @@ namespace AeDirectory.Services
                             employeeSkillDictionary[employeeSkill.EmployeeNumber].Add(employeeSkill.SkillId);
                         }
                     }
-                    HashSet<string> skillIdsHashSet = filters.Skill.skillIdsHashSet();
-                    foreach (int employeeNumber in employeeSkillDictionary.Keys) {
-                        HashSet<string> skillIdsHashSetCopy = skillIdsHashSet;
-                        int originalCount = skillIdsHashSet.Count();
-                        skillIdsHashSetCopy.IntersectWith(employeeSkillDictionary[employeeNumber]);
-                        if (skillIdsHashSetCopy.Count() == originalCount) {
-                            employeeIdsFromSkills.Add(employeeNumber);
+                    foreach (int employee in employeeSkillDictionary.Keys) {
+                        bool contains = true;
+                        foreach (string skill in filters.Skill.skillIds()) {
+                            if (!employeeSkillDictionary[employee].Contains(skill)) {
+                                //employeeSkillDictionary.Remove(employee);
+                                contains = false;
+                            }
+                        }
+                        if (contains) {
+                            employeeIdsFromSkills.Add(employee);
                         }
                     }
                 }
@@ -211,35 +235,87 @@ namespace AeDirectory.Services
                 }
             }
 
-            var employeeIdsFromLastName = new List<int>();
+            var employeeLastNamesFromFilters = new List<string>();
+            var employeeLastNames = new List<string>();
             if (filters.LastName != null) {
                 if ((filters.LastName.type == "OR") || (filters.LastName.values.Count == 1)) {
-                    employeeIdsFromLastName = (
+                    employeeLastNames = (
                         from employee in _context.Employees
-                        where filters.LastName.values.Contains(employee.LastName)
-                        select employee.EmployeeNumber).ToList();
-                } else if (filters.Location.type == "AND") {
+                        select employee.LastName).ToList();
+                } else if (filters.LastName.type == "AND") {
                     // no such case can exist
                 }
+                foreach (string lastName in employeeLastNames) {
+                    foreach (string name in filters.LastName.values) {
+                        if (lastName.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0) {
+                            employeeLastNamesFromFilters.Add(lastName);
+                        }
+                    }
+                }
             }
-            var employeeIdsFromFirstName = new List<int>();
+            var employeeFirstNamesFromFilters = new List<string>();
+            var employeeFirstNames = new List<string>();
             if (filters.FirstName != null) {
                 if ((filters.FirstName.type == "OR") || (filters.FirstName.values.Count == 1)) {
-                    employeeIdsFromFirstName = (
+                    employeeFirstNames = (
                         from employee in _context.Employees
-                        where filters.FirstName.values.Contains(employee.FirstName)
-                        select employee.EmployeeNumber).ToList();
-                } else if (filters.Location.type == "AND") {
+                        select employee.FirstName).ToList();
+                } else if (filters.FirstName.type == "AND") {
                     // no such case can exist
                 }
+                foreach (string firstName in employeeFirstNames) {
+                    foreach (string name in filters.FirstName.values) {
+                        if (firstName.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0) {
+                            employeeFirstNamesFromFilters.Add(firstName);
+                        }
+                    }
+                }
             }
-            var employeeIdsFromName = new List<int>();
+            var employeeNamesFromFilters = new List<string>();
+            var employeeNames = new List<string>();
             if (filters.Name != null) {
-                employeeIdsFromName = (
+                if ((filters.Name.type == "OR") || (filters.Name.values.Count == 1)) {
+                    employeeFirstNames = (
                     from employee in _context.Employees
-                    where filters.Name.values.Contains(employee.FirstName) || filters.Name.values.Contains(employee.LastName)
-                    select employee.EmployeeNumber).ToList();
+                    select employee.FirstName).ToList();
+                    employeeLastNames = (
+                        from employee in _context.Employees
+                        select employee.LastName).ToList();
+                    employeeNames = employeeFirstNames.Concat(employeeLastNames).ToList();
+                    foreach (string firstOrLastName in employeeNames) {
+                        foreach (string name in filters.Name.values) {
+                            if (firstOrLastName.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0) {
+                                employeeNamesFromFilters.Add(firstOrLastName);
+                            }
+                        }
+                    }
+                } else if (filters.Name.type == "AND" && (filters.Name.values.Count == 2)) {
+                    employeeLastNames = (
+                        from employee in _context.Employees
+                        select employee.LastName).ToList();
+                    foreach (string lastName in employeeLastNames) {
+                        foreach (string name in filters.Name.values) {
+                            if (lastName.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0) {
+                                employeeLastNamesFromFilters.Add(lastName);
+                            }
+                        }
+                    }
+                    employeeFirstNames = (
+                        from employee in _context.Employees
+                        select employee.FirstName).ToList();
+                    foreach (string firstName in employeeFirstNames) {
+                        foreach (string name in filters.Name.values) {
+                            if (firstName.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0) {
+                                employeeFirstNamesFromFilters.Add(firstName);
+                            }
+                        }
+                    }
+                    filters.LastName = filters.Name;
+                    filters.FirstName = filters.Name;
+                    filters.Name = null;
+                }
             }
+
             var employeeIdsFromTitle = new List<int>();
             if (filters.Title != null) {
                 if ((filters.Title.type == "OR") || (filters.Title.values.Count == 1)) {
@@ -247,29 +323,7 @@ namespace AeDirectory.Services
                         from employee in _context.Employees
                         where filters.Title.values.Contains(employee.Title)
                         select employee.EmployeeNumber).ToList();
-                } else if (filters.Location.type == "AND") {
-                    // no such case can exist
-                }
-            }
-            var employeeIdsFromHireDate = new List<int>();
-            if (filters.HireDate != null) {
-                if ((filters.HireDate.type == "OR") || (filters.HireDate.values.Count == 1)) {
-                    employeeIdsFromHireDate = (
-                        from employee in _context.Employees
-                        where filters.HireDate.values.Contains(employee.HireDate)
-                        select employee.EmployeeNumber).ToList();
-                } else if (filters.Location.type == "AND") {
-                    // no such case can exist
-                }
-            }
-            var employeeIdsFromTerminationDate = new List<int>();
-            if (filters.TerminationDate != null) {
-                if ((filters.TerminationDate.type == "OR") || (filters.TerminationDate.values.Count == 1)) {
-                    employeeIdsFromTerminationDate = (
-                        from employee in _context.Employees
-                        where filters.TerminationDate.values.Contains(employee.TerminationDate)
-                        select employee.EmployeeNumber).ToList();
-                } else if (filters.Location.type == "AND") {
+                } else if (filters.Title.type == "AND") {
                     // no such case can exist
                 }
             }
@@ -278,9 +332,9 @@ namespace AeDirectory.Services
                 if ((filters.YearsPriorExperience.type == "OR") || (filters.YearsPriorExperience.values.Count == 1)) {
                     employeeIdsFromYearsPriorExperience = (
                         from employee in _context.Employees
-                        where filters.YearsPriorExperience.values.Contains(employee.YearsPriorExperience)
+                        where filters.YearsPriorExperience.values.Contains(employee.YearsPriorExperience.ToString())
                         select employee.EmployeeNumber).ToList();
-                } else if (filters.Location.type == "AND") {
+                } else if (filters.YearsPriorExperience.type == "AND") {
                     // no such case can exist
                 }
             }
@@ -291,7 +345,7 @@ namespace AeDirectory.Services
                         from employee in _context.Employees
                         where filters.Email.values.Contains(employee.Email)
                         select employee.EmployeeNumber).ToList();
-                } else if (filters.Location.type == "AND") {
+                } else if (filters.Email.type == "AND") {
                     // no such case can exist
                 }
             }
@@ -302,7 +356,7 @@ namespace AeDirectory.Services
                         from employee in _context.Employees
                         where filters.WorkPhone.values.Contains(employee.WorkPhone)
                         select employee.EmployeeNumber).ToList();
-                } else if (filters.Location.type == "AND") {
+                } else if (filters.WorkPhone.type == "AND") {
                     // no such case can exist
                 }
             }
@@ -313,7 +367,7 @@ namespace AeDirectory.Services
                         from employee in _context.Employees
                         where filters.WorkCell.values.Contains(employee.WorkCell)
                         select employee.EmployeeNumber).ToList();
-                } else if (filters.Location.type == "AND") {
+                } else if (filters.WorkCell.type == "AND") {
                     // no such case can exist
                 }
             }
@@ -322,25 +376,87 @@ namespace AeDirectory.Services
 
             var employeeList = (
                 from employee in _context.Employees
+                .Include(employee => employee.EmployeeSkills)
+                .ThenInclude(empSkills => empSkills.Skill)
                 where   ((filters.Company               == null) ? true : employeeIdsFromCompany.Contains(employee.EmployeeNumber)) &&
                         ((filters.Office                == null) ? true : employeeIdsFromOffice.Contains(employee.EmployeeNumber)) && 
                         ((filters.Group                 == null) ? true : employeeIdsFromGroup.Contains(employee.EmployeeNumber)) && 
                         ((filters.Location              == null) ? true : employeeIdsFromLocation.Contains(employee.EmployeeNumber)) && 
                         ((filters.Skill                 == null) ? true : employeeIdsFromSkills.Contains(employee.EmployeeNumber)) && 
                         ((filters.Category              == null) ? true : employeeIdsFromSkillCategories.Contains(employee.EmployeeNumber)) &&
-                        ((filters.LastName              == null) ? true : employeeIdsFromLastName.Contains(employee.EmployeeNumber)) &&
-                        ((filters.FirstName             == null) ? true : employeeIdsFromFirstName.Contains(employee.EmployeeNumber)) &&
-                        ((filters.Name                  == null) ? true : employeeIdsFromName.Contains(employee.EmployeeNumber)) &&
+                        ((filters.LastName              == null) ? true : employeeLastNamesFromFilters.Contains(employee.LastName)) &&
+                        ((filters.FirstName             == null) ? true : employeeFirstNamesFromFilters.Contains(employee.FirstName)) &&
+                        ((filters.Name                  == null) ? true : (employeeNamesFromFilters.Contains(employee.FirstName) || (employeeNamesFromFilters.Contains(employee.LastName)))) &&
                         ((filters.Title                 == null) ? true : employeeIdsFromTitle.Contains(employee.EmployeeNumber)) &&
-                        ((filters.HireDate              == null) ? true : employeeIdsFromHireDate.Contains(employee.EmployeeNumber)) &&
-                        ((filters.TerminationDate       == null) ? true : employeeIdsFromTerminationDate.Contains(employee.EmployeeNumber)) &&
                         ((filters.YearsPriorExperience  == null) ? true : employeeIdsFromYearsPriorExperience.Contains(employee.EmployeeNumber)) &&
                         ((filters.Email                 == null) ? true : employeeIdsFromEmail.Contains(employee.EmployeeNumber)) &&
                         ((filters.WorkPhone             == null) ? true : employeeIdsFromWorkPhone.Contains(employee.EmployeeNumber)) &&
                         ((filters.WorkCell              == null) ? true : employeeIdsFromWorkCell.Contains(employee.EmployeeNumber))
                 select employee).ToList();
         
-            List<EmployeeDTO> employeeDTOList = _mapper.Map<List<Models.Employee>, List<EmployeeDTO>>(employeeList);
+            //List<EmployeeDTO> employeeDTOList = _mapper.Map<List<Models.Employee>, List<EmployeeDTO>>(employeeList);
+            List<EmployeeDTO> employeeDTOList = new List<EmployeeDTO>();
+
+            List<Employee> tempEmployeeList = new List<Employee>();
+            if (filters.Name != null) {
+                foreach (String name in filters.Name.values) {
+                    foreach (Employee employee in employeeList.ToList()) {
+                        if (!employee.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase) &&
+                            !employee.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase)) {
+                            tempEmployeeList.Add(employee);
+                            employeeList.Remove(employee);
+                        }
+                    }
+                }
+                foreach (Employee employee in tempEmployeeList) {
+                    employeeList.Add(employee);
+                }
+                tempEmployeeList.Clear();
+            }
+            if (filters.FirstName != null) {
+                foreach (String name in filters.FirstName.values) {
+                    foreach (Employee employee in employeeList.ToList()) {
+                        if (!employee.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase)) {
+                            tempEmployeeList.Add(employee);
+                            employeeList.Remove(employee);
+                        }
+                    }
+                }
+                foreach (Employee employee in tempEmployeeList) {
+                    employeeList.Add(employee);
+                }
+                tempEmployeeList.Clear();
+            }
+            if (filters.LastName != null) {
+                foreach (String name in filters.LastName.values) {
+                    foreach (Employee employee in employeeList.ToList()) {
+                        if (!employee.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase)) {
+                            tempEmployeeList.Add(employee);
+                            employeeList.Remove(employee);
+                        }
+                    }
+                }
+                foreach (Employee employee in tempEmployeeList) {
+                    employeeList.Add(employee);
+                }
+                tempEmployeeList.Clear();
+            }
+
+            foreach (Models.Employee employee in employeeList) {
+                var skillList = (from c in _context.EmployeeSkills
+                                 where c.EmployeeNumber == employee.EmployeeNumber
+                                 join o in _context.Skills on c.SkillId equals o.SkillId
+                                 select c).ToList();
+
+                EmployeeDTO employeeDTO = _mapper.Map<Models.Employee, EmployeeDTO>(employee);
+
+                foreach (var ele in skillList) {
+                    employeeDTO.Skills.Add(new EmployeeSkillDTO(ele.Skill.SkillCategoryId, ele.Skill.SkillId));
+                }
+
+                employeeDTOList.Add(employeeDTO);
+            }
+
             return employeeDTOList;          
         }
 

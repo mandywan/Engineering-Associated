@@ -22,6 +22,8 @@ namespace AeDirectory.Models
         }
 
         public virtual DbSet<Category> Categories { get; set; }
+        
+        public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<CompanyOfficeGroup> CompanyOfficeGroups { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
@@ -35,6 +37,7 @@ namespace AeDirectory.Models
             if (!optionsBuilder.IsConfigured)
             {
                 // need to be changed if the DB server is changed
+                // todo avoid hard coding
                 optionsBuilder.UseSqlServer(
                     "Server=35.182.69.53,1433;Database=AEV2;User Id=backend;Password=CPSC319cpsc319;");
             }
@@ -63,6 +66,23 @@ namespace AeDirectory.Models
                 entity.Property(e => e.SortValue)
                     .IsRequired()
                     .HasMaxLength(10)
+                    .IsUnicode(false);
+            });
+            
+            modelBuilder.Entity<Admin>(entity =>
+            {
+                entity.HasKey(e => e.AdminID)
+                    .HasName("pkAdmin");
+
+                entity.ToTable("Admin");
+
+                entity.Property(e => e.Username)
+                    .HasMaxLength(32)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(100)
                     .IsUnicode(false);
             });
 
@@ -121,7 +141,7 @@ namespace AeDirectory.Models
 
                 entity.ToTable("Employee");
 
-                entity.Property(e => e.EmployeeNumber).ValueGeneratedNever();
+                entity.Property(e => e.EmployeeNumber).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.CompanyCode)
                     .IsRequired()
@@ -179,6 +199,14 @@ namespace AeDirectory.Models
 
                 entity.Property(e => e.WorkPhone)
                     .HasMaxLength(24)
+                    .IsUnicode(false);
+                
+                entity.Property(e => e.Bio)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+                
+                entity.Property(e => e.ExtraInfo)
+                    .HasMaxLength(255)
                     .IsUnicode(false);
 
                 entity.Property(e => e.YearsPriorExperience).HasColumnType("numeric(3, 1)");

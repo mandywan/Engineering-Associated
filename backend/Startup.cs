@@ -20,6 +20,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.Json.Serialization;
+using Amazon.S3;
 
 namespace AeDirectory
 {
@@ -40,10 +41,14 @@ namespace AeDirectory
             services.AddDbContext<AEV2Context>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAutoMapper(typeof(EmployeeProfile));
+            services.AddAutoMapper(typeof(ContractorProfile));
             services.AddScoped<IEmployeeService, ImplEmployeeService>();
+            services.AddScoped<IContractorService, ImplIContractorService>();
             services.AddScoped<IAuthenticateService, TokenAuthenticationService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IOrgChartService, OrgChartService>();
+            // AWS S3
+            services.AddScoped<IStorageService, S3StorageService>();
 
             services.AddCors(options => 
             {
@@ -94,8 +99,7 @@ namespace AeDirectory
             app.UseRouting();
 
             // injust CORS into container
-            app.UseCors(options => 
-                options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             // order matters here, should be added after Routing
             app.UseAuthorization();

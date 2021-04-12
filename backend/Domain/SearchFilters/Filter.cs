@@ -20,13 +20,14 @@ namespace AeDirectory.Search
         public FilterByString? Title { get; set; }
         public FilterByDateTime? HireDate { get; set; }
         public FilterByDateTime? TerminationDate { get; set; }
-        public FilterByDecimal? YearsPriorExperience { get; set; }
+        public FilterByString? YearsPriorExperience { get; set; }
         public FilterByString? Email { get; set; }
         public FilterByString? WorkPhone { get; set; }
         public FilterByString? WorkCell { get; set; }
 
-
-
+        public int? EntriesStart { get; set; }
+        public int? EntriesCount { get; set; }
+        public int? Total { get; set; }
     }
 }
 
