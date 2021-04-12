@@ -1,15 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
 namespace AeDirectory.Models
 {
-/**
-* If anyone wants to change this class, please discord @Ricky
-* But the recommendation is that inheriting this class and making a new one by any change. 
-*/
     public partial class AEV2Context : DbContext
     {
         public AEV2Context()

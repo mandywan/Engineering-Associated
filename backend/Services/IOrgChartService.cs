@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using AeDirectory.DTO;
-using AeDirectory.Domain;
-using AeDirectory.Models;
 using AutoMapper;
+
+using AeDirectory.DTO;
+using AeDirectory.Models;
 
 namespace AeDirectory.Services
 {

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using System.Collections.Generic;
+
 using AeDirectory.DTO.FiltersDTO;
-using System.Collections.Generic;
 
 namespace AeDirectory.Services
 {

@@ -1,13 +1,13 @@
 ﻿using System;
+using System.Text.Json;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Cors;
 
 using AeDirectory.Services;
 using AeDirectory.DTO;
 using AeDirectory.Search;
-using System.Text.Json;
-using Microsoft.AspNetCore.Cors;
 
 namespace AeDirectory.Controllers
 {
@@ -34,7 +34,6 @@ namespace AeDirectory.Controllers
 			{
 				Status = "Up",
 			};
-			_logger.LogInformation($"Status pinged: {responseObject.Status}");
 			return responseObject;
 		}
 

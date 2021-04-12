@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using AeDirectory.DTO;
-using AeDirectory.Models;
-using AeDirectory.Services;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+
+using AeDirectory.DTO;
+using AeDirectory.Services;
 
 namespace AeDirectory.Controllers
 {
@@ -42,19 +39,6 @@ namespace AeDirectory.Controllers
         {
             return _employeeService.GetEmployeeByEmployeeNumber(id);
         }
-
-        [EnableCors("AllowAnyOrigin")]
-        [HttpPost]
-        [Authorize]
-        // Admin must login before posting this endpoint
-        // POST: api/employees
-        public IActionResult AddEmployee([FromBody] EmployeeDTO request)
-        {
-            // todo
-            // stretch goal
-            return Ok();
-        }
-
 
     }
 }

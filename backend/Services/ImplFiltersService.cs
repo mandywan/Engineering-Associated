@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+
 using AeDirectory.Models;
 using AeDirectory.Search;
-using AutoMapper;
-using System.Linq;
 using AeDirectory.DTO.FiltersDTO;
-using System.Linq.Expressions;
 
 namespace AeDirectory.Services
 {

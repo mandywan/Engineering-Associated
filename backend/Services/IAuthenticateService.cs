@@ -2,10 +2,11 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using AeDirectory.Domain;
-using AeDirectory.DTO;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+
+using AeDirectory.Domain;
+using AeDirectory.DTO;
 
 namespace AeDirectory.Services
 {

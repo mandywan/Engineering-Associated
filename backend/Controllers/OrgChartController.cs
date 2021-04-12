@@ -2,14 +2,10 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Linq;
+using Microsoft.AspNetCore.Cors;
 
 using AeDirectory.Services;
-using AeDirectory.DTO;
 using AeDirectory.Domain;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Cors;
 
 namespace AeDirectory.Controllers
 {

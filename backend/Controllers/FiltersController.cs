@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using AeDirectory.DTO;
-using AeDirectory.Models;
-using AeDirectory.Services;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using AeDirectory.DTO.FiltersDTO;
-using System.Text.Json.Serialization;
-using System.Text.Json;
 using Microsoft.AspNetCore.Cors;
+
+using AeDirectory.Services;
 
 namespace AeDirectory.Controllers
 {
