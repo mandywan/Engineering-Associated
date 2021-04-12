@@ -50,13 +50,13 @@ const ContractorProfileCard = (props) => {
               <Avatar
                 alt={name}
                 src={`/api/photos/${props.data.employeeNumber}`}
-                className="profilePic"
+                className="contractor-profilePic"
                 pr={0}
               />
             </Badge>
           </Grid>
           <Grid container item xs={8} justify={"flex-start"}>
-            <div className="profile-details">
+            <div className="contractor-profile-details">
               <CardContent padding={0}>
               <span className="profile-grid-heading">{name}</span>
               <span className="profile-grid-subheading">{title}</span>

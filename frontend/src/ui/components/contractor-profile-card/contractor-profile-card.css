@@ -70,16 +70,18 @@
   text-overflow: ellipsis;
 }
 
-.profilePic {
+.contractor-profilePic {
   width: 75px !important;
   height: 75px !important;
+  margin-left: 10%;
 }
 
-.profile-details {
+.contractor-profile-details {
   display: flex;
   flex-direction: row;
+  margin-left: 8%;
 }
 
-.profile-details {
+.contractor-profile-details {
   text-align: left;
 }
