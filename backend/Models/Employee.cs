@@ -5,10 +5,6 @@ using System.Collections.Generic;
 
 namespace AeDirectory.Models
 {
-/**
-* If anyone wants to change this class, please discord @Ricky
-* But the recommendation is that inheriting this class and making a new one by any change. 
-*/
     public partial class Employee
     {
         public Employee()

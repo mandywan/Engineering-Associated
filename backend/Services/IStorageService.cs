@@ -1,13 +1,12 @@
 using System;
 using System.IO;
-using System.Net;
 using System.Threading.Tasks;
-using AeDirectory.DTO;
-using AeDirectory.Models;
 using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
 using Microsoft.AspNetCore.Http;
+
+using AeDirectory.DTO;
 
 namespace AeDirectory.Services
 {

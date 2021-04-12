@@ -1,11 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+
 using AeDirectory.DTO;
 using AeDirectory.Search;
 using AeDirectory.Models;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace AeDirectory.Services
 {
@@ -33,11 +34,6 @@ namespace AeDirectory.Services
             // fetch employee basic info
             var employee = (from emp in _context.Employees
                     .Include("SupervisorEmployeeNumberNavigation")
-                    // .Include("CompanyCodeNavigation")
-                    // .Include("CompanyOfficeGroup")
-                    // .Include("Location")
-                    // .Include("Office")
-                    // many to many relationship, should join three tables together
                     .Include(emp => emp.EmployeeSkills )
                     .ThenInclude(empSkills => empSkills.Skill)
                 where emp.EmployeeNumber == id
@@ -394,7 +390,6 @@ namespace AeDirectory.Services
                         ((filters.WorkCell              == null) ? true : employeeIdsFromWorkCell.Contains(employee.EmployeeNumber))
                 select employee).ToList();
         
-            //List<EmployeeDTO> employeeDTOList = _mapper.Map<List<Models.Employee>, List<EmployeeDTO>>(employeeList);
             List<EmployeeDTO> employeeDTOList = new List<EmployeeDTO>();
 
             List<Employee> tempEmployeeList = new List<Employee>();

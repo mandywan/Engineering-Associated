@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using AeDirectory.DTO;
-using AeDirectory.Models;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+
+using AeDirectory.DTO;
+using AeDirectory.Models;
 
 namespace AeDirectory.Services
 {
@@ -29,7 +30,6 @@ namespace AeDirectory.Services
             _mapper = mapper;
         }
 
-        // public List<EmployeeDTO> GetContractorList()
         public List<ContractorDTO> GetContractorList()
         {
             var contractorList = (from emp in _context.Employees
@@ -40,16 +40,10 @@ namespace AeDirectory.Services
         }
 
         public ContractorDTO GetContractorByEmployeeNumber(int id)
-        // public EmployeeDTO GetContractorByEmployeeNumber(int id)
         {
             // fetch employee basic info
             var employee = (from emp in _context.Employees
                     .Include("SupervisorEmployeeNumberNavigation")
-                    // .Include("CompanyCodeNavigation")
-                    // .Include("CompanyOfficeGroup")
-                    // .Include("Location")
-                    // .Include("Office")
-                    // many to many relationship, should join three tables together
                     .Include(emp => emp.EmployeeSkills )
                     .ThenInclude(empSkills => empSkills.Skill)
                 where emp.EmployeeNumber == id
@@ -63,17 +57,6 @@ namespace AeDirectory.Services
                 select c).ToList();
             
             ContractorDTO employeeDTO = _mapper.Map<Models.Employee, ContractorDTO>(employee);
-            
-            // set supervisor in DTO
-            // employeeDTO.Supervisor.FirstName = employee.SupervisorEmployeeNumberNavigation.FirstName;
-            // employeeDTO.Supervisor.LastName = employee.SupervisorEmployeeNumberNavigation.LastName;
-            // employeeDTO.Supervisor.PhotoUrl = employee.SupervisorEmployeeNumberNavigation.PhotoUrl;
-
-            // set categories and skills in DTO
-            // foreach (var ele in skillList)
-            // {
-            //     employeeDTO.Skills.Add(new EmployeeSkillDTO(ele.Skill.SkillCategoryId, ele.Skill.SkillId));
-            // }
             
             return employeeDTO;
         }

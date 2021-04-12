@@ -1,9 +1,9 @@
-using AeDirectory.DTO;
-using AeDirectory.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
+using AeDirectory.DTO;
+using AeDirectory.Services;
 
 namespace AeDirectory.Controllers
 {

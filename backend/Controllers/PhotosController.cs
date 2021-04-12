@@ -1,12 +1,10 @@
-using System;
-using System.IO;
 using System.Threading.Tasks;
-using AeDirectory.Models;
-using AeDirectory.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
+using AeDirectory.Models;
+using AeDirectory.Services;
 
 namespace AeDirectory.Controllers
 {
@@ -24,8 +22,6 @@ namespace AeDirectory.Controllers
 
         [EnableCors("AllowAnyOrigin")]
         [HttpPut]
-        // todo
-        // [Authorize]
         public async Task<bool> AddPhoto([FromForm] PhotoModel photoFile)
         {
             // id is mandatory
@@ -59,15 +55,10 @@ namespace AeDirectory.Controllers
         
         [EnableCors("AllowAnyOrigin")]
         [HttpPost]
-        // todo
-        // [Authorize]
         public async Task<string> AddPhotoWithoutID([FromForm]IFormFile photoFile)
         {
             return await _S3StorageService.AddItemWithoutID(photoFile, photoFile.FileName);
         }
         
-        
-
-
     }
 }

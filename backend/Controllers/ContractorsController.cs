@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
-using AeDirectory.DTO;
-using AeDirectory.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+
+using AeDirectory.DTO;
+using AeDirectory.Services;
 
 namespace AeDirectory.Controllers
 {
@@ -41,7 +42,6 @@ namespace AeDirectory.Controllers
         
         [EnableCors("AllowAnyOrigin")]
         [HttpPost]
-        // todo uncomment this when this feature is done
         [Authorize]
         // Admin must login before posting this endpoint
         
@@ -59,11 +59,10 @@ namespace AeDirectory.Controllers
         
         [EnableCors("AllowAnyOrigin")]
         [HttpPut("{id}")]
-        // todo uncomment this when this feature is done
         [Authorize]
         // Admin must login before posting this endpoint
         
-        // PUT /api/Contractors/{id}
+        // PUT /api/contractors/{id}
         public IActionResult UpdateContractor (int id, [FromBody] ContractorUpdateDTO request)
         {
             int rowAffected = _contractorService.UpdateContractor(request, id);
@@ -77,11 +76,10 @@ namespace AeDirectory.Controllers
         
         [EnableCors("AllowAnyOrigin")]
         [HttpDelete("{id}")]
-        // todo uncomment this when this feature is done
         [Authorize]
         // Admin must login before posting this endpoint
         
-        // Delete /api/Contractors/{id}
+        // Delete /api/contractors/{id}
         public IActionResult DeleteContractor (int id)
         {
             int rowAffected = _contractorService.DeleteContractor(id);
