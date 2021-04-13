@@ -47,8 +47,8 @@ const SearchCard = (props) => {
 
   // TODO: needs to apply filters as well
   const handleCardOnClick = async () => {
-    console.log("search history card was clicked");
-    console.log(qs.stringify(keyword));
+    // console.log("search history card was clicked");
+    // console.log(qs.stringify(keyword));
     history.push(`/search?${qs.stringify(keyword)}`);
   };
 

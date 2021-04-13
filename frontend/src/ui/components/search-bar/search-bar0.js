@@ -55,8 +55,8 @@ const SearchBar = (props) => {
 
   const handleOnChange = (event, newValue) => {
     setValue(newValue);
-    console.log(selectedFilters);
-    console.log(newValue);
+    // console.log(selectedFilters);
+    // console.log(newValue);
     setSelectedFilters([newValue]);
 
   };
@@ -79,7 +79,7 @@ const SearchBar = (props) => {
   };
 
   const handleInitiateSearch = async () => {
-    console.log("search button was clicked");
+    // console.log("search button was clicked");
     let queries = await makeQueries();
 
     const stringified = qs.stringify(queries);
@@ -110,7 +110,7 @@ const SearchBar = (props) => {
   }
 
   const handleOpenFilterModal = () => {
-    console.log("filter button was clicked");
+    // console.log("filter button was clicked");
   };
 
   const handleCreateNewOptions = (options, params) => {
