@@ -100,7 +100,7 @@ const ProfilePage = (props) => {
                 workCell: res.workCell
             }]);
         });
-    }, []);
+    }, [location]);
     // Control loading indicator
     // Based on availability of first name, could be buggy
     useEffect(() => {
