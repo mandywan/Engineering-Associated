@@ -66,7 +66,7 @@ const ImageUpload = (props) => {
                 </Button>
                 {selectedFile ? selectedFile.name : "No file selected"}
             </Box>
-            <Box>
+            <Box display="flex" alignItems="center">
                 <Button
                     disabled={!selectedFile || isUploading}
                     variant={"contained"}
@@ -79,6 +79,7 @@ const ImageUpload = (props) => {
                 <CheckCircleOutlineSharpIcon
                     style={{ display: isUploaded ? 'inline' : 'none' }}
                     color="secondary"
+                    fontSize="large"
                     >
                 </CheckCircleOutlineSharpIcon>
             </Box>

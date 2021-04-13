@@ -59,17 +59,6 @@
       ],
       "value": ""
     }, {
-      "id": "2f93ff0c-ead5-46d7-8942-5391e8c29b0a",
-      "comment": "",
-      "command": "waitForElementVisible",
-      "target": "css=.page-title-search-toggle",
-      "targets": [
-        ["css=.page-title-search-toggle", "css:finder"],
-        ["xpath=//div[@id='root']/div/div[3]/div/div/div[2]", "xpath:idRelative"],
-        ["xpath=//div/div[3]/div/div/div[2]", "xpath:position"]
-      ],
-      "value": "22 Search Results(s)"
-    }, {
       "id": "1abde17f-a399-48f4-b6e6-7b613627de5e",
       "comment": "",
       "command": "click",
@@ -82,7 +71,14 @@
       ],
       "value": ""
     }, {
-      "id": "65096a12-2628-44db-ac50-d757f9ab1631",
+      "id": "f38f816b-0af5-4877-b7d4-31d0ec666048",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=.MuiCardContent-root > h1",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "a83fe593-2a77-43b5-aae9-34b447531ccf",
       "comment": "",
       "command": "verifyText",
       "target": "css=.MuiCardContent-root > h1",
@@ -149,7 +145,7 @@
     }]
   }, {
     "id": "e308a257-8a94-4ea5-8b12-24d7bbfdb8b7",
-    "name": "searchPhoneNumber1231231234",
+    "name": "searchPhoneNumber786-547-6382",
     "commands": [{
       "id": "8cb2470e-ed5b-4cf8-8803-e8a4949a1668",
       "comment": "",
@@ -182,7 +178,7 @@
         ["xpath=//section[@id='searchBox']/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "123-123-1234"
+      "value": "786-547-6382"
     }, {
       "id": "a8e9ab45-b01f-498d-b7f8-b9520b2aedff",
       "comment": "",
@@ -208,12 +204,19 @@
       ],
       "value": ""
     }, {
+      "id": "b053809d-cdb7-4832-8680-0089133fd1c3",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=.MuiCardContent-root > h1",
+      "targets": [],
+      "value": "30000"
+    }, {
       "id": "5dcf6080-10f6-45f7-b63e-295dcc848137",
       "comment": "",
       "command": "verifyText",
       "target": "css=.MuiCardContent-root > h1",
       "targets": [],
-      "value": "Jane Doe"
+      "value": "Ian Schiller"
     }]
   }, {
     "id": "94298d08-d298-4464-a9c0-8085e726c4ee",
@@ -250,7 +253,7 @@
         ["xpath=//section[@id='searchBox']/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "janedoe@ae.com"
+      "value": "Cyril@amc.com"
     }, {
       "id": "c39c8615-48ae-4e72-b3b9-c595143eb8b8",
       "comment": "",
@@ -288,12 +291,19 @@
       ],
       "value": ""
     }, {
+      "id": "5d46270c-4585-4785-aa0a-511cd397ec50",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=.MuiCardContent-root > h1",
+      "targets": [],
+      "value": "30000"
+    }, {
       "id": "7522ac1f-5bbc-482a-a901-dce5b6750178",
       "comment": "",
       "command": "verifyText",
       "target": "css=.MuiCardContent-root > h1",
       "targets": [],
-      "value": "Jane Doe"
+      "value": "Kent Bashirian"
     }]
   }, {
     "id": "469d7cf4-663d-4776-92e6-eb57a7319afc",
@@ -369,6 +379,13 @@
       ],
       "value": ""
     }, {
+      "id": "aa040451-7bdd-47f7-9516-1fcd035dd77d",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=.MuiChip-label",
+      "targets": [],
+      "value": "30000"
+    }, {
       "id": "fc6e7e63-9ee3-4e15-8db3-13425a635941",
       "comment": "",
       "command": "verifyText",
@@ -425,6 +442,13 @@
         ["xpath=//section[2]/section[2]", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "8a4ce350-a788-42b2-8640-7307d52421e9",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=.MuiChip-label",
+      "targets": [],
+      "value": "30000"
     }, {
       "id": "e9d604b9-441f-4f74-8590-2791531508d8",
       "comment": "",
@@ -493,6 +517,13 @@
         ["xpath=//div[5]/button/div/div[2]/div/div", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "34a40140-a99e-4649-8614-354fbd62fe66",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=.MuiChip-label",
+      "targets": [],
+      "value": "30000"
     }, {
       "id": "415ff4ad-ba25-4586-b242-25ff12ea0265",
       "comment": "",
@@ -1032,6 +1063,13 @@
       ],
       "value": ""
     }, {
+      "id": "9371260c-5830-4df9-903e-2735d0ba3883",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=//div[@id='reactgooglegraph-1']/table/tbody/tr[2]/td[2]/div/div/a[2]/span",
+      "targets": [],
+      "value": "30000"
+    }, {
       "id": "dae1d30a-a839-466c-be03-e9c17838b14b",
       "comment": "",
       "command": "click",
@@ -1289,6 +1327,13 @@
       ],
       "value": ""
     }, {
+      "id": "4af714c4-d056-4dc9-affd-0a329f252162",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=.MuiChip-label",
+      "targets": [],
+      "value": "30000"
+    }, {
       "id": "33e6b6f9-8931-4d1d-86ec-e88c5d32c671",
       "comment": "",
       "command": "verifyText",
@@ -1402,6 +1447,13 @@
       ],
       "value": ""
     }, {
+      "id": "db2accbe-f852-4721-a8b2-e5e0cf616e6d",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=.MuiChip-label",
+      "targets": [],
+      "value": "30000"
+    }, {
       "id": "5b5213b3-026f-4875-bcf2-4cb24f2eabc0",
       "comment": "",
       "command": "verifyText",
@@ -1514,6 +1566,13 @@
         ["xpath=//div[6]/button/div/div[2]/div/div", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "a7f86fd5-5b66-4ac7-81d5-6cd4e3a66f73",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=.MuiChip-label",
+      "targets": [],
+      "value": "30000"
     }, {
       "id": "b87a2de5-b3a4-44eb-b32d-0c647f69bf29",
       "comment": "",
@@ -1632,17 +1691,12 @@
       ],
       "value": ""
     }, {
-      "id": "2c831a79-b805-46c9-a2bb-29a98aaa5c76",
+      "id": "5e2afe28-7576-4a2f-bb3b-113d3adeae1e",
       "comment": "",
-      "command": "click",
+      "command": "waitForElementPresent",
       "target": "css=.MuiChip-label",
-      "targets": [
-        ["css=.MuiChip-label", "css:finder"],
-        ["xpath=//div[@id='root']/div/div[3]/section/div/div/div/div/div/div/span", "xpath:idRelative"],
-        ["xpath=//div/span", "xpath:position"],
-        ["xpath=//span[contains(.,'Company - Acme Harvesting Ltd.')]", "xpath:innerText"]
-      ],
-      "value": ""
+      "targets": [],
+      "value": "30000"
     }, {
       "id": "c7315e1c-6401-4812-b9d1-99b2f14ec2af",
       "comment": "",
@@ -2004,6 +2058,6 @@
     "timeout": 300,
     "tests": ["31affaf3-0360-433b-a5e0-1d338e085379"]
   }],
-  "urls": ["http://localhost:3000/"],
+  "urls": ["http://localhost:3000/", "https://ae-demo.dhruv.tech/"],
   "plugins": []
 }
