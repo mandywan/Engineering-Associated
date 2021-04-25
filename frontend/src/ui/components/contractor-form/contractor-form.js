@@ -80,13 +80,13 @@ const ContractorForm = (props) => {
         employmentType: props.data.employmentType || "",
         title: props.data.title || "",
         yearsPriorExperience: props.data.yearsPriorExperience || "",
-        email: props.data.email || '',
-        workPhone: props.data.workPhone || '',
-        workCell: props.data.workCell || '',
+        email: props.data.email || "",
+        workPhone: props.data.workPhone || "",
+        workCell: props.data.workCell || "",
         hireDate: new Date(props.data.hireDate) || null,
         terminationDate: new Date(props.data.terminationDate) || null,
-        bio: props.data.bio || '',
-        extraInfo: props.data.extraInfo || '',
+        bio: props.data.bio || "",
+        extraInfo: props.data.extraInfo || "",
     }
 
     // set the initial companies and locations selections
