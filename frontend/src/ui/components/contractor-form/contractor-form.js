@@ -25,7 +25,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const isValidDate = (d) => {
-    return d instanceof Date && !isNaN(d.valueOf());
+    if (d instanceof Date && !isNaN(d.valueOf())) {
+        return d > new Date(1900, 0o1, 0o1) && d < new Date(2100, 0o1, 0o1)
+    }
+    return false
 }
 
 const verifyMaxLen = (str, len) => {
@@ -83,8 +86,8 @@ const ContractorForm = (props) => {
         email: props.data.email || "",
         workPhone: props.data.workPhone || "",
         workCell: props.data.workCell || "",
-        hireDate: new Date(props.data.hireDate) || null,
-        terminationDate: new Date(props.data.terminationDate) || null,
+        hireDate: isEdit ? new Date(props.data.hireDate) : null,
+        terminationDate: isEdit ? new Date(props.data.terminationDate) : null,
         bio: props.data.bio || "",
         extraInfo: props.data.extraInfo || "",
     }
@@ -113,10 +116,14 @@ const ContractorForm = (props) => {
 
         if ('lastName' in fieldValues)
             temp.lastName = fieldValues.lastName ? "" : "This field is required."
-            temp.lastName = verifyMaxLen(fieldValues.lastName, 50)
+            if (temp.lastName === "") {
+                temp.lastName = verifyMaxLen(fieldValues.lastName, 50)
+            }
         if ('firstName' in fieldValues)
             temp.firstName = fieldValues.firstName ? "" : "This field is required."
-            temp.firstName = verifyMaxLen(fieldValues.firstName, 25)
+            if (temp.firstName === "") {
+                temp.firstName = verifyMaxLen(fieldValues.firstName, 25)
+            }
         if ('companyCode' in fieldValues && !isEdit)
             temp.companyCode = fieldValues.companyCode ? "" : "This field is required."
         if ('officeCode' in fieldValues && !isEdit)
@@ -129,27 +136,35 @@ const ContractorForm = (props) => {
             temp.supervisorEmployeeNumber = fieldValues.supervisorEmployeeNumber ? "" : "This field is required."
         if ('email' in fieldValues)
             temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
-            temp.email = verifyMaxLen(fieldValues.email)
-        if ('workPhone' in fieldValues && fieldValues.workPhone !== "")
-            temp.workPhone = (/^\d{3}\-\d{3}\-\d{4}$/).test(fieldValues.workPhone) ? "" : "Phone number is not valid."
-        if ('workCell' in fieldValues && fieldValues.workCell !== "")
-            temp.workCell = (/^\d{3}\-\d{3}\-\d{4}$/).test(fieldValues.workCell)  ? "" : "Phone number is not valid."
+            if (temp.email === "") {
+                temp.email = verifyMaxLen(fieldValues.email)
+            }
+        if ('workPhone' in fieldValues)
+            temp.workPhone = fieldValues.workPhone.length === 0 || (/^\d{3}\-\d{3}\-\d{4}$/).test(fieldValues.workPhone) ? "" : "Phone number is not valid."
+        if ('workCell' in fieldValues)
+            temp.workCell = fieldValues.workCell.length === 0 || (/^\d{3}\-\d{3}\-\d{4}$/).test(fieldValues.workCell) ? "" : "Phone number is not valid."
         if ('yearsPriorExperience' in fieldValues)
             temp.yearsPriorExperience = fieldValues.yearsPriorExperience >= 0 ? "" : "Please enter a number greater than or equal to zero."
         if ('hireDate' in fieldValues)
-            if (!isValidDate(fieldValues.hireDate)) {
+            if (fieldValues.hireDate && !isValidDate(fieldValues.hireDate)) {
                 setHireDateError("Please enter a valid date")
-            } else if (isValidDate(values.terminationDate) && fieldValues.hireDate >= values.terminationDate) {
-                setHireDateError("Invalid hire date: Hire date is later than termination date.")
+            } else if (fieldValues.hireDate
+                && values.terminationDate
+                && isValidDate(values.terminationDate)
+                && fieldValues.hireDate >= values.terminationDate) {
+                setHireDateError("Invalid hire date: Hire date should be earlier than termination date.")
             } else {
                 setHireDateError("")
                 setTermDateError("")
             }
         if ('terminationDate' in fieldValues)
-            if (!isValidDate(fieldValues.terminationDate)) {
+            if (fieldValues.terminationDate && !isValidDate(fieldValues.terminationDate)) {
                 setTermDateError("Please enter a valid date")
-            } else if (isValidDate(values.hireDate) && values.hireDate >= fieldValues.terminationDate) {
-                setTermDateError("Invalid termination date: Termination date is earlier than hire date.")
+            } else if (fieldValues.terminationDate
+                && values.hireDate
+                && isValidDate(values.hireDate)
+                && values.hireDate >= fieldValues.terminationDate) {
+                setTermDateError("Invalid termination date: Termination date should be later than hire date.")
             } else {
                 setTermDateError("")
                 setHireDateError("")
