@@ -24,6 +24,17 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const isValidDate = (d) => {
+    return d instanceof Date && !isNaN(d.valueOf());
+}
+
+const verifyMaxLen = (str, len) => {
+    if (str && str.length > len) {
+        return "Exceeded maximum character length"
+    }
+    return ""
+}
+
 // Model texts
 const ADD_SUCCESS_TITLE = "Add Success";
 const ADD_SUCCESS_TEXT = "Contractor was added successfully."
@@ -53,24 +64,27 @@ const ContractorForm = (props) => {
     const [defaultCompany, setDefaultCompany] = useState("")
     const [defaultOffice, setDefaultOffice] = useState("")
     const [defaultGroup, setDefaultGroup] = useState("")
+    const [defaultLoc, setDefaultLoc] = useState("")
+    const [hireDateError, setHireDateError] = useState("")
+    const [termDateError, setTermDateError] = useState("")
 
     // initial form values
     let initialFValues = {
-        lastName: props.data.lastName || '',
-        firstName: props.data.firstName || '',
-        companyCode: '',
-        officeCode: '',
-        groupCode: '',
-        locationId: props.data.locationId || '',
-        supervisorEmployeeNumber: props.data.supervisorEmployeeNumber || '',
-        employmentType: props.data.employmentType || '',
-        title: props.data.title || '',
-        yearsPriorExperience: props.data.yearsPriorExperience || '',
+        lastName: props.data.lastName || "",
+        firstName: props.data.firstName || "",
+        companyCode: "",
+        officeCode: "",
+        groupCode: "",
+        locationId: props.data.locationId || "",
+        supervisorEmployeeNumber: props.data.supervisorEmployeeNumber || "",
+        employmentType: props.data.employmentType || "",
+        title: props.data.title || "",
+        yearsPriorExperience: props.data.yearsPriorExperience || "",
         email: props.data.email || '',
         workPhone: props.data.workPhone || '',
         workCell: props.data.workCell || '',
-        hireDate: props.data.hireDate || null,
-        terminationDate: props.data.terminationDate || null,
+        hireDate: new Date(props.data.hireDate) || null,
+        terminationDate: new Date(props.data.terminationDate) || null,
         bio: props.data.bio || '',
         extraInfo: props.data.extraInfo || '',
     }
@@ -87,6 +101,8 @@ const ContractorForm = (props) => {
             setDefaultOffice(office[0].value_name)
             let group = await storage.db.searchDocument('metadata', {meta_id: `Group,${props.data.companyCode},${props.data.officeCode},${props.data.groupCode}`})
             setDefaultGroup(group[0].value_name)
+            let location = await storage.db.searchDocument('metadata', {meta_id: `Location,${props.data.locationId}`})
+            setDefaultLoc(location[0].value_name)
         }
     }, [])
 
@@ -97,8 +113,10 @@ const ContractorForm = (props) => {
 
         if ('lastName' in fieldValues)
             temp.lastName = fieldValues.lastName ? "" : "This field is required."
+            temp.lastName = verifyMaxLen(fieldValues.lastName, 50)
         if ('firstName' in fieldValues)
             temp.firstName = fieldValues.firstName ? "" : "This field is required."
+            temp.firstName = verifyMaxLen(fieldValues.firstName, 25)
         if ('companyCode' in fieldValues && !isEdit)
             temp.companyCode = fieldValues.companyCode ? "" : "This field is required."
         if ('officeCode' in fieldValues && !isEdit)
@@ -111,12 +129,35 @@ const ContractorForm = (props) => {
             temp.supervisorEmployeeNumber = fieldValues.supervisorEmployeeNumber ? "" : "This field is required."
         if ('email' in fieldValues)
             temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
+            temp.email = verifyMaxLen(fieldValues.email)
         if ('workPhone' in fieldValues && fieldValues.workPhone !== "")
             temp.workPhone = (/^\d{3}\-\d{3}\-\d{4}$/).test(fieldValues.workPhone) ? "" : "Phone number is not valid."
         if ('workCell' in fieldValues && fieldValues.workCell !== "")
             temp.workCell = (/^\d{3}\-\d{3}\-\d{4}$/).test(fieldValues.workCell)  ? "" : "Phone number is not valid."
         if ('yearsPriorExperience' in fieldValues)
             temp.yearsPriorExperience = fieldValues.yearsPriorExperience >= 0 ? "" : "Please enter a number greater than or equal to zero."
+        if ('hireDate' in fieldValues)
+            if (!isValidDate(fieldValues.hireDate)) {
+                setHireDateError("Please enter a valid date")
+            } else if (isValidDate(values.terminationDate) && fieldValues.hireDate >= values.terminationDate) {
+                setHireDateError("Invalid hire date: Hire date is later than termination date.")
+            } else {
+                setHireDateError("")
+                setTermDateError("")
+            }
+        if ('terminationDate' in fieldValues)
+            if (!isValidDate(fieldValues.terminationDate)) {
+                setTermDateError("Please enter a valid date")
+            } else if (isValidDate(values.hireDate) && values.hireDate >= fieldValues.terminationDate) {
+                setTermDateError("Invalid termination date: Termination date is earlier than hire date.")
+            } else {
+                setTermDateError("")
+                setHireDateError("")
+            }
+        if ('employmentType' in fieldValues)
+            temp.employmentType = verifyMaxLen(fieldValues.employmentType, 10)
+        if ('title' in fieldValues)
+            temp.title = verifyMaxLen(fieldValues.employmentType, 50)
 
         setErrors({
             ...temp
@@ -177,7 +218,8 @@ const ContractorForm = (props) => {
                         setModalTitle(ADD_SUCCESS_TITLE);
                         setModalText(ADD_SUCCESS_TEXT);
                         handleOpen();
-                        resetForm();
+                        history.push(`/admin`);
+                        window.location.reload();
                     } else if (res.response.status === 401) {
                         handleNotLoggedIn()
                     } else {
@@ -313,11 +355,13 @@ const ContractorForm = (props) => {
                             required
                             name="locationId"
                             label="Physical Location"
-                            value={values.locationId.value_name}
+                            placeHolder={defaultLoc}
+                            value={isEdit ? "" : values.locationId.value_name}
                             onChange={handleInputChange}
                             options={locations}
                             error =  {errors.locationId}
                             helperText={errors.locationId}
+                            disabled = {isEdit}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -386,6 +430,8 @@ const ContractorForm = (props) => {
                             name="title"
                             value={values.title}
                             onChange={handleInputChange}
+                            error = {errors.title}
+                            helperText = {errors.title}
                         />
                     </Grid>
                     <Grid item xs={12} sm={3}>
@@ -395,16 +441,21 @@ const ContractorForm = (props) => {
                             name="employmentType"
                             value={values.employmentType}
                             onChange={handleInputChange}
+                            error = {errors.employmentType}
+                            helperText = {errors.employmentType}
                         />
                     </Grid>
                     <Grid item xs={12} sm={3}>
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker disableToolbar variant="inline" inputVariant="outlined"
                                                 label="Hire Date"
-                                                format="MMM/dd/yyyy"
+                                                format="MM/dd/yyyy"
+                                                placeholder="mm/dd/yyyy"
                                                 name="hireDate"
                                                 value={values.hireDate}
                                                 onChange={date =>handleInputChange(convertToDefEventPara('hireDate',date))}
+                                                error = {hireDateError.length > 0}
+                                                helperText = {hireDateError}
 
                             />
                         </MuiPickersUtilsProvider>
@@ -413,10 +464,13 @@ const ContractorForm = (props) => {
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker disableToolbar variant="inline" inputVariant="outlined"
                                                 label="Termination Date"
-                                                format="MMM/dd/yyyy"
+                                                format="MM/dd/yyyy"
                                                 name="terminationDate"
+                                                placeholder="mm/dd/yyyy"
                                                 value={values.terminationDate}
                                                 onChange={date =>handleInputChange(convertToDefEventPara('terminationDate',date))}
+                                                error = {termDateError.length > 0}
+                                                helperText = {termDateError}
 
                             />
                         </MuiPickersUtilsProvider>

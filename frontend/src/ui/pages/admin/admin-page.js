@@ -17,6 +17,7 @@ const AdminPage = () => {
   const [contractors, setContractors] = useState([]);
   useEffect(async () => {
     contractor.getAllContractors().then(res => {
+        res = res.sort((a,b) => ('' + a.firstName).localeCompare(b.firstName))
         setContractors(res);
       }).catch(error => {
         if (error.response.status === 401) {
