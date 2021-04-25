@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 const isValidDate = (d) => {
     if (d instanceof Date && !isNaN(d.valueOf())) {
-        return d > new Date(1900, 0o1, 0o1) && d < new Date(2100, 0o1, 0o1)
+        return d > new Date(1900, 0, 0) && d < new Date(2100, 0, 0)
     }
     return false
 }
