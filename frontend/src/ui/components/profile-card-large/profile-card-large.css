@@ -121,6 +121,32 @@ a.link:hover {
     opacity: 0.9;
 }
 
+.profile-card-large .profile-contractorEditLink {
+    float: right !important;
+    margin-right: -17px;
+}
+
+.profile-card-large .profile-contractorEditLink button{
+    float: right !important;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 15px;
+    text-align: right;
+    color: #FFFFFF !important;
+    background: #26415C;
+    padding: 12px;
+    padding-left: 15px;
+    border-bottom-left-radius: 21px;
+    border-top-left-radius: 21px;
+
+}
+
+.profile-card-large .profile-contractorEditLink button:hover{
+    opacity: 0.9;
+}
+
 .profile-card-large .profile-cardContent {
     padding: 16px;
     width: 100%;
@@ -153,6 +179,20 @@ a.link:hover {
     display: inline-block;
     line-height: 12;
     text-align: left;
+}
+
+.profile-card-large .contractor-badge {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #005CAB;
+    color: white;
+    display: flex;
+    justify-content: center;
+    font-size: 15px;
+    align-items: center;
+    margin-bottom: -30%;
+    margin-right: -30%;
 }
 
 .profile-card-large .profile-outerBox svg {

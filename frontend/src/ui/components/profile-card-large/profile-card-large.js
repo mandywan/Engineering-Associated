@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import {Avatar, Box, CardMedia, Divider, Grid, Icon, Link, withStyles} from "@material-ui/core";
+import {Avatar, Box, CardMedia, Divider, Grid, Icon, Link, withStyles, Badge} from "@material-ui/core";
 import PhoneIcon from '@material-ui/icons/Phone';
 import EmailIcon from '@material-ui/icons/Email';
 import TodayIcon from '@material-ui/icons/Today';
@@ -18,6 +18,7 @@ import Button from '@material-ui/core/Button';
 import EventEmitter from '../../hooks/event-manager';
 import SmartphoneIcon from '@material-ui/icons/Smartphone';
 import filters from "../../../services/filters";
+import jwtManager from "../../../services/jwt-manager"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -132,7 +133,6 @@ const ProfileCardLarge = (props) => {
                 let allPins = await storage.db.toArray('pinnedProfiles');
     
                 let res = await allPins.filter((item) => {
-                    // console.log(`${item.employeeNumber} == ${props.data.employeeNumber}`)
                     if (item.employeeNumber == props.data.employeeNumber) {
                         return true;
                     } else {
@@ -214,7 +214,16 @@ const ProfileCardLarge = (props) => {
                 <Grid container spacing={0}>
                     <Grid container item xs={2} justify={"center"} alignItems="center" paddingRight={0}>
                         <div className="profile-profileDiv">
+                        <Badge
+                            overlap="circle"
+                            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                            badgeContent={props.data.isContractor ? 
+                                (<div className='contractor-badge'>
+                                C
+                                </div>) : null}
+                            >
                             <Avatar alt={props.data.firstName} src={`/api/photos/${props.data.employeeNumber}`} className="profile-profilePic" pr={0}/>
+                            </Badge>
                             <div className="profile-pin" id="profile-addpin">
                                 <Button onClick={addPin}>
                                     <AddIcon className="icon" align={"left"}/> Pin
@@ -244,6 +253,20 @@ const ProfileCardLarge = (props) => {
                     </Grid>
                     <Grid container item xs={5} >
                         <div className="profile-cardContent">
+                            {
+                                props.data.isContractor && jwtManager.hasToken() && (<div className="profile-contractorEditLink" id="profile-contractorEditLink">
+                                    <Link
+                                        component="button"
+                                        variant="body2"
+                                        onClick={() => {
+                                            history.push({pathname: `/editcontractor/${props.data.employeeNumber}`, state : props.data});
+                                            window.location.reload();
+                                        }}
+                                    >
+                                        Edit Contractor →
+                                    </Link>
+                                </div>)
+                            }
                             <div className="profile-outerBox">
                                 <div className="profile-content">
                                     <SmartphoneIcon className="icon" align={"left"}/>

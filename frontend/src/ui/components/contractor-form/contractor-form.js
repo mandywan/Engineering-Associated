@@ -290,9 +290,7 @@ const ContractorForm = (props) => {
     };
 
     const handleBack = () => {
-        // pushes the contractor data onto edit page url
-        history.push(`/admin`);
-        window.location.reload();
+        window.history.back();
     };
 
     return (
