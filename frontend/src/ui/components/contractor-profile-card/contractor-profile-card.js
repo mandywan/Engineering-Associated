@@ -21,8 +21,8 @@ const ContractorProfileCard = (props) => {
 
   const handleButtonClick = async () => {
     clickButton = true;
-    // pushes the contractor data onto edit page url
-    history.push({pathname: `/editcontractor/${props.data.employeeNumber}`, state : props.data});
+    // pushes the previous url and contractor data onto edit page url
+    history.push({pathname: `/editcontractor/${props.data.employeeNumber}`, state : { prevUrl: window.location.href, employeeData: props.data }});
     window.location.reload();
   };
 
