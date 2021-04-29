@@ -132,8 +132,12 @@ const ContractorForm = (props) => {
             temp.groupCode = fieldValues.groupCode && fieldValues.groupCode !== -1 ? "" : "This field is required."
         if ('locationId' in fieldValues)
             temp.locationId = fieldValues.locationId && fieldValues.locationId !== -1 ? "" : "This field is required."
-        if ('supervisorEmployeeNumber' in fieldValues)
+        if ('supervisorEmployeeNumber' in fieldValues){
             temp.supervisorEmployeeNumber = fieldValues.supervisorEmployeeNumber ? "" : "This field is required."
+            if (fieldValues.supervisorEmployeeNumber) {
+                temp.supervisorEmployeeNumber = fieldValues.supervisorEmployeeNumber > 0 ? "" : "Please enter a valid supervisor id greater than zero."
+            }
+        }
         if ('email' in fieldValues)
             temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
             if (temp.email === "") {
@@ -147,25 +151,31 @@ const ContractorForm = (props) => {
             temp.yearsPriorExperience = fieldValues.yearsPriorExperience >= 0 ? "" : "Please enter a number greater than or equal to zero."
         if ('hireDate' in fieldValues)
             if (fieldValues.hireDate && !isValidDate(fieldValues.hireDate)) {
+                temp.hireDate = "error"
                 setHireDateError("Please enter a valid date")
             } else if (fieldValues.hireDate
                 && values.terminationDate
                 && isValidDate(values.terminationDate)
                 && fieldValues.hireDate >= values.terminationDate) {
+                temp.hireDate = "error"
                 setHireDateError("Invalid hire date: Hire date should be earlier than termination date.")
             } else {
+                temp.hireDate = ""
                 setHireDateError("")
                 setTermDateError("")
             }
         if ('terminationDate' in fieldValues)
             if (fieldValues.terminationDate && !isValidDate(fieldValues.terminationDate)) {
+                temp.hireDate = "error"
                 setTermDateError("Please enter a valid date")
             } else if (fieldValues.terminationDate
                 && values.hireDate
                 && isValidDate(values.hireDate)
                 && values.hireDate >= fieldValues.terminationDate) {
+                temp.hireDate = "error"
                 setTermDateError("Invalid termination date: Termination date should be later than hire date.")
             } else {
+                temp.hireDate = ""
                 setTermDateError("")
                 setHireDateError("")
             }
@@ -225,7 +235,7 @@ const ContractorForm = (props) => {
         e.preventDefault()
         if (validate()) {
             const requestBody = formatContractor(values, imageName);
-            const editRequestBody = formatEditContractor(values, imageName);
+            const editRequestBody = formatEditContractor(values, imageName, initialFValues.yearsPriorExperience);
             // case add - no initial data
             if (!isEdit) {
                 addContractor(requestBody).then(res => {

@@ -77,7 +77,7 @@ namespace AeDirectory.Services
                 existingEmp.CompanyCode = request.CompanyCode ?? existingEmp.CompanyCode;
                 existingEmp.Email = request.Email ?? existingEmp.Email;
                 existingEmp.SupervisorEmployeeNumber = request.SupervisorEmployeeNumber != 0 ? request.SupervisorEmployeeNumber : existingEmp.SupervisorEmployeeNumber;
-                existingEmp.YearsPriorExperience = request.YearsPriorExperience != 0 ? request.YearsPriorExperience : existingEmp.YearsPriorExperience;
+                existingEmp.YearsPriorExperience = request.YearsPriorExperience >= 0 ? request.YearsPriorExperience : existingEmp.YearsPriorExperience;
                 existingEmp.OfficeCode = request.OfficeCode ?? existingEmp.OfficeCode;
                 existingEmp.GroupCode = request.GroupCode ?? existingEmp.GroupCode;
                 existingEmp.LocationId = request.LocationId ?? existingEmp.LocationId;

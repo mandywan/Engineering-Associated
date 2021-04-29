@@ -46,21 +46,27 @@ export const addContractor = (contractor) => {
         );
 };
 
-// formats the contractor object for http request
-export const formatEditContractor = (contractor, imageFileName) => {
+// formats the contractor object for put http request
+export const formatEditContractor = (contractor, imageFileName, expVal) => {
     // make a deep copy
     let res = JSON.parse(JSON.stringify(contractor));
     for (let [key, value] of Object.entries(res)) {
-        // delete empty fields
-        if (value === "" || value === null) {
-            delete res[key];
-            // format dropdown items
-        } else if (key === "companyCode" || key === "officeCode" || key === "groupCode" || key === "locationId" ) {
-            delete res[key];
-            // format number fields
-        } else if (key === "supervisorEmployeeNumber" || key === "yearsPriorExperience") {
-            res[key] = parseInt(value)
-        }
+        // years of experience has to be filled
+        // format yearsPriorExperience
+        if (key === "yearsPriorExperience") {
+            if (value === "") {
+                if (expVal === "") {
+                    delete res[key];
+                } else {
+                    res[key] = 0;
+                }
+            } else {
+                res[key] = parseInt(value)
+            }
+            // remove all the fields we disabled
+        } else if (key === "companyCode" || key === "officeCode" || key === "groupCode" || key === "locationId" || key === "supervisorEmployeeNumber" ) {
+            delete res[key];   
+        } 
     }
 
     // update image url
