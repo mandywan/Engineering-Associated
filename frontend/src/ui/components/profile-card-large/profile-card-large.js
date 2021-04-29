@@ -259,7 +259,7 @@ const ProfileCardLarge = (props) => {
                                         component="button"
                                         variant="body2"
                                         onClick={() => {
-                                            history.push({pathname: `/editcontractor/${props.data.employeeNumber}`, state : props.data});
+                                            history.push({pathname: `/editcontractor/${props.data.employeeNumber}`, state : { prevUrl: window.location.href, employeeData: props.data }});
                                             window.location.reload();
                                         }}
                                     >
