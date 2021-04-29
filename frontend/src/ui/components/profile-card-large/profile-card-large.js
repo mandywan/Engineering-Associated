@@ -254,18 +254,13 @@ const ProfileCardLarge = (props) => {
                     <Grid container item xs={5} >
                         <div className="profile-cardContent">
                             {
-                                props.data.isContractor && (<div className="profile-contractorEditLink" id="profile-contractorEditLink">
+                                props.data.isContractor && jwtManager.hasToken() && (<div className="profile-contractorEditLink" id="profile-contractorEditLink">
                                     <Link
                                         component="button"
                                         variant="body2"
                                         onClick={() => {
-                                            if (jwtManager.hasToken()) {
-                                                history.push({pathname: `/editcontractor/${props.data.employeeNumber}`, state : props.data});
-                                                window.location.reload();
-                                            } else {
-                                                history.push(`/login`);
-                                                window.location.reload();
-                                            }
+                                            history.push({pathname: `/editcontractor/${props.data.employeeNumber}`, state : props.data});
+                                            window.location.reload();
                                         }}
                                     >
                                         Edit Contractor →
