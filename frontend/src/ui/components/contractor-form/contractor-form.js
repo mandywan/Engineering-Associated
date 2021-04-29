@@ -260,14 +260,12 @@ const ContractorForm = (props) => {
                         setModalTitle(EDIT_SUCCESS_TITLE);
                         setModalText(EDIT_SUCCESS_TEXT);
                         handleOpen();
-                        if (props.data.prevUrl) {
-                            if (props.data.prevUrl.includes("/admin")) {
-                                history.push(`/admin`);
-                                window.location.reload();
-                            } else {
-                                history.push(`/profile/${formData.employeeNumber}`);
-                                window.location.reload();
-                            }
+                        if (props.data.prevUrl.includes("/admin")) {
+                            history.push(`/admin`);
+                            window.location.reload();
+                        } else {
+                            history.push(`/profile/${formData.employeeNumber}`);
+                            window.location.reload();
                         }
                     } else if (res.response.status === 401) {
                         handleNotLoggedIn()
