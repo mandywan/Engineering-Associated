@@ -80,7 +80,7 @@ const SearchResults = (props) => {
 
   const handleSort = async(select) => {
     let data = JSON.parse(await storage.ss.getPair('resultsFromServer'));
-    if (select.toLowerCase() == 'alpha') {
+    if (select.toLowerCase() == 'alpha' && searchResults != null) {
 
       let nameSortResults = data.results.sort(function(a, b) {
         let personA = a.firstName.toUpperCase() + a.lastName.toUpperCase();
@@ -91,7 +91,6 @@ const SearchResults = (props) => {
       obj.data = data;
       props = obj;
       props.data.results = nameSortResults;
-      console.table(nameSortResults);
       propschange();
 
     } else {
