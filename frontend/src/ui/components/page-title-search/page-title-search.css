@@ -47,14 +47,12 @@
   height: 16px;
 }
 
-/* Hide default HTML checkbox */
 .tab-switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* The slider */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -91,7 +89,6 @@ input:checked + .slider:before {
   transform: translateX(20px);
 }
 
-/* Rounded sliders */
 .slider.round {
   border-radius: 34px;
 }
@@ -103,11 +100,22 @@ input:checked + .slider:before {
 
 .search-options {
   position: relative;
-  top: 57px;
-  left: 150px;
+  top: 48px;
+  right: 210px;
   width: 500px;
   text-align: right;
   z-index: 5;
+}
+
+.search-options-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  width: 80%;
+  max-width: 1400px;
+  min-width: 800px;
+  padding-bottom: 16px;
+  position: absolute;
+  bottom: 0px;
 }
 
 .tab-switch p {

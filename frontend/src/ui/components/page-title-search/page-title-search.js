@@ -38,20 +38,23 @@ const Title = (props) => {
     <div className="page-title-search-wrapper">
       <div className="page-title-search-box">
         <div className="page-title-search">{props.data.title}</div>
-        <div className="search-options">
-          <label className="tab-switch">
-            <p>Open results in new tab</p>
-            <input id="tab-checkbox" type="checkbox" onChange={handleTabs}/>
-            <span className="slider round"></span>
-          </label>
-          <div className="search-sort">
-            <p>Sort By: </p>
-            <select onChange={handleSort} id="handleSort">
-              <option value="Default">Best Match</option>
-              <option value="Alpha">Name</option>
-            </select>
+        <div className="search-options-wrapper">
+          <div className="search-options">
+            <label className="tab-switch">
+              <p>Open results in new tab</p>
+              <input id="tab-checkbox" type="checkbox" onChange={handleTabs}/>
+              <span className="slider round"></span>
+            </label>
+            <div className="search-sort">
+              <p>Sort By: </p>
+              <select onChange={handleSort} id="handleSort">
+                <option value="Default">Best Match</option>
+                <option value="Alpha">Name</option>
+              </select>
+            </div>
           </div>
         </div>
+        
         <div className="page-title-search-toggle">
           <ToggleView />
         </div>
