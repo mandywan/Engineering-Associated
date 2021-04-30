@@ -45,6 +45,7 @@ const SearchPage = () => {
         return;*/
       }
       setSearchResults([]);
+      await storage.ss.setPair('resultsFromServer', JSON.stringify([]));
       let data = JSON.parse(decodeURIComponent(query.q));
       if(data.Name) {
         await storage.ss.setPair('search_key', JSON.stringify({Name: data.Name}));
