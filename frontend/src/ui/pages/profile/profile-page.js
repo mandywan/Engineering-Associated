@@ -131,7 +131,7 @@ const ProfilePage = (props) => {
                                     </HeaderTypography>
                                 </div>
                                 <div className={"content profile-page-cards"}>
-                                    <ProfileCard data={supervisorResults} />
+                                    <ProfileCard data={supervisorResults} tab="override"/>
                                 </div>
                             </div>
                         ) : (

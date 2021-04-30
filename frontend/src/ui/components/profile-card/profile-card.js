@@ -14,7 +14,7 @@ const ProfileCard = (props) => {
 
   const handleCardOnClick = async () => {
     let newTab = await storage.ss.getPair('newTab');
-    if (newTab == 'true') {
+    if (newTab == 'true' && !props.tab) {
       window.open(`/profile/${props.data.employeeNumber}`, "_blank");
     } else {
       history.push(`/profile/${props.data.employeeNumber}`);
