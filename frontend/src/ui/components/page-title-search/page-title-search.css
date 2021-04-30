@@ -39,3 +39,111 @@
   position: absolute;
   bottom: 0px;
 }
+
+.tab-switch {
+  position: relative;
+  display: inline-block;
+  width: 39px;
+  height: 16px;
+}
+
+/* Hide default HTML checkbox */
+.tab-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 3px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #005CAB;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #005CAB;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+
+.search-options {
+  position: relative;
+  top: 57px;
+  left: 150px;
+  width: 500px;
+  text-align: right;
+  z-index: 5;
+}
+
+.tab-switch p {
+  width: 160px;
+  position: relative;
+  left: -170px;
+  top: -15px;
+  font-size: 9.5pt;
+  font-family: 'Poppins';
+  color: #26415C;
+}
+
+.search-sort select {
+  padding: 2px !important;
+  border-radius: 5px;
+  font-family: Poppins;
+  font-size: 10pt;
+  margin-left: 7px;
+  display: inline-block;
+  border-color:#CCCCCC;
+  color: #26415C;
+  font-size: 9pt !important;
+
+}
+
+.search-sort p {
+  width: 160px;
+  display: inline-block;
+  font-size: 9.5pt;
+  font-family: 'Poppins';
+  color: #26415C;
+}
+
+.search-sort {
+  position: relative;
+  height: 25px;
+  top:-55px;
+  text-align: right;
+}

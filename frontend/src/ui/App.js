@@ -21,8 +21,6 @@ function App() {
 
   useEffect(async()=> {
     await filters.init();
-    //await storage.ss.setPair('basisURI', null);
-    //await storage.ss.setPair('currentURI', null);
     EventEmitter.emit('onInit');
   }, [] );
 

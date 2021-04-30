@@ -14,7 +14,7 @@ filters.init = async() => {
     return new Promise(async(resolve, reject) => {
         if (!storage.ss.getFlag('filters')) {
             try {
-    
+                await storage.ss.setPair('newTab', 'true');
                 let response = await fetch("/api/filters/", {"method": "GET"});
                 if (!response.ok) {
     

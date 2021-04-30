@@ -6,6 +6,8 @@ import storage from '../../../services/storage';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { IconButton, Grid, withStyles, Tooltip } from '@material-ui/core';
 import LoadingIndicator from '../loading-indicator';
+import { useLocation } from 'react-router-dom';
+import EventEmitter from '../../hooks/event-manager';
 
 const ExpandButton = withStyles((theme) => ({
   root: {
@@ -31,10 +33,31 @@ const SearchResults = (props) => {
   const [showMore, setShowMore] = useState(false);
   const forceUpdate = React.useReducer(bool => !bool)[1];
   const [msg, setMsg] = useState("Looked here, there and everywhere - but couldn't find the person you're looking for.");
-  
-  useEffect(() => {
-    setSearchResults(props.data.results);
+  const location = useLocation();
 
+
+  useEffect(async() => {
+    document.getElementById('handleSort').onchange = (event) => {
+      handleSort(event.target.value);
+    };
+
+  }, []);
+  useEffect(async() => {
+    let select = await storage.ss.getPair('sort');
+    if (select) {
+      if (select.toLowerCase() == 'alpha') {
+        handleSort('alpha');
+      }
+    }
+    propschange();
+  }, [props]);
+
+  useEffect(async() => {
+
+  }, [location.search]);
+
+  const propschange = () => {
+    setSearchResults(props.data.results);
     try {
       let reslen = props.data.results.length;
       if (reslen > 24) {
@@ -53,8 +76,31 @@ const SearchResults = (props) => {
     setMsg(props.data.msg);
     setSearchResultsDisplayed(toShow);
     forceUpdate();
+  };
 
-  }, [props]);
+  const handleSort = async(select) => {
+    let data = JSON.parse(await storage.ss.getPair('resultsFromServer'));
+    if (select.toLowerCase() == 'alpha') {
+
+      let nameSortResults = data.results.sort(function(a, b) {
+        let personA = a.firstName.toUpperCase() + a.lastName.toUpperCase();
+        let personB = b.firstName.toUpperCase() + b.lastName.toUpperCase();
+        return (personA < personB) ? -1 : (personA > personB) ? 1 : 0;
+      });
+      let obj = {}
+      obj.data = data;
+      props = obj;
+      props.data.results = nameSortResults;
+      console.table(nameSortResults);
+      propschange();
+
+    } else {
+      let obj = {}
+      obj.data = data;
+      props = obj;
+      propschange();
+    }
+  }
 
   const checkNextPageAvailable = () => {
     if (searchResults.length <= searchResultsDisplayed.length) {
@@ -64,10 +110,13 @@ const SearchResults = (props) => {
 
   // Control loading indicator
   useEffect(() => {
+
     if (searchResults !== null && searchResults !== undefined) {
       setIsLoading(false);
+      document.getElementById('handleSort').disabled = false;
     } else {
       setIsLoading(true);
+      document.getElementById('handleSort').disabled = true;
       document.querySelector('.page-title-search').innerHTML = `Searching...`;
     }
   }, [searchResults]);
@@ -78,13 +127,13 @@ const SearchResults = (props) => {
   };
 
   const handleExpandMore = () => {
-    let reslen = props.data.results.length;
+    let reslen = searchResults.length;
     if (reslen > (listed+24)) {
-      toShow = toShow.concat(props.data.results.slice(listed, (listed+24)));
+      toShow = toShow.concat(searchResults.slice(listed, (listed+24)));
       listed += 24;
       setShowMore(true);
     } else {
-      toShow = props.data.results;
+      toShow = searchResults;
       setShowMore(false);
     }
 

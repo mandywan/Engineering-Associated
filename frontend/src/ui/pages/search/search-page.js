@@ -76,6 +76,7 @@ const SearchPage = () => {
       .then(async(res) => {
         //alert("!"+JSON.stringify(res));
         setSearchResults(res);
+        await storage.ss.setPair('resultsFromServer', JSON.stringify(res));
         await storage.ss.setPair('currentURI', encodeURIComponent(JSON.stringify(data)));
         return data;
       })
@@ -95,8 +96,7 @@ const SearchPage = () => {
 
   EventEmitter.addListener('deleteChip', (data) => {
     setSelectionsRaw(data.selectionsRaw);
-  })
-
+  });
 
   return (
     <div>

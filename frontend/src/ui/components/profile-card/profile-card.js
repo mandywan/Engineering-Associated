@@ -3,6 +3,7 @@ import { Avatar, Grid, CardActionArea, Typography, CardContent, Card, Badge } fr
 import { useHistory } from "react-router-dom";
 
 import './profile-card.css';
+import storage from "../../../services/storage";
 
 const ProfileCard = (props) => {
   let history = useHistory();
@@ -12,8 +13,14 @@ const ProfileCard = (props) => {
   let isContractor = props.data.isContractor;
 
   const handleCardOnClick = async () => {
-    history.push(`/profile/${props.data.employeeNumber}`);
-    window.location.reload();
+    let newTab = await storage.ss.getPair('newTab');
+    if (newTab == 'true') {
+      window.open(`/profile/${props.data.employeeNumber}`, "_blank");
+    } else {
+      history.push(`/profile/${props.data.employeeNumber}`);
+      window.location.reload();
+    }
+    
   };
 
   return (

@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import arrow from "../../../assets/arrow.svg";
 import "./profile-card-list.css";
+import storage from "../../../services/storage";
 
 const ProfileCard = (props) => {
   let history = useHistory();
@@ -13,8 +14,14 @@ const ProfileCard = (props) => {
   let isContractor = props.data.isContractor;
 
   const handleCardOnClick = async () => {
-    history.push(`/profile/${props.data.employeeNumber}`);
-    window.location.reload();
+    let newTab = await storage.ss.getPair('newTab');
+    if (newTab == 'true') {
+      window.open(`/profile/${props.data.employeeNumber}`, "_blank");
+    } else {
+      history.push(`/profile/${props.data.employeeNumber}`);
+      
+      window.location.reload();
+    }
   };
 
   return (
