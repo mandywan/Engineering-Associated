@@ -53,8 +53,8 @@ const EDIT_FAIL_TEXT = "Failed to edit the contractor. Please ensure all informa
 const ContractorForm = (props) => {
     let history = useHistory();
     const classes = useStyles();
-    //const formTitle = props.data.hasData ? "Edit Contractor" : "Add a contractor";
-    const isEdit = Object.keys(props.data).length !== 0
+    let formData = props.data.employeeData? props.data.employeeData : props.data
+    const isEdit = Object.keys(formData).length !== 0
     const formTitle = isEdit ? "Edit contractor" : "Add a contractor";
     const [companies, setCompanies] = useState([]);
     const [offices, setOffices] = useState([{value_id: -1, value_name: "Please select a Company first"}]);
@@ -73,23 +73,23 @@ const ContractorForm = (props) => {
 
     // initial form values
     let initialFValues = {
-        lastName: props.data.lastName || "",
-        firstName: props.data.firstName || "",
+        lastName: formData.lastName || "",
+        firstName: formData.firstName || "",
         companyCode: "",
         officeCode: "",
         groupCode: "",
-        locationId: props.data.locationId || "",
-        supervisorEmployeeNumber: props.data.supervisorEmployeeNumber || "",
-        employmentType: props.data.employmentType || "",
-        title: props.data.title || "",
-        yearsPriorExperience: props.data.yearsPriorExperience || "",
-        email: props.data.email || "",
-        workPhone: props.data.workPhone || "",
-        workCell: props.data.workCell || "",
-        hireDate: isEdit ? new Date(props.data.hireDate) : null,
-        terminationDate: isEdit ? new Date(props.data.terminationDate) : null,
-        bio: props.data.bio || "",
-        extraInfo: props.data.extraInfo || "",
+        locationId: formData.locationId || "",
+        supervisorEmployeeNumber: formData.supervisorEmployeeNumber || "",
+        employmentType: formData.employmentType || "",
+        title: formData.title || "",
+        yearsPriorExperience: formData.yearsPriorExperience || "",
+        email: formData.email || "",
+        workPhone: formData.workPhone || "",
+        workCell: formData.workCell || "",
+        hireDate: isEdit ? new Date(formData.hireDate) : null,
+        terminationDate: isEdit ? new Date(formData.terminationDate) : null,
+        bio: formData.bio || "",
+        extraInfo: formData.extraInfo || "",
     }
 
     // set the initial companies and locations selections
@@ -98,13 +98,13 @@ const ContractorForm = (props) => {
         setLocations(await storage.db.searchDocument('metadata', {call_name: 'Location'}));
 
         if (isEdit) {
-            let company = await storage.db.searchDocument('metadata', {meta_id: `Company,${props.data.companyCode}`})
+            let company = await storage.db.searchDocument('metadata', {meta_id: `Company,${formData.companyCode}`})
             setDefaultCompany(company[0].value_name)
-            let office = await storage.db.searchDocument('metadata', {meta_id: `Office,${props.data.companyCode},${props.data.officeCode}`})
+            let office = await storage.db.searchDocument('metadata', {meta_id: `Office,${formData.companyCode},${formData.officeCode}`})
             setDefaultOffice(office[0].value_name)
-            let group = await storage.db.searchDocument('metadata', {meta_id: `Group,${props.data.companyCode},${props.data.officeCode},${props.data.groupCode}`})
+            let group = await storage.db.searchDocument('metadata', {meta_id: `Group,${formData.companyCode},${formData.officeCode},${formData.groupCode}`})
             setDefaultGroup(group[0].value_name)
-            let location = await storage.db.searchDocument('metadata', {meta_id: `Location,${props.data.locationId}`})
+            let location = await storage.db.searchDocument('metadata', {meta_id: `Location,${formData.locationId}`})
             setDefaultLoc(location[0].value_name)
         }
     }, [])
@@ -255,11 +255,18 @@ const ContractorForm = (props) => {
                     }
                 });
             } else {
-                editContractor(props.data.employeeNumber, editRequestBody).then(res => {
+                editContractor(props.data.employeeData.employeeNumber, editRequestBody).then(res => {
                     if (res.status === 200) {
                         setModalTitle(EDIT_SUCCESS_TITLE);
                         setModalText(EDIT_SUCCESS_TEXT);
                         handleOpen();
+                        if (props.data.prevUrl.includes("/admin")) {
+                            history.push(`/admin`);
+                            window.location.reload();
+                        } else {
+                            history.push(`/profile/${formData.employeeNumber}`);
+                            window.location.reload();
+                        }
                     } else if (res.response.status === 401) {
                         handleNotLoggedIn()
                     } else {
@@ -290,7 +297,18 @@ const ContractorForm = (props) => {
     };
 
     const handleBack = () => {
-        window.history.back();
+        if (props.data.prevUrl) {
+            if (props.data.prevUrl.includes("/admin")) {
+                history.push(`/admin`);
+                window.location.reload();
+            } else {
+                history.push(`/profile/${formData.employeeNumber}`);
+                window.location.reload();
+            }
+        } else {
+            history.push(`/admin`);
+            window.location.reload();
+        }
     };
 
     return (
@@ -552,7 +570,7 @@ const ContractorForm = (props) => {
                             size={"large"}
                             color={"primary"}
                             onClick={handleBack}
-                            text={"Back to Admin Page"}>
+                            text={"Back to Previous Page"}>
                             Back
                         </Button>
                     </Box>
