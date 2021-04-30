@@ -20,7 +20,7 @@ const PinnedProfiles = (profiles) => {
           ((profiles.length > 0) ? (
             profiles.map(profile => 
               (
-                <ProfileCard key={profiles.indexOf(profile)} data={profile} />
+                <ProfileCard key={profiles.indexOf(profile)} data={profile} tab="override" />
               )
               )
           ):(

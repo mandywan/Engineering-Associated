@@ -14,7 +14,7 @@ import Header from './pages/landing-page/landing-header';
 import EventEmitter from './hooks/event-manager';
 import LoadingIndicator  from '../ui/components/loading-indicator';
 import AlertBanner  from '../ui/components/alert';
-import storage from '../services/storage';
+import Footer from '../ui/components/footer/footer';
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -37,6 +37,7 @@ function App() {
     <div className='App'>
     <AlertBanner/>
     {(isLoading) ? (<LoadingIndicator />)  : (null)}
+
     <Header />
       <Switch>
         <Route exact path='/'>
@@ -72,6 +73,7 @@ function App() {
         </Route>
 
       </Switch>
+      <Footer />
     </div>
   );
 }

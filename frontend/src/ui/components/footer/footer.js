@@ -1,12 +1,16 @@
 import React from 'react';
+import './footer.css';
 
 const Footer = () => {
 
+  let year = new Date().getFullYear();
   return (
-    <div >
-      © Associated Engineering 2021-23. All Rights Reserved. 
-      Treat all data as confidential.
-    </div>
+    <footer id="site-footer">
+      <center>
+        © {year} Associated Engineering. All Rights Reserved. <br/>
+        <small>Treat all data as confidential.</small>
+      </center>
+    </footer>
   );
 
 
