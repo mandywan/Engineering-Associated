@@ -49,7 +49,7 @@ const Title = (props) => {
               <p>Sort By: </p>
               <select onChange={handleSort} id="handleSort">
                 <option value="Default">Best Match</option>
-                <option value="Alpha">Name</option>
+                <option value="Alpha">Name (A-Z)</option>
               </select>
             </div>
           </div>

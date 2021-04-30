@@ -28,11 +28,6 @@
     padding-bottom: 0;
 }
 
-#filter_modal .vertical-tabpanel div{
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-}
-
 #filter_modal .MuiTabs-indicator {
     background-color: rgb(38, 65, 92) !important;
 }
@@ -81,4 +76,23 @@
     font-family: Poppins;
     font-size: 10pt;
     margin-left: 1.5px;
+}
+
+#filter_modal .skill-category-title {
+    background-color: #F2F2F2;
+    border-radius: 5px;
+    color: rgb(75, 75, 75);
+    padding: 0 10px !important;
+}
+
+#filter_modal .skill-category-title p{
+   padding-top: 5px;
+   padding-bottom: 5px;
+   margin-top: 10px;
+   margin-bottom: 3px;
+}
+
+#filter_modal .vertical-tabpanel div{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }

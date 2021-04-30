@@ -124,6 +124,33 @@ function TabPanel(props) {
               });
               
             }
+            //let temp = filterManifest;
+            //let splDoc = filterManifest.slice(4, 6);
+            //filterManifest = temp.slice(0, 4);
+            
+            if (filterManifest[4].call_name == "Category") {
+              filterManifest[4].call_name = filterManifest[5].call_name;
+              filterManifest[4].display_name = filterManifest[5].display_name;
+              filterManifest[4]._uuid = filterManifest[5]._uuid;
+              filterManifest[4].spl = [];
+
+              for (let x = 0; x < filterManifest[4].metadata.length; x++) {
+
+                let spl = {};
+                spl.title = filterManifest[4].metadata[x].value_name;
+                spl.skills = [];
+                for (let skill of filterManifest[5].metadata) {
+                  if (filterManifest[4].metadata[x].value_id[0] == skill.value_id[0]) {
+                    spl.skills.push(skill);
+                  }
+                }
+
+                filterManifest[4].spl.push(spl);
+
+              }
+
+              delete filterManifest[5];
+            }
 
             setFilterDocs(filterManifest);
         }
@@ -212,26 +239,46 @@ function TabPanel(props) {
 
             {filterDocs !== null ? (filterDocs.map((filterDoc) => (
               <TabPanel key={'panel-'+idx} value={value} index={idx++}>
-              { filterDoc.call_name.toLowerCase() == "skill" ? ( 
-                <div className="filter-model-selbox">
-                  <center>
-                    <span> Filtering Mode: </span>
-                    <select name="skillType" id="skillType" onChange={() => {handleSkill(document.getElementById('skillType').value)}}>
-                      <option value="OR" selected={ORSkill}>Any of these</option>
-                      <option value="AND" selected={ANDSkill}>All of these</option>
-                    </select>
-                  </center>
-                </div>
-              ) : (null)}
-                    {filterDoc.metadata.map((e) => (
-                        <FormGroup row key={`panelrow-${idx}-${e.meta_id}`}>
-                            <FormControlLabel
-                                control={<Checkbox value={e.meta_id} name="filter_checkbox" checked={selectionData.includes(e.meta_id)} onChange={handleFilterSelection} color="primary"/>}
-                                label={e.value_name}
-                            />
-                        </FormGroup> 
+                { filterDoc.call_name.toLowerCase() == "skill" ? ( 
+                  <div className="filter-model-selbox">
+                    <center>
+                      <span> Filtering Mode: </span>
+                      <select name="skillType" id="skillType" onChange={() => {handleSkill(document.getElementById('skillType').value)}}>
+                        <option value="OR" selected={ORSkill}>Any of these</option>
+                        <option value="AND" selected={ANDSkill}>All of these</option>
+                      </select>
+                    </center>
+                  </div>
+                ) : (null)}
+
+              {filterDoc.call_name.toLowerCase() != "skill" ? filterDoc.metadata.map((e) => (
+                
+                <FormGroup row key={`panelrow-${idx}-${e.meta_id}`}>
+                    <FormControlLabel
+                        control={<Checkbox value={e.meta_id} name="filter_checkbox" checked={selectionData.includes(e.meta_id)} onChange={handleFilterSelection} color="primary"/>}
+                        label={e.value_name}
+                    />
+                  </FormGroup>
+                        
+              )): (null)}
+
+              {filterDoc.call_name.toLowerCase() == "skill" ? filterDoc.spl.map((e) => (
+                <div className="skill-category-wrapper" key={`panelrow-${idx}-${filterDoc.spl.indexOf(e)}plus`}>
+                  <section className="skill-category-title"><p>{e.title}</p></section>
+
+                    {e.skills.map((s) => (
+                      <FormGroup row key={`panelrow-${idx}-${s.meta_id}`}>
+                        <FormControlLabel
+                            control={<Checkbox value={s.meta_id} name="filter_checkbox" checked={selectionData.includes(s.meta_id)} onChange={handleFilterSelection} color="primary"/>}
+                            label={s.value_name}
+                        />
+                      </FormGroup>
                     ))}
-                </TabPanel>
+                </div>
+                        
+              )): (null)}
+
+              </TabPanel>
                 
             ))) : (null)}
             

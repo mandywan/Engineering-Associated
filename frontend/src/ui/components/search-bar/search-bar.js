@@ -123,6 +123,13 @@ const SearchBar = (props) => {
 
     if (element.value.trim().length >= 3) {
       let allFilters = await storage.db.toArray('metadata');
+      allFilters = allFilters.filter((item) => {
+        if (item.call_name.toLowerCase() != 'category') {
+          return true;
+        } else {
+          return false;
+        }
+      })
       let allProfiles = await storage.db.toArray('viewHistory');
 
       let supplimentaryData = [];
